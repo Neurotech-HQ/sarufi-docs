@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksarufi_docs=self.webpackChunksarufi_docs||[]).push([[7519],{1383:function(s){s.exports=JSON.parse('{"permalink":"/sarufi-docs/blog/tags/hello","page":1,"postsPerPage":10,"totalPages":1,"totalCount":2,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

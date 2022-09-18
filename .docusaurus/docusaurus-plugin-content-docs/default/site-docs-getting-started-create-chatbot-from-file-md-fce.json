@@ -1,0 +1,27 @@
+{
+  "unversionedId": "Getting started /create-chatbot-from-file",
+  "id": "Getting started /create-chatbot-from-file",
+  "title": "Create Chatbot from file",
+  "description": "Sarufi-Python-SDK allows you to create a chatbot from a file. where you can define your intents, utterances, and responses separately.",
+  "source": "@site/docs/Getting started /create-chatbot-from-file.md",
+  "sourceDirName": "Getting started ",
+  "slug": "/Getting started /create-chatbot-from-file",
+  "permalink": "/sarufi/docs/Getting started /create-chatbot-from-file",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Getting started /create-chatbot-from-file.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Chatbot Addons",
+    "permalink": "/sarufi/docs/Getting started /chatbots-addons"
+  },
+  "next": {
+    "title": "Congratulations",
+    "permalink": "/sarufi/docs/Getting started /congratulations"
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "/sarufi/__docusaurus/debug-1e3": {
+    "__comp": "__comp---theme-debug-config-23-a-2ff",
+    "__context": {
+      "plugin": "plugin---sarufi-docusaurus-debug-9-bf-565"
+    }
+  },
+  "/sarufi/__docusaurus/debug/config-d3c": {
+    "__comp": "__comp---theme-debug-config-23-a-2ff",
+    "__context": {
+      "plugin": "plugin---sarufi-docusaurus-debug-9-bf-565"
+    }
+  },
+  "/sarufi/__docusaurus/debug/content-b90": {
+    "__comp": "__comp---theme-debug-contentba-8-ce7",
+    "__context": {
+      "plugin": "plugin---sarufi-docusaurus-debug-9-bf-565"
+    },
+    "allContent": "allContent---sarufi-docusaurus-debug-content-246-340"
+  },
+  "/sarufi/__docusaurus/debug/globalData-0b2": {
+    "__comp": "__comp---theme-debug-global-dataede-0fa",
+    "__context": {
+      "plugin": "plugin---sarufi-docusaurus-debug-9-bf-565"
+    }
+  },
+  "/sarufi/__docusaurus/debug/metadata-c52": {
+    "__comp": "__comp---theme-debug-site-metadata-68-e-3d4",
+    "__context": {
+      "plugin": "plugin---sarufi-docusaurus-debug-9-bf-565"
+    }
+  },
+  "/sarufi/__docusaurus/debug/registry-34b": {
+    "__comp": "__comp---theme-debug-registry-679-501",
+    "__context": {
+      "plugin": "plugin---sarufi-docusaurus-debug-9-bf-565"
+    }
+  },
+  "/sarufi/__docusaurus/debug/routes-351": {
+    "__comp": "__comp---theme-debug-routes-946-699",
+    "__context": {
+      "plugin": "plugin---sarufi-docusaurus-debug-9-bf-565"
+    }
+  },
+  "/sarufi/blog-770": {
+    "__comp": "__comp---theme-blog-list-pagea-6-a-7ba",
+    "__context": {
+      "plugin": "plugin---sarufi-blog-08-f-18f"
+    },
+    "sidebar": "sidebar---sarufi-blog-814-080",
+    "items": [
+      {
+        "content": "content---sarufi-blog-766-2bb"
+      },
+      {
+        "content": "content---sarufi-blog-925-81c"
+      }
+    ],
+    "metadata": "metadata---sarufi-blogb-2-c-a81"
+  },
+  "/sarufi/blog/archive-a45": {
+    "__comp": "__comp---theme-blog-archive-page-9-e-4-1d8",
+    "__context": {
+      "plugin": "plugin---sarufi-blog-08-f-18f"
+    },
+    "archive": "archive---sarufi-blog-archive-7-c-0-9e7"
+  },
+  "/sarufi/blog/first-blog-post-6cd": {
+    "__comp": "__comp---theme-blog-post-pageccc-cab",
+    "__context": {
+      "plugin": "plugin---sarufi-blog-08-f-18f"
+    },
+    "sidebar": "sidebar---sarufi-blog-814-080",
+    "content": "content---sarufi-blog-first-blog-poste-27-d36"
+  },
+  "/sarufi/blog/tags-263": {
+    "__comp": "__comp---theme-blog-tags-list-page-01-a-d0b",
+    "__context": {
+      "plugin": "plugin---sarufi-blog-08-f-18f"
+    },
+    "sidebar": "sidebar---sarufi-blog-814-080",
+    "tags": "tags---sarufi-blog-tags-87-f-5ab"
+  },
+  "/sarufi/blog/tags/docusaurus-3a0": {
+    "__comp": "__comp---theme-blog-tags-posts-page-687-b6c",
+    "__context": {
+      "plugin": "plugin---sarufi-blog-08-f-18f"
+    },
+    "sidebar": "sidebar---sarufi-blog-814-080",
+    "items": [
+      {
+        "content": "content---sarufi-blog-766-2bb"
+      },
+      {
+        "content": "content---sarufi-blog-925-81c"
+      }
+    ],
+    "tag": "tag---sarufi-blog-tags-docusaurusb-24-15a",
+    "listMetadata": "listMetadata---sarufi-blog-tags-docusaurus-9-f-1-716"
+  },
+  "/sarufi/blog/tags/facebook-dc8": {
+    "__comp": "__comp---theme-blog-tags-posts-page-687-b6c",
+    "__context": {
+      "plugin": "plugin---sarufi-blog-08-f-18f"
+    },
+    "sidebar": "sidebar---sarufi-blog-814-080",
+    "items": [
+      {
+        "content": "content---sarufi-blog-766-2bb"
+      }
+    ],
+    "tag": "tag---sarufi-blog-tags-facebookb-3-d-7e0",
+    "listMetadata": "listMetadata---sarufi-blog-tags-facebook-7-a-1-aea"
+  },
+  "/sarufi/blog/tags/hello-c06": {
+    "__comp": "__comp---theme-blog-tags-posts-page-687-b6c",
+    "__context": {
+      "plugin": "plugin---sarufi-blog-08-f-18f"
+    },
+    "sidebar": "sidebar---sarufi-blog-814-080",
+    "items": [
+      {
+        "content": "content---sarufi-blog-766-2bb"
+      }
+    ],
+    "tag": "tag---sarufi-blog-tags-helloddb-92f",
+    "listMetadata": "listMetadata---sarufi-blog-tags-hello-7-cf-b55"
+  },
+  "/sarufi/blog/tags/hola-596": {
+    "__comp": "__comp---theme-blog-tags-posts-page-687-b6c",
+    "__context": {
+      "plugin": "plugin---sarufi-blog-08-f-18f"
+    },
+    "sidebar": "sidebar---sarufi-blog-814-080",
+    "items": [
+      {
+        "content": "content---sarufi-blog-925-81c"
+      }
+    ],
+    "tag": "tag---sarufi-blog-tags-holaa-5-c-675",
+    "listMetadata": "listMetadata---sarufi-blog-tags-hola-0-a-7-c32"
+  },
+  "/sarufi/blog/welcome-2ac": {
+    "__comp": "__comp---theme-blog-post-pageccc-cab",
+    "__context": {
+      "plugin": "plugin---sarufi-blog-08-f-18f"
+    },
+    "sidebar": "sidebar---sarufi-blog-814-080",
+    "content": "content---sarufi-blog-welcomed-9-f-317"
+  },
+  "/sarufi/markdown-page-a8b": {
+    "__comp": "__comp---theme-mdx-page-1-f-3-b90",
+    "__context": {
+      "plugin": "plugin---sarufi-markdown-pageca-3-73c"
+    },
+    "content": "content---sarufi-markdown-page-393-ab1"
+  },
+  "/sarufi/docs-6ba": {
+    "__comp": "__comp---theme-doc-page-1-be-9be",
+    "__context": {
+      "plugin": "plugin---sarufi-docs-554-35a"
+    },
+    "versionMetadata": "versionMetadata---sarufi-docs-935-a33"
+  },
+  "/sarufi/docs/category/getting-started-021": {
+    "__comp": "__comp---theme-doc-category-generated-index-page-14-e-640",
+    "categoryGeneratedIndex": "categoryGeneratedIndex---sarufi-docs-category-getting-startedb-7-f-281"
+  },
+  "/sarufi/docs/category/integrations-2d0": {
+    "__comp": "__comp---theme-doc-category-generated-index-page-14-e-640",
+    "categoryGeneratedIndex": "categoryGeneratedIndex---sarufi-docs-category-integrationsc-38-7c9"
+  },
+  "/sarufi/docs/Getting started /basic-concepts-aff": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---sarufi-docs-getting-started-basic-conceptsbd-9-8da"
+  },
+  "/sarufi/docs/Getting started /chatbots-addons-a3e": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---sarufi-docs-getting-started-chatbots-addonsfa-0-396"
+  },
+  "/sarufi/docs/Getting started /congratulations-42a": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---sarufi-docs-getting-started-congratulations-215-ecf"
+  },
+  "/sarufi/docs/Getting started /create-a-simple-chatbot-a5f": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---sarufi-docs-getting-started-create-a-simple-chatbot-581-017"
+  },
+  "/sarufi/docs/Getting started /create-chatbot-from-file-e5c": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---sarufi-docs-getting-started-create-chatbot-from-filefce-834"
+  },
+  "/sarufi/docs/intro-240": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---sarufi-docs-intro-0-e-3-18a"
+  },
+  "/sarufi/docs/tutorial-extras/integrate-with-messenger-1f9": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---sarufi-docs-tutorial-extras-integrate-with-messenger-57-f-002"
+  },
+  "/sarufi/docs/tutorial-extras/integrate-with-telegram-67c": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---sarufi-docs-tutorial-extras-integrate-with-telegramd-16-87a"
+  },
+  "/sarufi/docs/tutorial-extras/integrate-with-whatsapp-ace": {
+    "__comp": "__comp---theme-doc-item-178-a40",
+    "content": "content---sarufi-docs-tutorial-extras-integrate-with-whatsappbf-9-2e1"
+  },
+  "/sarufi/-1c6": {
+    "__comp": "__comp---site-src-pages-index-jsc-4-f-f99",
+    "__context": {
+      "plugin": "plugin---sarufi-markdown-pageca-3-73c"
+    },
+    "config": "config---sarufi-5-e-9-50a"
+  }
+}

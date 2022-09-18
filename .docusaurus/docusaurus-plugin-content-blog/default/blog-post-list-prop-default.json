@@ -1,0 +1,13 @@
+{
+  "title": "Recent posts",
+  "items": [
+    {
+      "title": "Welcome",
+      "permalink": "/sarufi/blog/welcome"
+    },
+    {
+      "title": "First Blog Post",
+      "permalink": "/sarufi/blog/first-blog-post"
+    }
+  ]
+}

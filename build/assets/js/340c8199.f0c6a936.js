@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksarufi_docs=self.webpackChunksarufi_docs||[]).push([[8773],{7575:function(s){s.exports=JSON.parse('{"label":"hello","permalink":"/sarufi-docs/blog/tags/hello","allTagsPath":"/sarufi-docs/blog/tags","count":2}')}}]);

@@ -1,0 +1,588 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "loadedVersions": [
+        {
+          "versionName": "current",
+          "label": "Next",
+          "banner": null,
+          "badge": false,
+          "className": "docs-version-current",
+          "path": "/sarufi/docs",
+          "tagsPath": "/sarufi/docs/tags",
+          "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs",
+          "editUrlLocalized": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/i18n/en/docusaurus-plugin-content-docs/current",
+          "isLast": true,
+          "routePriority": -1,
+          "sidebarFilePath": "/home/kalebu/Work/NeuroTech/code/NLP Tools/Swahili-SARUFI-docs/sarufi/sarufi-docs/sidebars.js",
+          "contentPath": "/home/kalebu/Work/NeuroTech/code/NLP Tools/Swahili-SARUFI-docs/sarufi/sarufi-docs/docs",
+          "contentPathLocalized": "/home/kalebu/Work/NeuroTech/code/NLP Tools/Swahili-SARUFI-docs/sarufi/sarufi-docs/i18n/en/docusaurus-plugin-content-docs/current",
+          "docs": [
+            {
+              "unversionedId": "Getting started /basic-concepts",
+              "id": "Getting started /basic-concepts",
+              "title": "Basic Concepts and Terminology",
+              "description": "Before you start building your first chatbot, it is important to understand the basic concepts and terminology of chatbots. Here are some of the basic concepts and terminology that you need to know:",
+              "source": "@site/docs/Getting started /basic-concepts.md",
+              "sourceDirName": "Getting started ",
+              "slug": "/Getting started /basic-concepts",
+              "permalink": "/sarufi/docs/Getting started /basic-concepts",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Getting started /basic-concepts.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Getting Started",
+                "permalink": "/sarufi/docs/category/getting-started"
+              },
+              "next": {
+                "title": "Create your first Chatbot",
+                "permalink": "/sarufi/docs/Getting started /create-a-simple-chatbot"
+              }
+            },
+            {
+              "unversionedId": "Getting started /chatbots-addons",
+              "id": "Getting started /chatbots-addons",
+              "title": "Chatbot Addons",
+              "description": "We have seen how to create a simple chatbot in the previous section. In this section, we will see how to add addons to our chatbot. Addons are a set of functionalities that can be added to our chatbot to make it more interactive, things like: handling choices, canceling intents in the middle of a conversation, and etc.",
+              "source": "@site/docs/Getting started /chatbots-addons.md",
+              "sourceDirName": "Getting started ",
+              "slug": "/Getting started /chatbots-addons",
+              "permalink": "/sarufi/docs/Getting started /chatbots-addons",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Getting started /chatbots-addons.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Create your first Chatbot",
+                "permalink": "/sarufi/docs/Getting started /create-a-simple-chatbot"
+              },
+              "next": {
+                "title": "Create Chatbot from file",
+                "permalink": "/sarufi/docs/Getting started /create-chatbot-from-file"
+              }
+            },
+            {
+              "unversionedId": "Getting started /congratulations",
+              "id": "Getting started /congratulations",
+              "title": "Congratulations",
+              "description": "Congratulations! You have successfully created your first chatbot using Sarufi-Python-SDK. You can start learning how to integrate it with messaging platforms like Telegram, WhatsApp, and Facebook Messenger.",
+              "source": "@site/docs/Getting started /congratulations.md",
+              "sourceDirName": "Getting started ",
+              "slug": "/Getting started /congratulations",
+              "permalink": "/sarufi/docs/Getting started /congratulations",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Getting started /congratulations.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 5,
+              "frontMatter": {
+                "sidebar_position": 5
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Create Chatbot from file",
+                "permalink": "/sarufi/docs/Getting started /create-chatbot-from-file"
+              },
+              "next": {
+                "title": "Integrations",
+                "permalink": "/sarufi/docs/category/integrations"
+              }
+            },
+            {
+              "unversionedId": "Getting started /create-a-simple-chatbot",
+              "id": "Getting started /create-a-simple-chatbot",
+              "title": "Create your first Chatbot",
+              "description": "As I mentioned in the previous section, that we only support Python SDK for now and we will be adding more SDKs in the future.",
+              "source": "@site/docs/Getting started /create-a-simple-chatbot.md",
+              "sourceDirName": "Getting started ",
+              "slug": "/Getting started /create-a-simple-chatbot",
+              "permalink": "/sarufi/docs/Getting started /create-a-simple-chatbot",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Getting started /create-a-simple-chatbot.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Basic Concepts and Terminology",
+                "permalink": "/sarufi/docs/Getting started /basic-concepts"
+              },
+              "next": {
+                "title": "Chatbot Addons",
+                "permalink": "/sarufi/docs/Getting started /chatbots-addons"
+              }
+            },
+            {
+              "unversionedId": "Getting started /create-chatbot-from-file",
+              "id": "Getting started /create-chatbot-from-file",
+              "title": "Create Chatbot from file",
+              "description": "Sarufi-Python-SDK allows you to create a chatbot from a file. where you can define your intents, utterances, and responses separately.",
+              "source": "@site/docs/Getting started /create-chatbot-from-file.md",
+              "sourceDirName": "Getting started ",
+              "slug": "/Getting started /create-chatbot-from-file",
+              "permalink": "/sarufi/docs/Getting started /create-chatbot-from-file",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Getting started /create-chatbot-from-file.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 4,
+              "frontMatter": {
+                "sidebar_position": 4
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Chatbot Addons",
+                "permalink": "/sarufi/docs/Getting started /chatbots-addons"
+              },
+              "next": {
+                "title": "Congratulations",
+                "permalink": "/sarufi/docs/Getting started /congratulations"
+              }
+            },
+            {
+              "unversionedId": "intro",
+              "id": "intro",
+              "title": "What is Sarufi ?",
+              "description": "Learn how to build `cool` conversational experience using a `lightweight blatzing fast` python library, It has a simple and intuitive API plus a rich set of features to make your bot more engaging.",
+              "source": "@site/docs/intro.md",
+              "sourceDirName": ".",
+              "slug": "/intro",
+              "permalink": "/sarufi/docs/intro",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/intro.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "next": {
+                "title": "Getting Started",
+                "permalink": "/sarufi/docs/category/getting-started"
+              }
+            },
+            {
+              "unversionedId": "tutorial-extras/integrate-with-messenger",
+              "id": "tutorial-extras/integrate-with-messenger",
+              "title": "Messenger",
+              "description": "Messenger is a messaging app and platform developed by Facebook, Inc. It allows users to send text messages and voice messages, make voice and video calls, and share images, documents, user locations, and other media.",
+              "source": "@site/docs/tutorial-extras/integrate-with-messenger.md",
+              "sourceDirName": "tutorial-extras",
+              "slug": "/tutorial-extras/integrate-with-messenger",
+              "permalink": "/sarufi/docs/tutorial-extras/integrate-with-messenger",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-extras/integrate-with-messenger.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "WhatsApp",
+                "permalink": "/sarufi/docs/tutorial-extras/integrate-with-whatsapp"
+              }
+            },
+            {
+              "unversionedId": "tutorial-extras/integrate-with-telegram",
+              "id": "tutorial-extras/integrate-with-telegram",
+              "title": "Telegram",
+              "description": "Telegram is a cloud-based instant messaging and voice over IP service. It was developed by the Russian entrepreneur Pavel Durov and his brother Nikolai Durov, who were also the founders of VK.com and Odnoklassniki.",
+              "source": "@site/docs/tutorial-extras/integrate-with-telegram.md",
+              "sourceDirName": "tutorial-extras",
+              "slug": "/tutorial-extras/integrate-with-telegram",
+              "permalink": "/sarufi/docs/tutorial-extras/integrate-with-telegram",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-extras/integrate-with-telegram.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Integrations",
+                "permalink": "/sarufi/docs/category/integrations"
+              },
+              "next": {
+                "title": "WhatsApp",
+                "permalink": "/sarufi/docs/tutorial-extras/integrate-with-whatsapp"
+              }
+            },
+            {
+              "unversionedId": "tutorial-extras/integrate-with-whatsapp",
+              "id": "tutorial-extras/integrate-with-whatsapp",
+              "title": "WhatsApp",
+              "description": "WhatsApp is a freeware, cross-platform messaging and Voice over IP (VoIP) service owned by Facebook, Inc. It allows users to send text messages and voice messages, make voice and video calls, and share images, documents, user locations, and other media.",
+              "source": "@site/docs/tutorial-extras/integrate-with-whatsapp.md",
+              "sourceDirName": "tutorial-extras",
+              "slug": "/tutorial-extras/integrate-with-whatsapp",
+              "permalink": "/sarufi/docs/tutorial-extras/integrate-with-whatsapp",
+              "draft": false,
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/tutorial-extras/integrate-with-whatsapp.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Telegram",
+                "permalink": "/sarufi/docs/tutorial-extras/integrate-with-telegram"
+              },
+              "next": {
+                "title": "Messenger",
+                "permalink": "/sarufi/docs/tutorial-extras/integrate-with-messenger"
+              }
+            }
+          ],
+          "drafts": [],
+          "sidebars": {
+            "tutorialSidebar": [
+              {
+                "type": "doc",
+                "id": "intro"
+              },
+              {
+                "type": "category",
+                "label": "Getting Started",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "Getting started /basic-concepts"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Getting started /create-a-simple-chatbot"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Getting started /chatbots-addons"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Getting started /create-chatbot-from-file"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Getting started /congratulations"
+                  }
+                ],
+                "link": {
+                  "type": "generated-index",
+                  "description": "5 minutes to learn the most important Docusaurus concepts.",
+                  "slug": "/category/getting-started",
+                  "permalink": "/sarufi/docs/category/getting-started"
+                }
+              },
+              {
+                "type": "category",
+                "label": "Integrations",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "tutorial-extras/integrate-with-telegram"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "tutorial-extras/integrate-with-whatsapp"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "tutorial-extras/integrate-with-messenger"
+                  }
+                ],
+                "link": {
+                  "type": "generated-index",
+                  "slug": "/category/integrations",
+                  "permalink": "/sarufi/docs/category/integrations"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "docusaurus-plugin-content-blog": {
+    "default": {
+      "blogSidebarTitle": "Recent posts",
+      "blogPosts": [
+        {
+          "id": "welcome",
+          "metadata": {
+            "permalink": "/sarufi/blog/welcome",
+            "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/blog/2021-08-26-welcome/index.md",
+            "source": "@site/blog/2021-08-26-welcome/index.md",
+            "title": "Welcome",
+            "description": "Docusaurus blogging features are powered by the blog plugin.",
+            "date": "2021-08-26T00:00:00.000Z",
+            "formattedDate": "August 26, 2021",
+            "tags": [
+              {
+                "label": "facebook",
+                "permalink": "/sarufi/blog/tags/facebook"
+              },
+              {
+                "label": "hello",
+                "permalink": "/sarufi/blog/tags/hello"
+              },
+              {
+                "label": "docusaurus",
+                "permalink": "/sarufi/blog/tags/docusaurus"
+              }
+            ],
+            "readingTime": 0.405,
+            "truncated": false,
+            "authors": [
+              {
+                "name": "Sébastien Lorber",
+                "title": "Docusaurus maintainer",
+                "url": "https://sebastienlorber.com",
+                "imageURL": "https://github.com/slorber.png",
+                "key": "slorber"
+              },
+              {
+                "name": "Yangshun Tay",
+                "title": "Front End Engineer @ Facebook",
+                "url": "https://github.com/yangshun",
+                "imageURL": "https://github.com/yangshun.png",
+                "key": "yangshun"
+              }
+            ],
+            "frontMatter": {
+              "slug": "welcome",
+              "title": "Welcome",
+              "authors": [
+                "slorber",
+                "yangshun"
+              ],
+              "tags": [
+                "facebook",
+                "hello",
+                "docusaurus"
+              ]
+            },
+            "nextItem": {
+              "title": "First Blog Post",
+              "permalink": "/sarufi/blog/first-blog-post"
+            }
+          },
+          "content": "[Docusaurus blogging features](https://docusaurus.io/docs/blog) are powered by the [blog plugin](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-blog).\n\nSimply add Markdown files (or folders) to the `blog` directory.\n\nRegular blog authors can be added to `authors.yml`.\n\nThe blog post date can be extracted from filenames, such as:\n\n- `2019-05-30-welcome.md`\n- `2019-05-30-welcome/index.md`\n\nA blog post folder can be convenient to co-locate blog post images:\n\n![Docusaurus Plushie](./docusaurus-plushie-banner.jpeg)\n\nThe blog supports tags as well!\n\n**And if you don't want a blog**: just delete this directory, and use `blog: false` in your Docusaurus config."
+        },
+        {
+          "id": "first-blog-post",
+          "metadata": {
+            "permalink": "/sarufi/blog/first-blog-post",
+            "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/blog/2019-05-28-first-blog-post.md",
+            "source": "@site/blog/2019-05-28-first-blog-post.md",
+            "title": "First Blog Post",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet",
+            "date": "2019-05-28T00:00:00.000Z",
+            "formattedDate": "May 28, 2019",
+            "tags": [
+              {
+                "label": "hola",
+                "permalink": "/sarufi/blog/tags/hola"
+              },
+              {
+                "label": "docusaurus",
+                "permalink": "/sarufi/blog/tags/docusaurus"
+              }
+            ],
+            "readingTime": 0.12,
+            "truncated": false,
+            "authors": [
+              {
+                "name": "Gao Wei",
+                "title": "Docusaurus Core Team",
+                "url": "https://github.com/wgao19",
+                "image_url": "https://github.com/wgao19.png",
+                "imageURL": "https://github.com/wgao19.png"
+              }
+            ],
+            "frontMatter": {
+              "slug": "first-blog-post",
+              "title": "First Blog Post",
+              "authors": {
+                "name": "Gao Wei",
+                "title": "Docusaurus Core Team",
+                "url": "https://github.com/wgao19",
+                "image_url": "https://github.com/wgao19.png",
+                "imageURL": "https://github.com/wgao19.png"
+              },
+              "tags": [
+                "hola",
+                "docusaurus"
+              ]
+            },
+            "prevItem": {
+              "title": "Welcome",
+              "permalink": "/sarufi/blog/welcome"
+            }
+          },
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet"
+        }
+      ],
+      "blogListPaginated": [
+        {
+          "items": [
+            "welcome",
+            "first-blog-post"
+          ],
+          "metadata": {
+            "permalink": "/sarufi/blog",
+            "page": 1,
+            "postsPerPage": 10,
+            "totalPages": 1,
+            "totalCount": 2,
+            "blogDescription": "Blog",
+            "blogTitle": "Blog"
+          }
+        }
+      ],
+      "blogTags": {
+        "/sarufi/blog/tags/facebook": {
+          "label": "facebook",
+          "items": [
+            "welcome"
+          ],
+          "permalink": "/sarufi/blog/tags/facebook",
+          "pages": [
+            {
+              "items": [
+                "welcome"
+              ],
+              "metadata": {
+                "permalink": "/sarufi/blog/tags/facebook",
+                "page": 1,
+                "postsPerPage": 10,
+                "totalPages": 1,
+                "totalCount": 1,
+                "blogDescription": "Blog",
+                "blogTitle": "Blog"
+              }
+            }
+          ]
+        },
+        "/sarufi/blog/tags/hello": {
+          "label": "hello",
+          "items": [
+            "welcome"
+          ],
+          "permalink": "/sarufi/blog/tags/hello",
+          "pages": [
+            {
+              "items": [
+                "welcome"
+              ],
+              "metadata": {
+                "permalink": "/sarufi/blog/tags/hello",
+                "page": 1,
+                "postsPerPage": 10,
+                "totalPages": 1,
+                "totalCount": 1,
+                "blogDescription": "Blog",
+                "blogTitle": "Blog"
+              }
+            }
+          ]
+        },
+        "/sarufi/blog/tags/docusaurus": {
+          "label": "docusaurus",
+          "items": [
+            "welcome",
+            "first-blog-post"
+          ],
+          "permalink": "/sarufi/blog/tags/docusaurus",
+          "pages": [
+            {
+              "items": [
+                "welcome",
+                "first-blog-post"
+              ],
+              "metadata": {
+                "permalink": "/sarufi/blog/tags/docusaurus",
+                "page": 1,
+                "postsPerPage": 10,
+                "totalPages": 1,
+                "totalCount": 2,
+                "blogDescription": "Blog",
+                "blogTitle": "Blog"
+              }
+            }
+          ]
+        },
+        "/sarufi/blog/tags/hola": {
+          "label": "hola",
+          "items": [
+            "first-blog-post"
+          ],
+          "permalink": "/sarufi/blog/tags/hola",
+          "pages": [
+            {
+              "items": [
+                "first-blog-post"
+              ],
+              "metadata": {
+                "permalink": "/sarufi/blog/tags/hola",
+                "page": 1,
+                "postsPerPage": 10,
+                "totalPages": 1,
+                "totalCount": 1,
+                "blogDescription": "Blog",
+                "blogTitle": "Blog"
+              }
+            }
+          ]
+        }
+      },
+      "blogTagsListPath": "/sarufi/blog/tags"
+    }
+  },
+  "docusaurus-plugin-content-pages": {
+    "default": [
+      {
+        "type": "jsx",
+        "permalink": "/sarufi/",
+        "source": "@site/src/pages/index.js"
+      },
+      {
+        "type": "mdx",
+        "permalink": "/sarufi/markdown-page",
+        "source": "@site/src/pages/markdown-page.md",
+        "title": "Markdown page example",
+        "description": "You don't need React to write simple standalone pages.",
+        "frontMatter": {
+          "title": "Markdown page example"
+        }
+      }
+    ]
+  },
+  "docusaurus-plugin-debug": {},
+  "docusaurus-theme-classic": {},
+  "docusaurus-bootstrap-plugin": {},
+  "docusaurus-mdx-fallback-plugin": {}
+}

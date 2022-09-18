@@ -1,0 +1,16 @@
+{
+  "title": "Getting Started",
+  "description": "5 minutes to learn the most important Docusaurus concepts.",
+  "slug": "/category/getting-started",
+  "permalink": "/sarufi/docs/category/getting-started",
+  "navigation": {
+    "previous": {
+      "title": "What is Sarufi ?",
+      "permalink": "/sarufi/docs/intro"
+    },
+    "next": {
+      "title": "Basic Concepts and Terminology",
+      "permalink": "/sarufi/docs/Getting started /basic-concepts"
+    }
+  }
+}

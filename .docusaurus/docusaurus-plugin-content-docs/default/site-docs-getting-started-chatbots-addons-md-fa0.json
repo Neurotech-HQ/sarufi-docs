@@ -1,0 +1,27 @@
+{
+  "unversionedId": "Getting started /chatbots-addons",
+  "id": "Getting started /chatbots-addons",
+  "title": "Chatbot Addons",
+  "description": "We have seen how to create a simple chatbot in the previous section. In this section, we will see how to add addons to our chatbot. Addons are a set of functionalities that can be added to our chatbot to make it more interactive, things like: handling choices, canceling intents in the middle of a conversation, and etc.",
+  "source": "@site/docs/Getting started /chatbots-addons.md",
+  "sourceDirName": "Getting started ",
+  "slug": "/Getting started /chatbots-addons",
+  "permalink": "/sarufi/docs/Getting started /chatbots-addons",
+  "draft": false,
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Getting started /chatbots-addons.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Create your first Chatbot",
+    "permalink": "/sarufi/docs/Getting started /create-a-simple-chatbot"
+  },
+  "next": {
+    "title": "Create Chatbot from file",
+    "permalink": "/sarufi/docs/Getting started /create-chatbot-from-file"
+  }
+}
