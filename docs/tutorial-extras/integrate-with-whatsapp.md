@@ -22,7 +22,7 @@ pip install heyoo
 
 ### Sarufi - Heyoo Blueprint
 
-To make it easier for you to connect Sarufi to WhatsApp Cloud API, we have created a blueprint for Sarufi and Heyoo. You can find it [here](https://github.com/Neurotech-HQ/heyoo). You only need to configure the `config.yaml` file. You can find the instructions in the `README.md` file.
+To make it easier for you to connect Sarufi to WhatsApp Cloud API, we have created a blueprint for Sarufi and Heyoo. You can find it [here](https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint). You only need to configure the `config.yaml` file. You can find the instructions in the `README.md` file.
 
 ```yaml config.yaml
 
