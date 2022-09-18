@@ -3,11 +3,11 @@
   "items": [
     {
       "title": "Welcome",
-      "permalink": "/sarufi/blog/welcome"
+      "permalink": "/blog/welcome"
     },
     {
       "title": "First Blog Post",
-      "permalink": "/sarufi/blog/first-blog-post"
+      "permalink": "/blog/first-blog-post"
     }
   ]
 }

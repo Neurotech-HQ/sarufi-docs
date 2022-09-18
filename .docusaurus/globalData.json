@@ -1,68 +1,68 @@
 {
   "docusaurus-plugin-content-docs": {
     "default": {
-      "path": "/sarufi/docs",
+      "path": "/docs",
       "versions": [
         {
           "name": "current",
           "label": "Next",
           "isLast": true,
-          "path": "/sarufi/docs",
+          "path": "/docs",
           "mainDocId": "intro",
           "docs": [
             {
               "id": "Getting started /basic-concepts",
-              "path": "/sarufi/docs/Getting started /basic-concepts",
+              "path": "/docs/Getting started /basic-concepts",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "Getting started /chatbots-addons",
-              "path": "/sarufi/docs/Getting started /chatbots-addons",
+              "path": "/docs/Getting started /chatbots-addons",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "Getting started /congratulations",
-              "path": "/sarufi/docs/Getting started /congratulations",
+              "path": "/docs/Getting started /congratulations",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "Getting started /create-a-simple-chatbot",
-              "path": "/sarufi/docs/Getting started /create-a-simple-chatbot",
+              "path": "/docs/Getting started /create-a-simple-chatbot",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "Getting started /create-chatbot-from-file",
-              "path": "/sarufi/docs/Getting started /create-chatbot-from-file",
+              "path": "/docs/Getting started /create-chatbot-from-file",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "intro",
-              "path": "/sarufi/docs/intro",
+              "path": "/docs/intro",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "tutorial-extras/integrate-with-messenger",
-              "path": "/sarufi/docs/tutorial-extras/integrate-with-messenger",
+              "path": "/docs/tutorial-extras/integrate-with-messenger",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "tutorial-extras/integrate-with-telegram",
-              "path": "/sarufi/docs/tutorial-extras/integrate-with-telegram",
+              "path": "/docs/tutorial-extras/integrate-with-telegram",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "tutorial-extras/integrate-with-whatsapp",
-              "path": "/sarufi/docs/tutorial-extras/integrate-with-whatsapp",
+              "path": "/docs/tutorial-extras/integrate-with-whatsapp",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "/category/getting-started",
-              "path": "/sarufi/docs/category/getting-started",
+              "path": "/docs/category/getting-started",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "/category/integrations",
-              "path": "/sarufi/docs/category/integrations",
+              "path": "/docs/category/integrations",
               "sidebar": "tutorialSidebar"
             }
           ],
@@ -70,7 +70,7 @@
           "sidebars": {
             "tutorialSidebar": {
               "link": {
-                "path": "/sarufi/docs/intro",
+                "path": "/docs/intro",
                 "label": "intro"
               }
             }

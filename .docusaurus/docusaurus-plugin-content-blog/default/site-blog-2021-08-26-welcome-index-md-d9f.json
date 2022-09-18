@@ -1,5 +1,5 @@
 {
-  "permalink": "/sarufi/blog/welcome",
+  "permalink": "/blog/welcome",
   "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/blog/2021-08-26-welcome/index.md",
   "source": "@site/blog/2021-08-26-welcome/index.md",
   "title": "Welcome",
@@ -9,15 +9,15 @@
   "tags": [
     {
       "label": "facebook",
-      "permalink": "/sarufi/blog/tags/facebook"
+      "permalink": "/blog/tags/facebook"
     },
     {
       "label": "hello",
-      "permalink": "/sarufi/blog/tags/hello"
+      "permalink": "/blog/tags/hello"
     },
     {
       "label": "docusaurus",
-      "permalink": "/sarufi/blog/tags/docusaurus"
+      "permalink": "/blog/tags/docusaurus"
     }
   ],
   "readingTime": 0.405,
@@ -53,6 +53,6 @@
   },
   "nextItem": {
     "title": "First Blog Post",
-    "permalink": "/sarufi/blog/first-blog-post"
+    "permalink": "/blog/first-blog-post"
   }
 }

@@ -11,7 +11,7 @@
       {
         "type": "link",
         "label": "What is Sarufi ?",
-        "href": "/sarufi/docs/intro",
+        "href": "/docs/intro",
         "docId": "intro"
       },
       {
@@ -23,35 +23,35 @@
           {
             "type": "link",
             "label": "Basic Concepts and Terminology",
-            "href": "/sarufi/docs/Getting started /basic-concepts",
+            "href": "/docs/Getting started /basic-concepts",
             "docId": "Getting started /basic-concepts"
           },
           {
             "type": "link",
             "label": "Create your first Chatbot",
-            "href": "/sarufi/docs/Getting started /create-a-simple-chatbot",
+            "href": "/docs/Getting started /create-a-simple-chatbot",
             "docId": "Getting started /create-a-simple-chatbot"
           },
           {
             "type": "link",
             "label": "Chatbot Addons",
-            "href": "/sarufi/docs/Getting started /chatbots-addons",
+            "href": "/docs/Getting started /chatbots-addons",
             "docId": "Getting started /chatbots-addons"
           },
           {
             "type": "link",
             "label": "Create Chatbot from file",
-            "href": "/sarufi/docs/Getting started /create-chatbot-from-file",
+            "href": "/docs/Getting started /create-chatbot-from-file",
             "docId": "Getting started /create-chatbot-from-file"
           },
           {
             "type": "link",
             "label": "Congratulations",
-            "href": "/sarufi/docs/Getting started /congratulations",
+            "href": "/docs/Getting started /congratulations",
             "docId": "Getting started /congratulations"
           }
         ],
-        "href": "/sarufi/docs/category/getting-started"
+        "href": "/docs/category/getting-started"
       },
       {
         "type": "category",
@@ -62,23 +62,23 @@
           {
             "type": "link",
             "label": "Telegram",
-            "href": "/sarufi/docs/tutorial-extras/integrate-with-telegram",
+            "href": "/docs/tutorial-extras/integrate-with-telegram",
             "docId": "tutorial-extras/integrate-with-telegram"
           },
           {
             "type": "link",
             "label": "WhatsApp",
-            "href": "/sarufi/docs/tutorial-extras/integrate-with-whatsapp",
+            "href": "/docs/tutorial-extras/integrate-with-whatsapp",
             "docId": "tutorial-extras/integrate-with-whatsapp"
           },
           {
             "type": "link",
             "label": "Messenger",
-            "href": "/sarufi/docs/tutorial-extras/integrate-with-messenger",
+            "href": "/docs/tutorial-extras/integrate-with-messenger",
             "docId": "tutorial-extras/integrate-with-messenger"
           }
         ],
-        "href": "/sarufi/docs/category/integrations"
+        "href": "/docs/category/integrations"
       }
     ]
   },

@@ -1,0 +1,15 @@
+{
+  "title": "Integrations",
+  "slug": "/category/integrations",
+  "permalink": "/docs/category/integrations",
+  "navigation": {
+    "previous": {
+      "title": "Congratulations",
+      "permalink": "/docs/Getting started /congratulations"
+    },
+    "next": {
+      "title": "Telegram",
+      "permalink": "/docs/tutorial-extras/integrate-with-telegram"
+    }
+  }
+}

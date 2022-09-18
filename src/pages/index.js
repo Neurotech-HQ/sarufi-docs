@@ -17,7 +17,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Get started with Sarufi | Launch your bot
+            Get started with Sarufi
           </Link>
         </div>
       </div>

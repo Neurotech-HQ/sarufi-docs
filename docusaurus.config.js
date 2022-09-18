@@ -9,7 +9,7 @@ const config = {
   title: 'SARUFI',
   tagline: 'A simple and easy to use tool for creating and deploying Conversational AI',
   url: 'https://kalebu.github.io',
-  baseUrl: '/sarufi/',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
