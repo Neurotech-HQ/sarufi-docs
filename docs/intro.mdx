@@ -2,6 +2,9 @@
 sidebar_position: 1
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # What is Sarufi ?
 
 Learn how to build ```cool``` conversational experience using a ```lightweight blatzing fast``` python library, It has a simple and intuitive API plus a rich set of features to make your bot more engaging.
@@ -15,29 +18,48 @@ With the [sarufi](https://github.com/Neurotech-HQ/sarufi-python-sdk) library you
 ### What you'll need
 
 - [Python](https://www.python.org/downloads/) version 3.6+ or above:
-- [sarufi](https://github.com/Neurotech-HQ/sarufi-python-sdk) library: [Github](https://github.com/Neurotech-HQ/sarufi-python-sdk)
+- [sarufi](https://github.com/Neurotech-HQ/sarufi-python-sdk) library: [Github](https://github.com/Neurotech-HQ/sarufi-python-sdk) | Python.
+- [sarufi](https://github.com/flexcodelabs/sarufi) library | Nodejs+Typescript.
 
 :::tip Other Languages
-Currently, we support only support **Python SDK** for **sarufi**. but we are working on supporting other languages as well.
+Currently, we support only support **Python SDK** and **Typescript SDK** for **sarufi**. but we are working on supporting other languages as well.
 :::
 
 ## Environment Setup
 
-You can install sarufi directly from the [Github repository](https://github.com/Neurotech-HQ/sarufi-python-sdk).
+You can install sarufi directly from the [Github repository](https://github.com/Neurotech-HQ/sarufi-python-sdk) and also from official releases.
 
 ### Installing from Github
+
+<Tabs>
+<TabItem value="py" label="Python">
 
 ```bash
 git clone https://github.com/Neurotech-HQ/sarufi-python-sdk
 cd sarufi-python-sdk
 sarufi-python-sdk $ python setup.py install
 ```
+</TabItem>
+</Tabs>
 
-### Installing from pip
+### Official installation
+
+<Tabs>
+<TabItem value="js" label="JavaScript">
+
+```bash
+npm install sarufi
+```
+</TabItem>
+
+<TabItem value="py" label="Python">
 
 ```bash
 pip install --upgrade sarufi
 ```
+
+</TabItem>
+</Tabs>
 
 ## Here we go
 

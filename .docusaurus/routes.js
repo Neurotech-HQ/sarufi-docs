@@ -89,7 +89,7 @@ export default [
   },
   {
     path: '/docs',
-    component: ComponentCreator('/docs', '1e6'),
+    component: ComponentCreator('/docs', '359'),
     routes: [
       {
         path: '/docs/category/getting-started',
@@ -123,7 +123,7 @@ export default [
       },
       {
         path: '/docs/Getting started /create-a-simple-chatbot',
-        component: ComponentCreator('/docs/Getting started /create-a-simple-chatbot', '02c'),
+        component: ComponentCreator('/docs/Getting started /create-a-simple-chatbot', 'fdc'),
         exact: true,
         sidebar: "tutorialSidebar"
       },
@@ -135,7 +135,7 @@ export default [
       },
       {
         path: '/docs/intro',
-        component: ComponentCreator('/docs/intro', 'aed'),
+        component: ComponentCreator('/docs/intro', '99a'),
         exact: true,
         sidebar: "tutorialSidebar"
       },
