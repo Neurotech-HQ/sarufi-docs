@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunksarufi_docs=self.webpackChunksarufi_docs||[]).push([[792],{7668:function(s){s.exports=JSON.parse('{"permalink":"/sarufi-docs/blog/tags/facebook","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
