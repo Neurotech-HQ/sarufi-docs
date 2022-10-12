@@ -12,9 +12,9 @@ jobs:
       run: |
         apt-update
         apt-install yarn
-     - name: Get dependencies
-       run: |
+    - name: Get dependencies
+      run: |
          yarn
-      - name: Build site
-        run: |
-          yarn build
+    - name: Build site
+      run: |
+        yarn build
