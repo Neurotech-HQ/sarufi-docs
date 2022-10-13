@@ -20,8 +20,8 @@ jobs:
         yarn build
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
-          publish_branch: site
-          keep_files: true
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
+        publish_branch: site
+        keep_files: true
