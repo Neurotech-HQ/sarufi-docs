@@ -20,7 +20,7 @@ jobs:
          yarn
     - name: Update baseurl
       run: |
-        sed -i 's/baseUrl: \'\/\',/baseUrl: \'\/sarufi-docs\/${{ env.folder_name }}\'/g' docusaurus.config.js
+        sed -i "s/baseUrl: '\/',/baseUrl: '\/sarufi-docs\/${{ env.folder_name }}'/g" docusaurus.config.js
     - name: Build site
       run: |
         yarn build
