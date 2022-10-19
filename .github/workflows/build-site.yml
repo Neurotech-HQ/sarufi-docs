@@ -12,15 +12,18 @@ jobs:
       run: |
         sudo apt -y update
         sudo apt -y install yarn
-    - name: Get dependencies
-      run: |
-         yarn
-    - name: Build site
-      run: |
-        yarn build
     - name: Get directory name
       run: |
         echo folder_name=$(date | sed 's/ //g' | sed 's/://g') >> $GITHUB_ENV
+    - name: Get dependencies
+      run: |
+         yarn
+    - name: Update baseurl
+      run: |
+        sed -i 's/baseUrl: \'\/\',/baseUrl: \'\/sarufi-docs\/${{ env.folder_name }}\'/g' docusaurus.config.js
+    - name: Build site
+      run: |
+        yarn build
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
