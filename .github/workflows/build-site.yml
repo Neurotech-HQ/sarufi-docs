@@ -20,8 +20,7 @@ jobs:
         yarn build
     - name: Get directory name
       run: |
-        export DATE=$(date | sed 's/ //g' | sed 's/://g')
-        echo "folder_name=$DATE" >> $GITHUB_ENV
+        echo folder_name=$(date | sed 's/ //g' | sed 's/://g') >> $GITHUB_ENV
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
