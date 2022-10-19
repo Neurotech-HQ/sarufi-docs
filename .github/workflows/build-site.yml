@@ -18,10 +18,14 @@ jobs:
     - name: Build site
       run: |
         yarn build
+    - name: Get directory name
+      run: |
+        export DATE=$(date | sed 's/ //g' | sed 's/://g')
+        echo "folder_name=$DATE" >> $GITHUB_ENV
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build
+        publish_dir: ./build/"${{ env.folder_name }}"
         publish_branch: site
         keep_files: true
