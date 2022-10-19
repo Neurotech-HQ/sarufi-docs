@@ -22,7 +22,7 @@ jobs:
       run: |
         sed -i "s/url: 'https:\/\/kalebu.github.io',/url: 'https:\/\/${{ github.repository_owner }}.github.io',/g" docusaurus.config.js
         sed -i "s/organizationName: 'kalebu',/organizationName: '${{ github.repository_owner }}',/g" docusaurus.config.js
-        sed -i "s/baseUrl: '\/',/baseUrl: '\/sarufi-docs\/${{ env.folder_name }}\/'/g" docusaurus.config.js
+        sed -i "s/baseUrl: '\/',/baseUrl: '\/sarufi-docs\/${{ env.folder_name }}\/',/g" docusaurus.config.js
         cat docusaurus.config.js
     - name: Build site
       run: |
