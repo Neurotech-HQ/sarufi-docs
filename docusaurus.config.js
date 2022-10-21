@@ -38,14 +38,14 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/Neurotech-HQ/sarufi-docs',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/Neurotech-HQ/sarufi-docs',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -93,14 +93,7 @@ const config = {
           {
             title: 'Community',
             items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
+              // Add other links as appropriate, replicate the section below
               {
                 label: 'Twitter',
                 href: 'https://twitter.com/NeuroTech_HQ',
@@ -116,7 +109,7 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/neurotech-HQ',
+                href: 'https://github.com/Neurotech-HQ/sarufi-docs',
               },
             ],
           },
