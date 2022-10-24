@@ -22,7 +22,15 @@ pip install heyoo
 
 ### Sarufi - Heyoo Blueprint
 
-To make it easier for you to connect Sarufi to WhatsApp Cloud API, we have created a blueprint for Sarufi and Heyoo. You can find it [here](https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint). You only need to configure the `config.yaml` file. You can find the instructions in the `README.md` file.
+To make it easier for you to connect Sarufi to WhatsApp Cloud API, we have created a blueprint for Sarufi and Heyoo. You can find it [here](https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint).
+ 
+In the active virtual environment `chatbot`, clone `sarufi-heyoo-blueprint` repository
+
+```bash
+git clone https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint
+```
+
+You only need to configure the `config.yaml` file found in `sarufi-heyoo-blueprint` directory after clonning. You can find the instructions in the `README.md` file.
 
 ```yaml config.yaml
 
@@ -40,7 +48,12 @@ whatsapp:
 
 To run WhatsApp, you need to install the dependencies in the `requirements.txt` file and run the `app.py` file.
 
+:::note
+Make sure you are in active virtual environment and have `sarufi-heyoo-blueprint` cloned
+:::
+
 ```bash
+cd sarufi-heyoo-blueprint
 pip install -r requirements.txt
 python app.py
 ```

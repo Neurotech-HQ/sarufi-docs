@@ -18,7 +18,13 @@ Once you have created a bot, you will receive a token. This token is used to aut
 
 The shortest route is to use Telegram blueprint for Sarufi, which is available in our Github repository. You can find it [here](https://github.com/Neurotech-HQ/telegram-chatbot-blueprint).
 
-You only need to configure the `config.yaml` file. You can find the instructions in the `README.md` file.
+In the active virtual environment `chatbot`, clone `sarufi-heyoo-blueprint` repository
+
+```bash
+git clone https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint
+```
+
+You only need to configure the `config.yaml` file found in `sarufi-heyoo-blueprint` directory after clonning. You can find the instructions in the `README.md` file.
 
 ```yaml config.yaml
 sarufi:
@@ -34,9 +40,14 @@ telegram:
 
 ## How to run Telegram
 
-To run Telegram, you need to install the dependencies in the `requirements.txt` file and run the `app.py` file.
+To run WhatsApp, you need to install the dependencies in the `requirements.txt` file and run the `app.py` file.
+
+:::note
+Make sure you are in active virtual environment and have `sarufi-heyoo-blueprint` cloned
+:::
 
 ```bash
+cd sarufi-heyoo-blueprint
 pip install -r requirements.txt
 python app.py
 ```
