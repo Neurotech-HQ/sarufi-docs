@@ -12,13 +12,17 @@ Telegram is one of the most popular messaging apps in the world. It has over 500
 
 To connect to Telegram, you need to create a Telegram bot. You can do this by following the instructions in the [Telegram documentation](https://core.telegram.org/bots#6-botfather).
 
-Once you have created a bot, you will receive a token. This token is used to authenticate your bot with Telegram.
+Once you have created a bot, you will receive a `token`. This token is used to authenticate your bot with Telegram.
 
 ## How to configure Telegram
 
-The shortest route is to use Telegram blueprint for Sarufi, which is available in our Github repository. You can find it [here](https://github.com/Neurotech-HQ/telegram-chatbot-blueprint).
+The shortest route is to use Telegram blueprint for Sarufi, which is available in our Github repository. You can find it [here](https://github.com/Neurotech-HQ/telegram-chatbot-blueprint) by clonning the directory.
 
-You only need to configure the `config.yaml` file. You can find the instructions in the `README.md` file.
+```bash
+git clone https://github.com/Neurotech-HQ/telegram-chatbot-blueprint
+```
+
+You only need to configure the `config.yaml` file found in cloned directory. You can find instructions in the `README.md` file.
 
 ```yaml config.yaml
 sarufi:
@@ -32,11 +36,14 @@ telegram:
     Hi {name}, I can help you with ABC
 ```
 
+The `start_message` will be the bot's response when `/start` command is sent from telegram.
+
 ## How to run Telegram
 
-To run Telegram, you need to install the dependencies in the `requirements.txt` file and run the `app.py` file.
+To run Telegram bot, you need to install the dependencies in the `requirements.txt` file and run `app.py` file.
 
 ```bash
+cd telegram-chatbot-blueprint
 pip install -r requirements.txt
 python app.py
 ```

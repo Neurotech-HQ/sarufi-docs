@@ -13,8 +13,11 @@ We will be using [Python SDK](https://github.com/Neurotech-HQ/sarufi-python-sdk)
 
 <Tabs>
 <TabItem value="py" label="Python">
+Its good to use virtual environment. So, I am going to create a virtual environment, activate it  and install sarufi. 
 
 ```bash
+python -m venv chatbot
+source chatbot/bin/activate
 pip install --upgrade sarufi
 ```
 
@@ -117,7 +120,11 @@ Here is an example of how to start a conversation with our chatbot.
 <Tabs>
 <TabItem value="py" label="Python">
 
-You can either use `sarufi.chat()` method or `chatbot.respond()` to start a conversation with your chatbot. with `sarufi.chat()` method, you need to pass the `bot_id`, `chat_id` and the `message`. With `chatbot.respond()` method, you need to pass the `message` and `chat_id` only.
+You can either use `sarufi.chat()` method or `chatbot.respond()` to start a conversation with your chatbot. 
+
+With `sarufi.chat()` method, you need to pass the `bot_id`, `chat_id` and the `message`. 
+
+With `chatbot.respond()` method, you need to pass the `message` and `chat_id` only.
 
 By default, `chat_id` is set to a random UUID. You can pass your own `chat_id` if you want to continue the conversation with the same user.
 

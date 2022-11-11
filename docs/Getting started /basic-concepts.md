@@ -18,7 +18,7 @@ You can think of a chatbot as a virtual assistant that you can interact with thr
 
 There are many different types of chatbots, and each type of chatbot is built using different building blocks. Here are some of the most common building blocks that are used to build chatbots:
 
-- **User Interface**: The user interface is the part of the chatbot that the user interacts with. It is the part of the chatbot that the user sees and interacts with. The user interface can be a chat interface, a voice interface, or a combination of both.interface, a voice interface, or a combination of both.
+- **User Interface**: The user interface is the part of the chatbot that the user interacts with. It is the part of the chatbot that the user sees and interacts with. The user interface can be a chat interface, a voice interface, or a combination of both.
 
 - **Intents**: An intent is a user's intention or goal when interacting with a chatbot. For example, if a user asks a chatbot a question, the intent of the user is to get an answer to the question. If a user asks a chatbot to book a flight, the intent of the user is to book a flight.
 
