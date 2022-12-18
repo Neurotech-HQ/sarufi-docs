@@ -29,6 +29,13 @@ npm install sarufi
 ```
 
 </TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+go mod init chatbot
+go get github.com/sarufi-io/sarufi-golang-sdk
+```
+</TabItem>
 </Tabs>
 
 ## Draft Architecture
@@ -57,6 +64,14 @@ Once you're successfully accepted to our beta program, you will receive an email
 ```bash
 > import sarufi from 'sarufi'
 > sarufi.login({username: 'your-username', password: 'your-password'})
+```
+
+</TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+var bot sarufi.Bot
+bot.Initialize("your-email", "your-password")
 ```
 
 </TabItem>
@@ -105,10 +120,23 @@ Bot(id=13, name=My First Chatbot)
 ```
 
 </TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+bot.CreateBot("TestBot", "Description", "Industry")
+fmt.Println(bot.Name)
+
+// output
+INFO	2022/12/18 16:27:08 Getting Token...
+INFO	2022/12/18 16:27:09 Creating new bot...
+INFO	2022/12/18 16:27:09 Bot created successfully
+TestBot
+```
+</TabItem>
 </Tabs>
 
 :::note
-For python SDK, use `create_bot()` method to create a chatbot. For JavaScript SDK, use `createBot()` method to create an empty chatbot. For Python SDK a 'Bot' object is returned. For JavaScript SDK, a JSON object is returned.
+For python SDK use `create_bot()` method to create a chatbot, for JavaScript SDK use `createBot()` method to create an empty chatbot and for Golang use `CreateBot()`. For Python SDK a 'Bot' object is returned. For JavaScript and Golang SDK, a JSON object is returned.
 :::
 
 ## Starting Conversation with our Chatbot
@@ -162,6 +190,22 @@ You will need to pass the `chat_id` and `message` to the `chat()` method. By def
 
 ```
 
+</TabItem>
+<TabItem value="go" label="Golang">
+
+To get a list of available bots use `bot.GetBots()`, this will return a json response of all your bots and their details. To get a specific bot use `bot.GetBot(bot_id)`. This will return a bot object.
+
+To start a conversation, use `bot.Respond("message", "message_type")`. For now only `text` message types are supported:
+```go
+bot.Respond("Hey", "Text")
+
+// output
+
+INFO	2022/12/18 16:43:24 Getting Response...
+INFO	2022/12/18 16:43:25 {
+  "message": "Intent for this message is missing in [FLOW]"
+}
+```
 </TabItem>
 </Tabs>
 
@@ -236,6 +280,39 @@ To make more interactive, let's general intents like `greets`, `order_pizza`, `g
 ```
 
 </TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+package main
+
+import (
+	"github.com/sarufi-io/sarufi-golang-sdk"
+)
+
+func main() {
+	var bot sarufi.Bot
+	bot.Initialize("your-email", "your-password")
+	bot.GetBot(bot_id)
+
+// Create a string in JSON format
+
+  intents := `
+  {
+      "goodbye": ["bye", "goodbye", "see ya"],
+      "greets": ["hey", "hello", "hi"],
+      "order_pizza": ["I need pizza", "I want pizza"]
+  }`
+
+  bot.CreateIntents(intents)
+}
+
+// output
+
+INFO	2022/12/18 17:57:32 Updating bot...
+INFO	2022/12/18 17:57:33 Intents created successfully
+```
+
+</TabItem>
 </Tabs>
 
 ### Conversation with our chatbot after adding intents and utterances
@@ -260,6 +337,19 @@ Now that we have successfully added some intents and utterances to our chatbot, 
 > await chatbot.chat({message: 'Hey'})
 ```
 
+</TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+bot.Respond("Hey", "Text")
+
+// output
+
+INFO	2022/12/18 16:43:24 Getting Response...
+INFO	2022/12/18 16:43:25 {
+  "message": "Intent for this message is missing in [FLOW]"
+}
+```
 </TabItem>
 </Tabs>
 
@@ -369,6 +459,63 @@ Let's now add a flow to our chatbot. You can use the following code to add a flo
  await sarufi.updateBot({ bot, id: chatbot.id });
 ```
 
+</TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+package main
+
+import (
+	"github.com/sarufi-io/sarufi-golang-sdk"
+)
+
+func main() {
+	var bot sarufi.Bot
+	bot.Initialize("your-email", "your-password")
+	bot.GetBot(bot_id)
+
+  // create a string in JSON format
+
+  newFlow := `
+  {
+     "greets": {
+         "message": ["Hi, How can I help you?"],
+         "next_state": "end"
+     },
+     "order_pizza": {
+         "message": ["Sure, How many pizzas would you like to order?"],
+         "next_state": "number_of_pizzas"
+     },
+     "number_of_pizzas": {
+         "message": ["Sure, What would you like to have on your pizza?"],
+         "next_state": "pizza_toppings"
+     },
+     "pizza_toppings": {
+         "message": ["Cool, Whats your address ?"],
+         "next_state": "address"
+     },
+     "address": {
+         "message": ["Sure, What is your phone number ?"],
+         "next_state": "phone_number"
+     },
+     "phone_number": {
+         "message": ["Your order has been placed.", "Thank you for ordering with us."],
+         "next_state": "end"
+     },
+     "goodbye": {
+         "message": ["Bye", "See you soon"],
+         "next_state": "end"
+     }
+ }`
+
+  bot.CreateFlows(newFlow)
+}
+
+// output
+
+INFO	2022/12/18 17:52:08 Updating bot...
+INFO	2022/12/18 17:52:08 Flows created successfully
+```
 </TabItem>
 </Tabs>
 
