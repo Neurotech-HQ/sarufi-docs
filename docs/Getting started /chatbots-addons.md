@@ -1,6 +1,8 @@
 ---
 sidebar_position: 3
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Chatbot Addons
 
@@ -13,6 +15,9 @@ In the previous section, we created a chatbot that can order pizza. but what if 
 if you name your intent `cancel` then it will be treated as a special intent. If the user says something that matches the cancel intent in the middle of a conversation, the conversation will be canceled and the chatbot will respond with the message defined in the `cancel flow`.
 
 Let's add a cancel intent to our chatbot. You can use the following code to add a cancel intent to our chatbot.
+
+<Tabs>
+<TabItem value="py" label="python">
 
 ```python
 >>> cancel_intent = {
@@ -31,8 +36,44 @@ Let's add a cancel intent to our chatbot. You can use the following code to add 
 2022-09-18 12:25:44,209 - root - INFO - Bot(id=15, name=My First Chatbot)
 2022-09-18 12:25:44,209 - root - INFO - A new intents "['cancel']" has been added
 ```
+</TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+package main
+
+import (
+	"github.com/sarufi-io/sarufi-golang-sdk"
+)
+
+func main() {
+	var bot sarufi.Bot
+	bot.Initialize("your-email", "your-password")
+	bot.GetBot(bot_id)
+	intentTitle := "cancel"
+	intentContent := []string{
+		"cancel",
+		"cancel it",
+		"cancel it please",
+		"acha",
+		"acha sasa",
+		"I changed my mind, cancel it",
+		"I changed my mind, cancel it please",
+	}
+	bot.AddIntent(intentTitle, intentContent)
+}
+
+// output
+
+INFO	2022/12/18 18:07:19 Updating bot...
+INFO	2022/12/18 18:07:19 Intent added successfully
+```
+</TabItem>
+</Tabs>
 
 Let's now add a cancel fallback flow to our chatbot. You can use the following code to add a cancel flow to our chatbot.
+<Tabs>
+<TabItem value="py" label="python">
 
 ```python
 >>> chatbot.add_flow(
@@ -42,6 +83,41 @@ Let's now add a cancel fallback flow to our chatbot. You can use the following c
 2022-09-18 12:37:41,824 - root - INFO - Bot(id=15, name=My First Chatbot)
 2022-09-18 12:37:41,825 - root - INFO - A new flow "['cancel']" has been added
 ```
+</TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+package main
+
+import (
+	"github.com/sarufi-io/sarufi-golang-sdk"
+)
+
+func main() {
+	var bot sarufi.Bot
+	bot.Initialize("your-email", "your-password")
+	bot.GetBot(bot_id)
+	// Create a title string
+
+	flowTitle := "cancel"
+
+	// Create a new variable of type Flow
+
+	var cancelFlow sarufi.Flow
+
+	// Fill in the new messages and the next state
+
+	cancelFlow.Message = []string{
+		"Okay we cancelled it, welcome again!",
+	}
+	cancelFlow.NextState = "end"
+
+	bot.AddFlow(flowTitle, cancelFlow)
+}
+
+```
+</TabItem>
+</Tabs>
 
 ### Testing the cancel intent
 
