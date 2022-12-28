@@ -2,77 +2,105 @@
 sidebar_position: 1
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # What is Sarufi ?
 
-Learn how to build ```cool``` conversational experience using a ```lightweight, blazingly fast``` python library, It has a simple and intuitive API plus a rich set of features to make your bot more engaging.
+[Sarufi](https://sarufi.io/) is a third-party conversational AI(Chatbot) platform built from ground up to make it easy for developers to build chatbots and integrate them with their applications or messaging platforms like WhatsApp and Telegram.
 
-It handles all the ```heavy lifting``` of building a conversational bot, including: intent detection, entity recognition, natural language understanding, and intent fulfillment. You don't need to worry about the details like how the bot is trained, how it is deployed, or how it is used in production anymore and you can focus on building your bot.
+It is a `lightweight`, `blazingly fast` python library tailored to excel at _African languages_.
+
+It handles all the _heavy lifting_ of building a conversational bot, including: _intent detection_, _entity recognition_, _natural language understanding_, and _intent fulfillment_. You don't need to worry about the details like how the bot is trained, how it is deployed, or how it is used in production anymore and you can focus on building your bot.
+
+![Sarufi](/img/undraw_artificial_intelligence_re_enpp.svg)
+
+:::tip What does Sarufi mean ?
+Sarufi is a Swahili word that means `grammar`.
+:::
 
 ## Getting Started
 
-With the [sarufi](https://github.com/Neurotech-HQ/sarufi-python-sdk) library you can build a ```conversational experience``` in a matter of ```minutes```. To give you an idea on what you can do with **sarufi**, Have a look at [Sarufi playground](https://playground.sarufi.io/) where we hosted some of the chatbots made with sarufi.
+To get started [Sarufi](https://sarufi.io/) you will need to create an account on [sarufi.io](https://sarufi.io/). Once you have created an account from [sarufi.io](https://sarufi.io/) you will get credentials to start building your chatbot.
 
-### What you'll need
+You will also need some familiarity with atleast one of the programming languages we support 👇.
 
-- [Python](https://www.python.org/downloads/) version 3.6+ or above:
-- [sarufi](https://github.com/Neurotech-HQ/sarufi-python-sdk) library: [Github](https://github.com/Neurotech-HQ/sarufi-python-sdk) | Python.
-- [sarufi](https://github.com/flexcodelabs/sarufi) library | Nodejs+Typescript.
-- [sarufi](https://github.com/sarufi-io/sarufi-golang-sdk) library | Golang
+### Supported Languages
+
+- [x] Python 3.6+
+  - [Sarufi Python SDK](https://github.com/sarufi-io/sarufi-python-sdk)
+- [x] Nodejs 12+
+  - [Sarufi Nodejs SDK](https://github.com/sarufi-io/sarufi-js)
+- [x] Golang 1.15+
+  - [Sarufi Golang SDK](https://github.com/sarufi-io/sarufi-golang-sdk)
+- [x] PHP 7.4+
+  - [Sarufi PHP SDK](https://github.com/sarufi-io/sarufi-php)
+  - [Sarufi Laravel SDK](https://github.com/sarufi-io/laravel-sarufi)
+- [x] Dart 2.12+
+  - [Sarufi Dart SDK](https://github.com/sarufi-io/sarufi-dart-sdk)
+
 :::tip Other Languages
-Currently, we support only support **Python SDK** and **Typescript SDK** for **sarufi**. but we are working on supporting other languages as well.
+We natively maintain only the [Python SDK](https://github.com/sarufi-io/sarufi-python-sdk) for now, all the other SDKs are community maintained.
+If you are interested in maintaining any of the SDKs or creating a new one for another language,
+please reach out to us on [Telegram](https://t.me/neurotechafrica).
 :::
 
-## Environment Setup
+## Installation
 
-You can install sarufi directly from the [Github repository](https://github.com/Neurotech-HQ/sarufi-python-sdk) and also from official releases.
-
-### Installing from Github
-
-<Tabs>
-<TabItem value="py" label="Python">
-
-```bash
-git clone https://github.com/Neurotech-HQ/sarufi-python-sdk
-cd sarufi-python-sdk
-sarufi-python-sdk $ python setup.py install
-```
-</TabItem>
-</Tabs>
-
-### Official installation
+You can either install language based SDKs from the official repositories mentioned above or you can install the official SDKs from the official release through package managers.
 
 <Tabs>
 <TabItem value="js" label="JavaScript">
 
 ```bash
-npm install sarufi
+$ npm install sarufi
 ```
+
 </TabItem>
 
 <TabItem value="py" label="Python">
 
 ```bash
-pip install --upgrade sarufi
+$ pip install --upgrade sarufi
 ```
 
 </TabItem>
 
 <TabItem value="go" label="Golang">
 
-```go
-go get github.com/sarufi-io/sarufi-golang-sdk
+```bash
+$ go get github.com/sarufi-io/sarufi-golang-sdk
 ```
+
 </TabItem>
+
+<TabItem value="php-laravel" label="PHP">
+
+```bash
+$ composer require alphaolomi/sarufi-php
+```
+
+</TabItem>
+
+<TabItem value="php" label="Laravel">
+
+```bash
+$ composer require alphaolomi/laravel-sarufi
+$ php artisan vendor:publish --tag="sarufi-config"
+```
+
+</TabItem>
+
+<TabItem value="dart" label="Dart">
+
+```bash
+$ flutter pub add sarufi
+```
+
+</TabItem>
+
 </Tabs>
 
-## Here we go
-
-:::danger Let's see how to use sarufi
-
- Now that you have installed sarufi, you can start using it.
-
- Go to the next section to see how to use sarufi to build a chatbot.
+:::tip
+If you don't see your language here, please go to official repositories and install the SDK from there or you can also reach out to us on [Telegram](https://t.me/neurotechafrica).
 :::

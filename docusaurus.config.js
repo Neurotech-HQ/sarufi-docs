@@ -6,9 +6,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'SARUFI',
+  title: 'Sarufi',
   tagline: 'A simple and easy to use tool for creating and deploying Conversational AI',
-  url: 'https://kalebu.github.io',
+  url: 'https://docs.sarufi.io/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -38,14 +38,15 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/Neurotech-HQ/sarufi-docs/blob/main/',
+            'https://github.com/Neurotech-HQ/sarufi-docs/edit/main/',
+          
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/Neurotech-HQ/sarufi-docs',
+            'https://github.com/Neurotech-HQ/sarufi-docs/edit/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -57,6 +58,12 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      docs: {
+        sidebar: {
+        hideable: true,
+         autoCollapseCategories: false
+      },
+    },
       navbar: {
         title: 'Sarufi',
         logo: {
@@ -88,6 +95,14 @@ const config = {
                 label: 'Tutorial',
                 to: '/docs/intro',
               },
+              {
+                label: 'Getting started',
+                to: '/docs/category/getting-started',
+              },
+              {
+                label: 'Integrations',
+                to: '/docs/category/integrations',
+              }
             ],
           },
           {
@@ -97,6 +112,10 @@ const config = {
               {
                 label: 'Twitter',
                 href: 'https://twitter.com/NeuroTech_HQ',
+              },
+              {
+                label: 'Telegram',
+                href: 'https://t.me/neurotechafrica'
               },
             ],
           },
@@ -111,6 +130,10 @@ const config = {
                 label: 'GitHub',
                 href: 'https://github.com/Neurotech-HQ/sarufi-docs',
               },
+              {
+                label: 'Neurotech Africa',
+                href: 'https://neurotech.africa/'
+              }
             ],
           },
         ],
