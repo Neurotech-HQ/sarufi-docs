@@ -28,7 +28,7 @@ const FeatureList = [
     Svg: require('@site/static/img/language.svg').default,
     description: (
       <>
-        Sarufi core priority is having a strong support for African languages like Swahili, Luganda,  Kinyarwanda, Yoruuba, etc.
+        Sarufi core priority is having a strong support for African languages like Swahili, Luganda,  Kinyarwanda, Yoruba, etc.
         Perhaps, We also have a strong support for major languages like English, French, Spanish, etc.
       </>
     ),
