@@ -48,7 +48,7 @@ Now that you know the basic concepts and terminology of chatbots, let's take a l
 
 The intent detection component is responsible for detecting the user's intent. Sarufi handles intents training  and detection for you. You don't need to worry about the details like how the bot is trained, how it is deployed, or how it is used in production anymore and you can focus on building your bot.  Your main task is to provide the training data for the intents that you want to detect. Sarufi will take care of the rest.
 
-### Dialog Management[Flow]
+### Dialog Management
 
 The Dialog management component is responsible for managing the dialog between the user and the chatbot. Sarufi handles dialog management for you. all you need to do is define the dialog flow for your bot. Sarufi will take care of the rest.
 
