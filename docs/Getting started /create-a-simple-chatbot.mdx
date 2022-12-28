@@ -2,18 +2,21 @@
 sidebar_position: 2
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # Create your first Chatbot
 
-As I mentioned in the previous section, that we only support [Python SDK](https://github.com/Neurotech-HQ/sarufi-python-sdk) for now and we will be adding more SDKs in the future.
+You can use any of the supported programming languages to create your first chatbot. This documentation currently support [**Python**](https://github.com/sarufi-io/sarufi-python-sdk), [**JavaScript**](https://github.com/sarufi-io/sarufi-js) and [**Golang**](https://github.com/sarufi-io/sarufi-golang-sdk).
 
-We will be using [Python SDK](https://github.com/Neurotech-HQ/sarufi-python-sdk) for this tutorial. You can install it using the following command:
+:::note
+As mentioned Before almost all of language based SDK with exception of [**Python**](https://github.com/sarufi-io/sarufi-python-sdk) are community maintained and not officially supported by Sarufi. If you find any issues with the SDK, please create an issue on the respective GitHub repository.
+Also If you see missing documentation or typos or bugs for any of the SDK, You're welcome to contribute
+:::
 
 <Tabs>
 <TabItem value="py" label="Python">
-Its good to use virtual environment. So, I am going to create a virtual environment, activate it  and install sarufi. 
+Its good to use virtual environment. So, I am going to create a virtual environment, activate it  and install sarufi.
 
 ```bash
 python -m venv chatbot
@@ -35,6 +38,7 @@ npm install sarufi
 go mod init chatbot
 go get github.com/sarufi-io/sarufi-golang-sdk
 ```
+
 </TabItem>
 </Tabs>
 
@@ -132,6 +136,7 @@ INFO	2022/12/18 16:27:09 Creating new bot...
 INFO	2022/12/18 16:27:09 Bot created successfully
 TestBot
 ```
+
 </TabItem>
 </Tabs>
 
@@ -148,9 +153,9 @@ Here is an example of how to start a conversation with our chatbot.
 <Tabs>
 <TabItem value="py" label="Python">
 
-You can either use `sarufi.chat()` method or `chatbot.respond()` to start a conversation with your chatbot. 
+You can either use `sarufi.chat()` method or `chatbot.respond()` to start a conversation with your chatbot.
 
-With `sarufi.chat()` method, you need to pass the `bot_id`, `chat_id` and the `message`. 
+With `sarufi.chat()` method, you need to pass the `bot_id`, `chat_id` and the `message`.
 
 With `chatbot.respond()` method, you need to pass the `message` and `chat_id` only.
 
@@ -196,6 +201,7 @@ You will need to pass the `chat_id` and `message` to the `chat()` method. By def
 To get a list of available bots use `bot.GetBots()`, this will return a json response of all your bots and their details. To get a specific bot use `bot.GetBot(bot_id)`. This will return a bot object.
 
 To start a conversation, use `bot.Respond("message", "message_type")`. For now only `text` message types are supported:
+
 ```go
 bot.Respond("Hey", "Text")
 
@@ -206,6 +212,7 @@ INFO	2022/12/18 16:43:25 {
   "message": "Intent for this message is missing in [FLOW]"
 }
 ```
+
 </TabItem>
 </Tabs>
 
@@ -350,6 +357,7 @@ INFO	2022/12/18 16:43:25 {
   "message": "Intent for this message is missing in [FLOW]"
 }
 ```
+
 </TabItem>
 </Tabs>
 
@@ -516,6 +524,7 @@ func main() {
 INFO	2022/12/18 17:52:08 Updating bot...
 INFO	2022/12/18 17:52:08 Flows created successfully
 ```
+
 </TabItem>
 </Tabs>
 

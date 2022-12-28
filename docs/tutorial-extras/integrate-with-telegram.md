@@ -8,6 +8,8 @@ Telegram is a cloud-based instant messaging and voice over IP service. It was de
 
 Telegram is one of the most popular messaging apps in the world. It has over 500 million active users and is available in 20 different languages.
 
+![Telegram](/img/telegram-5348490_640.png)
+
 ## How to connect to Telegram
 
 To connect to Telegram, you need to create a Telegram bot. You can do this by following the instructions in the [Telegram documentation](https://core.telegram.org/bots#6-botfather).

@@ -8,6 +8,8 @@ WhatsApp is a freeware, cross-platform messaging and Voice over IP (VoIP) servic
 
 WhatsApp is one of the most popular messaging apps in the world. It has over 2 billion active users and is available in 120 different languages.
 
+![WhatsApp](/img/whatsapp-1900453_640.png)
+
 ## How to connect to WhatsApp Cloud API
 
 To connect to WhatsApp Cloud API, you need to create a WhatsApp Business account. You can do this by following the instructions in the [WhatsApp documentation](https://www.whatsapp.com/business/api).
