@@ -10,9 +10,11 @@ Before you start building your first chatbot, it is important to understand the 
 
 Chatbots are software applications that simulate a conversation with a user. They are used to automate interactions with users, and can be used to `provide information`, `answer questions`, and `perform tasks`. Chatbots are often used in customer service, sales, and marketing.
 
+![Sample Chatbot](/img/laptop-6545315_1280.jpg)
+
 You can think of a chatbot as a virtual assistant that you can interact with through a chat interface, you can have a look at [Sarufi playground](https://playground.sarufi.io/) to see some of the chatbots examples made with sarufi.
 
-![Sample Chatbot](/img/chatbot-1.svg)
+
 
 ## Chatbot building blocks
 
@@ -20,11 +22,20 @@ There are many different types of chatbots, and each type of chatbot is built us
 
 - **User Interface**: The user interface is the part of the chatbot that the user interacts with. It is the part of the chatbot that the user sees and interacts with. The user interface can be a chat interface, a voice interface, or a combination of both.
 
+![Chatbot User Interface](/img/whatsapp-interface-1660652.svg)
+
 - **Intents**: An intent is a user's intention or goal when interacting with a chatbot. For example, if a user asks a chatbot a question, the intent of the user is to get an answer to the question. If a user asks a chatbot to book a flight, the intent of the user is to book a flight.
+
+![Chatbot Intents](/img/man-838880.png)
 
 - **Entities**: An entity is a piece of information that is relevant to the user's intent. For example, if a user asks a chatbot to book a flight, the entity is the flight that the user wants to book.
 
+![Chatbot Entities](/img/text-mining-1476780_6401.png)
+
+
 - **Dialog**: A dialog is a conversation between a user and a chatbot. A dialog is made up of one or more turns. A turn is a single interaction between a user and a chatbot. For example, if a user asks a chatbot a question, the dialog is made up of one turn. If a user asks a chatbot a question, and the chatbot asks the user a follow-up question, the dialog is made up of two turns.
+
+![Chatbot Dialog](/img/pixel-3699345.svg)
 
 ## SARUFI Architecture
 
