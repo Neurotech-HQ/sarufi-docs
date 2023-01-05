@@ -1,0 +1,37 @@
+name: Generate site
+
+on:
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get yarn
+      run: |
+        sudo apt -y update
+        sudo apt -y install yarn
+    - name: Get directory name
+      run: |
+        echo folder_name=$(date | sed 's/ //g' | sed 's/://g') >> $GITHUB_ENV
+    - name: Get dependencies
+      run: |
+         yarn
+    - name: Update docusaurus configuration
+      run: |
+        sed -i "s/url: 'https:\/\/kalebu.github.io',/url: 'https:\/\/${{ github.repository_owner }}.github.io',/g" docusaurus.config.js
+        sed -i "s/organizationName: 'kalebu',/organizationName: '${{ github.repository_owner }}',/g" docusaurus.config.js
+        sed -i "s/baseUrl: '\/',/baseUrl: '\/sarufi-docs\/${{ env.folder_name }}\/',/g" docusaurus.config.js
+        cat docusaurus.config.js
+    - name: Build site
+      run: |
+        yarn build
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
+        publish_branch: site
+        destination_dir: ${{ env.folder_name }}
+        keep_files: true
