@@ -173,7 +173,7 @@ Let's add a choice flow to our chatbot. You can use the following code to add a 
 ...             "Sure, What would you like to have on your pizza?",
 ...             "1. Cheese",
 ...             "2. Pepperoni",
-...             "3. Both",
+...             "3. Both"
 ...         ],
 ...         "next_state": "choice_pizza_toppings",
 ...     },
