@@ -18,8 +18,8 @@ In a growing technology world, you might have already heard or interacted with c
 
 A **`Chatbot`** is a computer program that simulates human-like conversation through voice commands or text chats or both. Chatbot is an artificial intelligence (AI) feature that can be embedded in messaging platforms such as WhatsApp, Telegram, Messanger. Chatbots are built in a way that can detect what one intends to mean. 
 
-With chatbot usage increasing globally, business adopt the technology in order to reduce oprational cost, enhance and improve customer engagement and improve overall business services oferred.
-Most customers would like a quick support whenever the visit your business platforms. This has forced most of business to adopt the use of chatbots.
+With chatbot usage increasing globally, business adopt the technology in order to reduce oprational cost, enhance and improve customer engagement thus improving overall business services oferred.
+Most customers would like a quick support whenever they visit business platforms for inquiries. This has forced most of business to adopt the use of chatbots.
 
 # Sarufi Playground
 ## Neurotech chatbots Playground
