@@ -3,7 +3,6 @@ slug: sarufi-ambassador-programme
 title: Sarufi Universities Ambassador Programme
 authors: [jovine]
 ---
-https://docs.sarufi.io/blog/get-to-know-sarufi
 
 Technology has been growing rapidly leading to [chatbots](https://docs.sarufi.io/blog/get-to-know-sarufi#what-is-a-chatbot) becoming crucial tool in customer engagement with businesses. Chatbots have proven to provide quick customer responses about business as they help cut down costs and operate 24/7. With increase in usage of A.I systems, the need of professional/skilled people in the field has grown exponentially.
 
