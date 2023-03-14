@@ -6,9 +6,9 @@ authors: [jovine]
 
 Technology has been growing rapidly leading to [chatbots](https://docs.sarufi.io/blog/get-to-know-sarufi#what-is-a-chatbot) becoming crucial tool in customer engagement with businesses. Chatbots have proven to provide quick customer responses about business as they help cut down costs and operate 24/7. With increase in usage of A.I systems, the need of professional/skilled people in the field has grown exponentially.
 
-At Neurotech, we have noticed the demand of skilled individuals on the field so we have [sarufi platform](https://playground.sarufi.io/community) for developers. Sarufi is excited to launch `Universities Ambassador Programmme` to spread knowledge to passionate students at universities. The launch of this programme aims to provide a space for skilled people to share knowledge on `Artificial Intelligence(A.I)` specially on how chatbots can be used in several fields.  This is a good place to network, share resources and develop skills in A.I field.
-
 ![Intro: Ambassador programme](./ambassador-programme-intro.jpeg)
+
+At Neurotech, we have noticed the demand of skilled individuals on the field so we have [sarufi platform](https://playground.sarufi.io/community) for developers. Sarufi is excited to launch `Universities Ambassador Programmme` to spread knowledge to passionate students at universities. The launch of this programme aims to provide a space for skilled people to share knowledge on `Artificial Intelligence(A.I)` specially on how chatbots can be used in several fields.  This is a good place to network, share resources and develop skills in A.I field.
 
 # What you will get from our Programme
 Joining this programme is going to bring you closer to most opportunities in the field of A.I. 
