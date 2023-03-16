@@ -46,7 +46,7 @@ go get github.com/sarufi-io/sarufi-golang-sdk
 
 Before we start coding, let's first draft the architecture of our chatbot. Here an oversimplified version of the architecture for our chatbot. Sarufi will handle intents training, intent inference, and dialog management. We will be handling the application logic and the user interface.
 
-![Oversimplified Architecture](/img/oversimplified-architecture.svg)
+![Oversimplified Architecture](/img/chatbot-flow.png)
 
 ## Authentication
 
@@ -84,6 +84,14 @@ bot.Initialize("your-email", "your-password")
 ## Create Empty Chatbot
 
 Now that we have successfully authenticated with Sarufi, we can create an empty chatbot, with 0 intents and 0 utterances. You can use the following code to create an empty chatbot.
+
+The below image shows overview of the steps it takes to create your first chatbot with Sarufi
+
+![Create Chatbot](/img/chatbot-diagram.png)
+
+### Let's start by creating an empty chatbot
+
+This is the first step in creating your first chatbot. You can use the following code to create an empty chatbot.
 
 <Tabs>
 <TabItem value="py" label="Python">

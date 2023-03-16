@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Sarufi',
-  tagline: 'A simple and easy to use tool for creating and deploying Conversational AI',
+  tagline: 'Simplifying Conversational AI Development for African Languages',
   url: 'https://docs.sarufi.io/',
   baseUrl: '/',
   onBrokenLinks: 'throw',

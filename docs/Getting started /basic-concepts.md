@@ -8,12 +8,17 @@ Before you start building your first chatbot, it is important to understand the 
 
 ## What is a Chatbot?
 
-Chatbots are software applications that simulate a conversation with a user. They are used to automate interactions with users, and can be used to `provide information`, `answer questions`, and `perform tasks`. Chatbots are often used in customer service, sales, and marketing.
+In simple terms, a chatbot is a computer program that can talk to people using text or voice. You can think of it as a virtual assistant that can help answer questions, provide information, or even carry out tasks for you.
+
+For example, imagine you have a business and you receive a lot of messages from customers asking about your products or services. Instead of answering each message individually, you could use a chatbot to handle the questions automatically. The chatbot could use natural language processing (NLP) to understand what the customer is asking and provide the appropriate response.
+
+Chatbots can be built using a variety of technologies, such as machine learning, natural language processing, and artificial intelligence. At Neurotech Africa, we offer a range of tools and APIs to help developers build their own chatbots, Sarufi being at the core of our chatbot building tools.
+
+By using chatbots, developers can help improve communication, streamline business operations, and provide better customer service. So if you're interested in building chatbots, don't hesitate to get started – the possibilities are endless!
 
 ![Sample Chatbot](/img/laptop-6545315_1280.jpg)
 
-You can think of a chatbot as a virtual assistant that you can interact with through a chat interface, you can have a look at [Sarufi playground](https://playground.sarufi.io/) to see some of the chatbots examples made with sarufi.
-
+You can check out [Sarufi Playground](https://playground.sarufi.io/) to see some examples of chatbots built with Sarufi.
 
 
 ## Chatbot building blocks
