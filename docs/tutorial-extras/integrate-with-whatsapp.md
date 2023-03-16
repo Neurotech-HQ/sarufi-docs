@@ -42,7 +42,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
   pip3 install --upgrade sarufi
   ```
 
-- Create a file named '.env` in your working folder to hold environment variables by running.
+- Create a file named `.env` in your working folder to hold environment variables by running.
   
   ```bash
   touch .env
