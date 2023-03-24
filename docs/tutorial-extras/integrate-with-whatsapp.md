@@ -122,19 +122,19 @@ Navigate to `Whatsapp`-->`Getting started` to get whatsApp cloud `token` and `ph
 
 You will have access token and phone number id.
 
-![How to get whatsapp token and phone number ID](./img/get_whatsapp_token.png)
+![How to get whatsapp token and phone number ID](/img/get_whatsapp_token.png)
 
 ## Setting whatsapp webhook
 
 Navigate to your whatsapp cloud account --> `configuration` --> edit --> then paste the url into callback url.
   
-![Web hook setup](./img/webhook_setup.png)
+![Web hook setup](/img/webhook_setup.png)
 
 ## Webhook field subscription
 
 After veryfing and saving whatsapp webook, navigate to webhook fields --> click `manage` to subscribe to `message` topic.
 
-![Webhook fields subscription](./img/webhook_subscription.png)
+![Webhook fields subscription](/img/webhook_subscription.png)
 
 ## How to test WhatsApp
 

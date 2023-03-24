@@ -12,14 +12,13 @@ In simple terms, a chatbot is a computer program that can talk to people using t
 
 For example, imagine you have a business and you receive a lot of messages from customers asking about your products or services. Instead of answering each message individually, you could use a chatbot to handle the questions automatically. The chatbot could use natural language processing (NLP) to understand what the customer is asking and provide the appropriate response.
 
-Chatbots can be built using a variety of technologies, such as machine learning, natural language processing, and artificial intelligence. At Neurotech Africa, we offer a range of tools and APIs to help developers build their own chatbots, Sarufi being at the core of our chatbot building tools.
+Chatbots can be built using a variety of technologies, such as machine learning, natural language processing, and artificial intelligence. At Neurotech Africa, we offer a range of tools and APIs to help developers build their own chatbots, **Sarufi** being at the core of our chatbot building tools.
 
 By using chatbots, developers can help improve communication, streamline business operations, and provide better customer service. So if you're interested in building chatbots, don't hesitate to get started – the possibilities are endless!
 
 ![Sample Chatbot](/img/laptop-6545315_1280.jpg)
 
 You can check out [Sarufi Playground](https://playground.sarufi.io/) to see some examples of chatbots built with Sarufi.
-
 
 ## Chatbot building blocks
 
@@ -36,7 +35,6 @@ There are many different types of chatbots, and each type of chatbot is built us
 - **Entities**: An entity is a piece of information that is relevant to the user's intent. For example, if a user asks a chatbot to book a flight, the entity is the flight that the user wants to book.
 
 ![Chatbot Entities](/img/text-mining-1476780_6401.png)
-
 
 - **Dialog**: A dialog is a conversation between a user and a chatbot. A dialog is made up of one or more turns. A turn is a single interaction between a user and a chatbot. For example, if a user asks a chatbot a question, the dialog is made up of one turn. If a user asks a chatbot a question, and the chatbot asks the user a follow-up question, the dialog is made up of two turns.
 
@@ -63,6 +61,8 @@ The app logic is the part of the chatbot that you manage, which can involves thi
 
 1. **Data storage**: The data storage is the part of the chatbot that stores the data that is used by the chatbot. For example, if a chatbot is used to book flights, the data storage will store information about flights, such as flight numbers, flight times, and flight prices.
 
-2. **APIs**: The APIs are the part of the chatbot that is used to interact with other systems. For example, if a chatbot is used to book flights, the APIs will be used to interact with the airline's booking system.
+2. **APIs**: The APIs are the part of the chatbot that is used to interact with other systems.They help chatbots to get relevant data to perform specific tasks. For example, if a chatbot is used to book flights, the APIs will be used to interact with the airline's booking system.
+
+    ![Application Logic: API](/img/chatbot_api.png)
 
 3. **Business logic**: The business logic is the part of the chatbot that is used to perform business tasks. For example, if a chatbot is used to book flights, the business logic will be used to book flights.
