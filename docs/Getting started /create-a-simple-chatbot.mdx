@@ -14,9 +14,22 @@ As mentioned Before almost all of language based SDK with exception of [**Python
 Also If you see missing documentation or typos or bugs for any of the SDK, You're welcome to contribute
 :::
 
-<Tabs>
+## Draft Architecture
+
+Before we start coding, let's first draft the architecture of our chatbot. Here an oversimplified version of the architecture for our chatbot. Sarufi will handle intents training, intent inference, and dialog management. We will be handling the application logic and the user interface.
+
+![Oversimplified Architecture](/img/chatbot-flow.png)
+
+## Collecting our tools
+
+### Installations
+
+Select your language of preference to get instructions on installing `SDK`
+
+<Tabs groupId="get_started">
 <TabItem value="py" label="Python">
-Its good to use virtual environment. So, I am going to create a virtual environment, activate it  and install sarufi.
+Its good to use virtual environment. You can read more on <a target="_blank" href="https://www.geeksforgeeks.org/python-virtual-environment/">Virtual Environment</a>. 
+So, lets create a virtual environment ➡️ activate it ➡️ install sarufi.
 
 ```bash
 python -m venv chatbot
@@ -42,19 +55,14 @@ go get github.com/sarufi-io/sarufi-golang-sdk
 </TabItem>
 </Tabs>
 
-## Draft Architecture
 
-Before we start coding, let's first draft the architecture of our chatbot. Here an oversimplified version of the architecture for our chatbot. Sarufi will handle intents training, intent inference, and dialog management. We will be handling the application logic and the user interface.
-
-![Oversimplified Architecture](/img/chatbot-flow.png)
-
-## Authentication
+### Authentication
 
 Before we start coding, we need to authenticate with Sarufi. Currently, we only support authentication your **username** and **password**. You can get your username and password. We still have't released the signup page yet. You can try out Sarufi by signing up for our [beta program](https://blog.neurotech.africa/what-is-sarufi/).
 
 Once you're successfully accepted to our beta program, you will receive an email with your username and password. You can use the following code to authenticate with Sarufi.
 
-<Tabs>
+<Tabs groupId="get_started">
 <TabItem value="py" label="Python">
 
 ```bash
@@ -81,19 +89,19 @@ bot.Initialize("your-email", "your-password")
 </TabItem>
 </Tabs>
 
-## Create Empty Chatbot
+## Create a Chatbot
 
-Now that we have successfully authenticated with Sarufi, we can create an empty chatbot, with 0 intents and 0 utterances. You can use the following code to create an empty chatbot.
+Now that we have successfully authenticated with Sarufi, we can create an empty chatbot, with 0 intents and 0 utterances.
 
 The below image shows overview of the steps it takes to create your first chatbot with Sarufi
 
 ![Create Chatbot](/img/chatbot-diagram.png)
 
-### Let's start by creating an empty chatbot
+### Creating an empty chatbot
 
 This is the first step in creating your first chatbot. You can use the following code to create an empty chatbot.
 
-<Tabs>
+<Tabs groupId="get_started">
 <TabItem value="py" label="Python">
 
 ```python
@@ -104,7 +112,6 @@ This is the first step in creating your first chatbot. You can use the following
 >>> chatbot
 Bot(id=13, name=My First Chatbot)
 ```
-
 </TabItem>
 <TabItem value="js" label="JavaScript">
 
@@ -149,45 +156,111 @@ TestBot
 </Tabs>
 
 :::note
-For python SDK use `create_bot()` method to create a chatbot, for JavaScript SDK use `createBot()` method to create an empty chatbot and for Golang use `CreateBot()`. For Python SDK a 'Bot' object is returned. For JavaScript and Golang SDK, a JSON object is returned.
+To Create a bot, each sdk has it method. Take note of the naming
+
+  |SDK        | Method used   | Return Value  |
+  |---        |---            |---            |
+  |Python     |`create_bot()` |Bot object   |
+  |JavaScript |`createBot()`  |JSON object   |
+  |Golang     |`CreateBot()`  |JSON object    |
+
 :::
 
-## Starting Conversation with our Chatbot
+### Start a conversation with your Chatbot
 
 Now that we have successfully created an empty chatbot, we can start a conversation with our chatbot and see how it responds. You can use the following code to start a conversation with our chatbot.
 
 Here is an example of how to start a conversation with our chatbot.
 
-<Tabs>
+<Tabs groupId="get_started">
 <TabItem value="py" label="Python">
+✅ To start conversation with a bot you can use one of the methods below
+<table>
+  <thead>
+  <tr>
+    <th>Class name</th>
+    <th>Method</th>
+    <th>Arguments</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> Sarufi </td>
+      <td> <code>chat()</code> </td>
+      <td> bot_id , chat_id and message </td>
+    </tr>
+    <tr>
+       <td> Bot </td>
+      <td><code>respond()</code></td>
+      <td> chat_id and message </td>
+    </tr>
+  </tbody>
+</table>
 
-You can either use `sarufi.chat()` method or `chatbot.respond()` to start a conversation with your chatbot.
-
-With `sarufi.chat()` method, you need to pass the `bot_id`, `chat_id` and the `message`.
-
-With `chatbot.respond()` method, you need to pass the `message` and `chat_id` only.
 
 By default, `chat_id` is set to a random UUID. You can pass your own `chat_id` if you want to continue the conversation with the same user.
 
+Here are examples on each method
+<Tabs>
+<TabItem value="Pysubtab1" label="Chat method">
+
 ```python
->>> chatbot = sarufi.get_bot(13)
->>> chatbot.respond('Hey')
-2022-09-12 15:44:02,811 - root - INFO - Sending message to bot and returning response
-2022-09-12 15:44:07,078 - root - INFO - Status code: 200
-2022-09-12 15:44:07,078 - root - INFO - Message sent successfully
-{'message': 'Intent for this message is missing in [FLOW]'}
+  >>> from sarufi import Sarufi
+  >>> sarufi = Sarufi('myname@domain.com', 'password')
+  >>> sarufi.chat(bot_id=5, message='Hello')
 ```
+</TabItem>
+  
+<TabItem value="pysubtab2" label="Respond method">
+
+```python
+  >>> chatbot = sarufi.get_bot(13)
+  >>> chatbot.respond('Hey')
+  2022-09-12 15:44:02,811 - root - INFO - Sending message to bot and returning response
+  2022-09-12 15:44:07,078 - root - INFO - Status code: 200
+  2022-09-12 15:44:07,078 - root - INFO - Message sent successfully
+  #here is the response
+  {'message': 'Intent for this message is missing in [FLOW]'}
+```
+</TabItem>
+</Tabs>
 
 </TabItem>
+
 <TabItem value="js" label="JavaScript">
 
 You can either use `sarufi.chat()` method or `chatbot.chat()` method on the bot response.
 
-The `chatbot.chat()` method takes a string as an input and returns a JSON object as an output. The JSON object contains `message` field which contains the response from our chatbot.
+<table>
+  <thead>
+  <tr>
+    <th>Class name</th>
+    <th>Method</th>
+    <th>Arguments</th>
+    <th>Return Type</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> Sarufi </td>
+      <td> <code>chat()</code> </td>
+      <td> bot_id , message and chat_id(optional) </td>
+      <td>  JSON object</td>
+    </tr>
+    <tr>
+       <td> Bot </td>
+      <td><code>chat()</code></td>
+      <td> message,chat_id </td>
+      <td> JSON object</td>
+    </tr>
+  </tbody>
+</table>
 
-The `sarufi.chat()` method only takes the message, optional chat_id and bot_id
 
-You will need to pass the `chat_id` and `message` to the `chat()` method. By default, `chat_id` is set to a random UUID. You can pass your own `chat_id` if you want to continue the conversation with the same user.
+
+You will need to pass the `chat_id` and `message` to the `chat()` method. By default, `chat_id` is set to a random UUID. 
+
+You can pass your own `chat_id` if you want to continue the conversation with the same user.
 
 ```js
 
@@ -232,31 +305,40 @@ Another cool way to test your chatbot is to use the Sarufi Playground. By Defaul
 
 ![Sarufi Playground](/img/community-feature.png)
 
-## Help me order a pizza [Intent]
+## Adding Intents and flow
+
+We are going to create a bot that will help us with ordering a 🍕 pizza
+
+### Add Intent
 
 Let's now create an intent that will help us order a pizza and also add some utterances to that intent. You can use the following code to create an intent and add some utterances to that intent.
 
 To make more interactive, let's general intents like `greets`, `order_pizza`, `goodbye` and add some utterances to those intents.
 
-<Tabs>
+<Tabs groupId="get_started">
 <TabItem value="py" label="Python">
 
 ```python
 >>> from sarufi import Sarufi
 >>> sarufi = Sarufi(username="your-username", password="your-password")
 >>> chatbot = sarufi.get_bot(13)
+#We assign intents attribute a dict with intent name and and intents
+# dict {<intent name>:[list of all related keywords to trigger the intent]}
 >>> chatbot.intents = {
 ...     'greets': ['hey', 'hello', 'hi', 'howdy', 'hola', 'greetings', 'good morning', 'good afternoon', 'good evening'],
 ...     'goodbye': ['bye', 'goodbye', 'see you later', 'see you soon', 'see you', 'talk to you later', 'talk to you soon', 'talk to you'],
 ...     'order_pizza': ['I need a pizza', 'I want a pizza', 'order a pizza', 'I want to order a pizza']}
 2022-09-12 15:55:06,696 - root - INFO - Updating bot
 2022-09-12 15:55:07,972 - root - INFO - Bot(id=13, name=My First Chatbot)
+#We get bot's intents
 >>> chatbot.intents
 {'greets': ['hey', 'hello', 'hi', 'howdy', 'hola', 'greetings', 'good morning', 'good afternoon', 'good evening'], 'goodbye': ['bye', 'goodbye', 'see you later', 'see you soon', 'see you', 'talk to you later', 'talk to you soon', 'talk to you'], 'order_pizza': ['I need a pizza', 'I want a pizza', 'order a pizza', 'I want to order a pizza']}
 ```
 
 </TabItem>
 <TabItem value="js" label="JavaScript">
+
+We are going to use **Sarufi UpdateBot** method we pass it a dict with `intents` and `bot_id`.
 
 ```js
 > const chatbot = await sarufi.getBot({ id: 45 });
@@ -330,11 +412,11 @@ INFO	2022/12/18 17:57:33 Intents created successfully
 </TabItem>
 </Tabs>
 
-### Conversation with our chatbot after adding intents and utterances
+### Try a conversation after adding intents 
 
 Now that we have successfully added some intents and utterances to our chatbot, let's start a conversation with our chatbot and see how it responds. You can use the following code to start a conversation with our chatbot.
 
-<Tabs>
+<Tabs groupId="get_started">
 <TabItem value="py" label="Python">
 
 ```python
@@ -373,7 +455,7 @@ INFO	2022/12/18 16:43:25 {
 You might wondering like but we trained it, yes ofcourse we trained it but we haven't given a flow on how to respond to the user. We will be adding a flow in the next section.
 :::
 
-## Help me order a pizza [Flow]
+### Lets add a flow
 
 Flow is a directed graph that defines the conversation flow between the user and the chatbot. Flow is defined using the [JSON](https://www.json.org/json-en.html) format. where each node is an intent and each edge is a response to the user message & the next intent to be triggered.
 
@@ -383,7 +465,7 @@ You can have nodes that are not intents. In that case, the node will be treated 
 
 Let's now add a flow to our chatbot. You can use the following code to add a flow to our chatbot.
 
-<Tabs>
+<Tabs groupId="get_started">
 <TabItem value="py" label="Python">
 
 ```python
