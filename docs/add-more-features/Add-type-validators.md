@@ -19,50 +19,19 @@ By now, we support following validations:- `Alphanumeric` , `Date` , `Email` , `
 
 Lets have a quick walk through these validators.
 
-- Alphanumeric (🔠 or 🔢)
+|Validator       | Type name      |      Description        |    Example     |
+|---                    |---             |---                       |---              |
+|Alphanumeric (🔠 or 🔢)| `alphanumeric_validation`| Accepts alphabets, numbers or both| 123wdcs or  1122 or adasd|
+|Date 📆|`date_validation`|accepts date in format **dd/mm/yyyy** or **mm/dd/yyyy**|24/3/2023 or 3/24/2023|
+|Email ✉️|`email_validation`| Ensures that a user has entered an email|hello123@yourdomain.com or hello.me@domain.com|
+|Length|`length_validation`| Validates amount of data user enters|name with characters between 10 and 20|
+|Numeric 🔢|`numeric_validation`|Accepts digits with no decimal|1233|
+|Phone number 📞|`phone_number_validation`|Accepts a phone number |+2(222)22222222 or +2(222)222-222 or +255711111111 or 0711111111|
+|Required field|`required_field_validation`|Enforces a user to provide a response|Customer must provide an input|
+|Time 🕘|`time_validation`|Accepts time in the format `hh:mm AM or PM`. **Note:**A space between `mm` and `AM/PM`|12:00 AM|
+|Zipcode 📫|`zipcode_validation`|Accepts zipcode |12345 or 12345-6789 or 12345 6789|
 
-  When used, it will accept alphabets, numbers or combination of both. Lets have some examples of inputs that will be accepted. This validator type will be added by naming it as `alphanumeric_validation`.
-
-  Example:    123wdcs or  1122 or adasd.
-
-- Date 📆
-
-  This validator will accept date in the format dd/mm/yyyy or mm/dd/yyyy as numbers. Here the type will be added by naming it as `date_validation`.
-
-  Example: 24/3/2023 or 3/24/2023.
-
-- Email ✉️
-
-  With this validator you can be sure that the user has enter the email and nothing else. We shall add this type by naming it as `email_validation`.
-
-  Example: your-name123@yourdomain.com or hello.me@domain.com
-
-- Length
-
-  If you want to validate the amount of data the user gives the bot, the using this validator will save your from receiving chunks that are unncessary.
-  
-  You will need to set the minimum length and maximum length of what you expect the user to provide. To add this validation type we shall name it as `length_validation`.
-
-- Numeric 🔢
-
-  Using this validator we can be sure that a user enter a numeric value and not otherwise. Adding numeric validator, we use the name `numeric_validation`.
-
-- Phone number 📞
-
-  Use this validator to let one provide a phone number in a good format. This validator type will be added by naming it as `phone_number_validation`. Examples of phone number formats accepted are:-
-  +2(222)22222222 or +2(222)222-222 or  +255711111111 0r 0711111111.
-
-- Required field
-
-  This will enforce the user to provide a response. This can be any input according to your flow. To use the validator in the flow, its type name will be `required_field_validation`.
-
-- Time 🕘
-
-  This validator will accept time in the format `hh:mm AM or PM`. Note the space between mm and AM/PM. Type name of this validator is `time_validation`.
-
-- Zipcode 📫
-
-  If you want to get your customer zipcode to deliver the product, we have a validator for you. Examples of zipcode accepted by the validator are `12345` or `12345-6789` or `12345 6789`. This validator type will be added by naming it as `zipcode_validation`.
+The `type name` is name that will used to add the validator to the bot's flow. We have examples below.
 
 ## Get into action
 
@@ -275,9 +244,11 @@ INFO	2022/12/18 17:52:08 Flows updated successfully
 </TabItem>
 </Tabs>
 
+Length validation takes some additional information, i have it explained at [more on length validation](#one-thing-to-note).
+
 ## See the outcome
 
-Now we have validators added to our bot, lets test our bot in the playground
+Now we have validators added to our bot, lets test our bot in the playground.
 
 - ❌ Unexpected input
 
@@ -297,7 +268,7 @@ You can see how the use of validators will give your bot a more meaningful conve
 
 All other validators, you just enter validator `name` and `error message` exccept `length validator`.
 
-For length validation, we shall have some additional information to add. We are going to add **min_length** and **max_length**
+For length validation, we shall have some additional information to add. We are going to add **min_length** and **max_length**.
 
 Here is an example for yaml and json file.
 
@@ -312,7 +283,7 @@ next_state: get_email
 validators:
   - type: length_validation
     error_message: sorry, provide a name with characters between 7 and 30
-    min_length: 10
+    min_length: 7
     max_length: 30
 ```
 
