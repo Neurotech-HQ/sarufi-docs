@@ -12,7 +12,7 @@ As your bot can be deployed in many platforms such as WhatsApp, Messenger, Teleg
 Here are general rules we are going to follow.
 
 - A state can have only 3 buttons
-- The text in the button should not exceed characters
+- The text in the button should not exceed 20 characters
 
 A button will be connected to a state with a response if a particular button is pressed.
 
