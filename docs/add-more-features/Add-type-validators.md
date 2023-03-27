@@ -246,7 +246,7 @@ Length validation takes some additional information, i have it explained at [mor
 
 ## See the outcome
 
-Now we have validators added to our bot, lets test our bot in the playground.
+Now we have validators added to our bot, lets test our bot in the playground. Go to [sarufi playground](https://playground.sarufi.io/community), search for your bot to see what the bot can do.
 
 - ❌ Unexpected input
 
@@ -270,8 +270,8 @@ Some validators take more parameters apart from **type** and **error_messsage**.
 
   For length validation, we are going to add **min_length** and **max_length**.
 
-  <Tabs>
-  <TabItem value="yaml" label="Yaml">
+  <Tabs groupId="additional_explanations">
+  <TabItem value="yaml" label="YAML">
 
   ```yaml
   get_name:
@@ -286,7 +286,7 @@ Some validators take more parameters apart from **type** and **error_messsage**.
   ```
 
   </TabItem>
-  <TabItem value="json" label="Json">
+  <TabItem value="json" label="JSON">
 
   ```js
   "get_name": {
@@ -312,8 +312,8 @@ Some validators take more parameters apart from **type** and **error_messsage**.
   
   This validator comes in hand with suppport of different types such as `audio` , `file` , `image` , `interactive` ,  `location` , `text` , `video`.
 
-  <Tabs>
-  <TabItem value="yaml" label="Yaml">
+  <Tabs groupId="additional_explanations">
+  <TabItem value="yaml" label="YAML">
 
   ```yaml
   get_id_image:
@@ -327,7 +327,7 @@ Some validators take more parameters apart from **type** and **error_messsage**.
   ```
 
   </TabItem>
-  <TabItem value="json" label="Json">
+  <TabItem value="json" label="JSON">
 
   ```js
   "get_id_image: {
@@ -350,8 +350,8 @@ Some validators take more parameters apart from **type** and **error_messsage**.
 
   With custom response, we can write our own pattern to meet chatbot needs. You can write `regex` and try it at [test your regex](https://regex101.com/) to check if it works properly.
 
-  <Tabs>
-    <TabItem value="yaml" label="Yaml">
+  <Tabs groupId="additional_explanations">
+    <TabItem value="yaml" label="YAML">
 
     ```yaml
     get_time_24hrs:
@@ -365,7 +365,7 @@ Some validators take more parameters apart from **type** and **error_messsage**.
     ```
 
     </TabItem>
-    <TabItem value="json" label="Json">
+    <TabItem value="json" label="JSON">
 
     ```js
     "get_id_image: {
