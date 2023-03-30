@@ -48,32 +48,17 @@ Lets create a project folder, `Telegram bot`. In this folder, we are going to cr
 
 ## Configure Environment variables ⚙
 
-After installing packages, we need to configure our credentials. In `telegram-chatbot-blueprint`, create a file(`.env`) to hold environment variables.
+After installing packages, we need to configure our credentials. In `telegram-chatbot-blueprint`, create a file(`.env`) using your text-editor to hold environment variables.
 
-```bash
-touch .env
+Open `.env` in the editor to edit the details with your credentials for sarufi and telegram. Then add the following:-
+
+```text
+sarufi_username= Your sarfi username
+sarufi_password = Your sarufi password
+sarufi_bot_id= bot id
+token = telegram token
+start_message= Hi {name}, Welcome To {bot_name}, How can i help you
 ```
-
-In the file we are going to add the following credetials. You can do it in the terminal or open using text editor `.env`. Then add the following:-
-
-- In the terminal
-
-  ```bash
-  echo "sarufi_username= Your sarfi username" >>.env &
-  echo "sarufi_password = Your sarufi password" >> .env &
-  echo "sarufi_bot_id= bot id" >> .env & 
-  echo "token = telegram token" >>.env &
-  echo "start_message= Hi {name}, Welcome To {bot_name}, How can i help you" >> .env
-  ```
-
-- Open `.env` file in text editor
-
-  ```text
-  sarufi_username= Your sarfi username
-  sarufi_password = Your sarufi password
-  sarufi_bot_id= bot id
-  token = telegram token
-  start_message= Hi {name}, Welcome To {bot_name}, How can i help you
 
 The `start_message` will be the bot's response when `/start` command is sent by user.
 
