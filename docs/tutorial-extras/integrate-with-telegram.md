@@ -10,50 +10,72 @@ Telegram is one of the most popular messaging apps in the world. It has over 500
 
 ![Telegram](/img/telegram-5348490_640.png)
 
-## How to connect to Telegram
+## How to connect to Telegram 🔗
 
 To connect to Telegram, you need to create a Telegram bot. You can do this by following the instructions in the [Telegram documentation](https://core.telegram.org/bots#6-botfather).
 
 Once you have created a bot, you will receive a `token`. This token is used to authenticate your bot with Telegram.
 
-## How to configure Telegram
+## Basic setup ⚙️
 
-The shortest route is to use Telegram blueprint for Sarufi, which is available in our Github repository. You can find it [here](https://github.com/Neurotech-HQ/telegram-chatbot-blueprint) by clonning the directory.
+Lets create a project folder, `Telegram bot`. In this folder, we are going to create a virtual environment using `venv`. You can can set up your evironment according to your preferences,either `virtualenv` or `conda`. Read more on [creating virtual environment](https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/).
 
-```bash
-git clone https://github.com/Neurotech-HQ/telegram-chatbot-blueprint
+1. Creating project folder 📂
+
+    ```bash
+    mkdir 'Telegram bot'
+    cd 'Telegram bot'
+    ```
+
+2. Creating virtual environment
+
+    Creating virtual environment and activating it
+
+    ```bash
+    python3 venv -m sarufi_telegram
+    source sarufi_telegram/bin/activate
+    ```
+
+3. Clone the repo and install packages 📦
+
+    The shortest route is to use Telegram blueprint for Sarufi, which is available in our Github repository. You can find it [here](https://github.com/Neurotech-HQ/telegram-chatbot-blueprint) by clonning the directory.
+
+    ```bash
+    git clone https://github.com/Neurotech-HQ/telegram-chatbot-blueprint
+    cd telegram-chatbot-blueprint
+    pip3 install -r requirements.txt
+    ```
+
+## Configure Environment variables ⚙
+
+After installing packages, we need to configure our credentials. In `telegram-chatbot-blueprint`, create a file(`.env`) using your text-editor to hold environment variables.
+
+Open `.env` in the editor to edit the details with your credentials for sarufi and telegram. Then add the following:-
+
+```text
+sarufi_username= Your sarfi username
+sarufi_password = Your sarufi password
+sarufi_bot_id= bot id
+token = telegram token
+start_message= Hi {name}, Welcome To {bot_name}, How can i help you
 ```
 
-You only need to configure the `config.yaml` file found in cloned directory. You can find instructions in the `README.md` file.
+The `start_message` will be the bot's response when `/start` command is sent by user.
 
-```yaml config.yaml
-sarufi:
-  username: sarufi_username
-  password: sarufi_password
-  bot_id: sarufi_bot_id
+## How to run Telegram 🚀
 
-telegram:
-  token: telegram_token
-  start_message: |
-    Hi {name}, I can help you with ABC
-```
-
-The `start_message` will be the bot's response when `/start` command is sent from telegram.
-
-## How to run Telegram
-
-To run Telegram bot, you need to install the dependencies in the `requirements.txt` file and run `app.py` file.
+To run Telegram bot, simply run `app.py` file after configuring above creditials.
 
 ```bash
-cd telegram-chatbot-blueprint
-pip install -r requirements.txt
 python app.py
 ```
 
-## How to test Telegram
+**NOTE:** _All operations are carried out in the active evironment in case you use virtual environment_
+
+## How to test Telegram 📊
 
 You can test Telegram by sending a message to your bot. You can also use the Telegram API to send messages to your bot or use telegram messenger.
 
-## What you learned
+## What you learned 👨🏽‍💻
 
-In this tutorial, you learned how to connect Sarufi to Telegram. You also learned how to configure and run Telegram.
+In this tutorial, you learned how to connect Sarufi to Telegram. You also learned how to configure and run your chatbot in Telegram.
