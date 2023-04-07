@@ -96,7 +96,7 @@ After we have updated our flow, its time we update our bot. Running the command 
 
 ```python
 >>> from sarufi import Sarufi
->>> sarufi = Sarufi("testing@gmail.com", "xxxxxx")
+>>> sarufi = Sarufi("client_id", "client_secret")
 >>> # We only update the flow
 >>> response = sarufi.update_from_file(
 ...     flow="data/flows.yaml",
@@ -171,7 +171,7 @@ import (
 
 func main() {
 	var bot sarufi.Bot
-	bot.Initialize("your-email", "your-password")
+	bot.Initialize("your client id", "your client secret")
 	bot.GetBot(bot_id)
 
   // create a string in JSON format
