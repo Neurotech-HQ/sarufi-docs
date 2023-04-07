@@ -62,8 +62,8 @@ thanks:
   - Thanks a ton
   - Thanks a million
   - Thanks a zillion
+```
 </TabItem>
-
 <TabItem value="json" label="JSON">
 
 ```json
@@ -134,6 +134,7 @@ thanks:
   message:
    - You are welcome
   next_state: end
+```
 </TabItem>
 <TabItem value="json" label="JSON">
 
@@ -152,6 +153,7 @@ thanks:
     "next_state": "end"
   }
 }
+```
 </TabItem>
 </Tabs>
 
