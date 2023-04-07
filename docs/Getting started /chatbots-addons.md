@@ -231,6 +231,6 @@ You can fetch all chatbots you have created by using the `bots()` method.
 
 ```python
 >>> from sarufi import Sarufi
->>> sarufi = Sarufi('testing@gmail.com', 'xxx')
+>>> sarufi = Sarufi('client_id', 'client_secret')
 >>> sarufi.bots()
 ```

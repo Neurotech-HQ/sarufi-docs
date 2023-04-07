@@ -20,9 +20,8 @@ Before we start coding, let's first draft the architecture of our chatbot. Here 
 
 ![Oversimplified Architecture](/img/chatbot-flow.png)
 
-## Collecting our tools
 
-### Installations
+## Installations
 
 Select your language of preference to get instructions on installing `SDK`
 
@@ -55,39 +54,56 @@ go get github.com/sarufi-io/sarufi-golang-sdk
 </TabItem>
 </Tabs>
 
+## Sign up to Sarufi.io
 
-### Authentication
+To use the Sarufi.io SDK, you'll need to create an account on the [Sarufi.io](https://www.sarufi.io/) website. Here's how:
 
-Before we start coding, we need to authenticate with Sarufi. Currently, we only support authentication your **username** and **password**. You can get your username and password. We still have't released the signup page yet. You can try out Sarufi by signing up for our [beta program](https://blog.neurotech.africa/what-is-sarufi/).
+1. Go to the [Sarufi.io](https://www.sarufi.io/) website and click on the "Sign Up" button in the top right corner of the screen.
+2. Choose your preferred sign-up method (email, GitHub, or Google).
+3. Follow the prompts to complete the sign-up process.
+4. Once you've signed up, log in to your Sarufi.io account.
 
-Once you're successfully accepted to our beta program, you will receive an email with your username and password. You can use the following code to authenticate with Sarufi.
+## Obtaining Your Client ID and Client Secret
+
+After logging in to your Sarufi.io account, you can obtain your client ID and client secret by following these steps:
+
+1. Go to your Sarufi.io profile settings page.
+2. Scroll down to the `API Credentials` section.
+3. Here, you'll find your `client ID` and `client secret`.
+4. Copy these values and use them in your Sarufi.io SDK client configuration.
+
+That's it! With your `client ID` and `client secret`, you can now use the Sarufi.io SDK to interact with the platform.
 
 <Tabs groupId="get_started">
 <TabItem value="py" label="Python">
 
-```bash
->>> from sarufi import Sarufi
->>> sarufi = Sarufi(username="your-username", password="your-password")
+```python
+from sarufi import Sarufi
+sarufi = Sarufi(client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET")
 ```
-
 </TabItem>
+
 <TabItem value="js" label="JavaScript">
 
-```bash
-> import sarufi from 'sarufi'
-> sarufi.login({username: 'your-username', password: 'your-password'})
+```js
+import sarufi from 'sarufi'
+sarufi.login({client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET'})
 ```
-
 </TabItem>
+
 <TabItem value="go" label="Golang">
 
 ```go
-var bot sarufi.Bot
-bot.Initialize("your-email", "your-password")
+bot.Initialize("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
 ```
-
 </TabItem>
 </Tabs>
+
+Please replace `YOUR_CLIENT_ID` and `YOUR_CLIENT_SECRET` with your actual client ID and secret respectively.
+
+
+
+
 
 ## Create a Chatbot
 
@@ -106,7 +122,7 @@ This is the first step in creating your first chatbot. You can use the following
 
 ```python
 >>> from sarufi import Sarufi
->>> sarufi = Sarufi(username="your-username", password="your-password")
+>>> sarufi = Sarufi(client_id='your client id', client_secret='your client secret')
 >>> chatbot = sarufi.create_bot(name='My First Chatbot')
 2022-09-12 15:42:02,821 - root - INFO - Creating bot
 >>> chatbot
@@ -206,7 +222,7 @@ Here are examples on each method
 
 ```python
   >>> from sarufi import Sarufi
-  >>> sarufi = Sarufi('myname@domain.com', 'password')
+  >>> sarufi = Sarufi('your client id', 'your client secret')
   >>> sarufi.chat(bot_id=5, message='Hello')
 ```
 </TabItem>
@@ -320,7 +336,7 @@ To make more interactive, let's general intents like `greets`, `order_pizza`, `g
 
 ```python
 >>> from sarufi import Sarufi
->>> sarufi = Sarufi(username="your-username", password="your-password")
+>>> sarufi = Sarufi(client_id='your client id', client_secret='your client secret')
 >>> chatbot = sarufi.get_bot(13)
 #We assign intents attribute a dict with intent name and and intents
 # dict {<intent name>:[list of all related keywords to trigger the intent]}
@@ -388,7 +404,7 @@ import (
 
 func main() {
 	var bot sarufi.Bot
-	bot.Initialize("your-email", "your-password")
+	bot.Initialize("your client id", "your client secret")
 	bot.GetBot(bot_id)
 
 // Create a string in JSON format
@@ -569,7 +585,7 @@ import (
 
 func main() {
 	var bot sarufi.Bot
-	bot.Initialize("your-email", "your-password")
+	bot.Initialize("your client id", "your client secret")
 	bot.GetBot(bot_id)
 
   // create a string in JSON format

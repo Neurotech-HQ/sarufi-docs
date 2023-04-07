@@ -53,8 +53,8 @@ After installing packages, we need to configure our credentials. In `telegram-ch
 Open `.env` in the editor to edit the details with your credentials for sarufi and telegram. Then add the following:-
 
 ```text
-sarufi_username= Your sarfi username
-sarufi_password = Your sarufi password
+sarufi_client_id= Your sarufi client ID 
+sarufi_client_secret = Your sarufi client Secret 
 sarufi_bot_id= bot id
 token = telegram token
 start_message= Hi {name}, Welcome To {bot_name}, How can i help you
@@ -74,8 +74,15 @@ python app.py
 
 ## How to test Telegram 📊
 
-You can test Telegram by sending a message to your bot. You can also use the Telegram API to send messages to your bot or use telegram messenger.
+To test your Telegram chatbot, you can send a message to your bot on the Telegram app. You can also use the Telegram API to send messages to your bot.
+
+1. Open Telegram and search for your bot by name.
+2. Click on the bot to start a chat.
+3. Send a message to your bot and see how it responds.
+
 
 ## What you learned 👨🏽‍💻
 
-In this tutorial, you learned how to connect Sarufi to Telegram. You also learned how to configure and run your chatbot in Telegram.
+In this tutorial, you learned how to connect Sarufi to Telegram and how to configure and run your chatbot in Telegram. You also learned how to test your chatbot by sending messages to it through the Telegram app or using the Telegram API. With this knowledge, you can now create your own custom chatbot and connect it to Telegram using Sarufi.
+
+
