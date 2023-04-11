@@ -72,7 +72,7 @@ python app.py
 
 **NOTE:** _All operations are carried out in the active evironment in case you use virtual environment_
 
-## How to test Telegram 📊
+## Test Your Telegram Bot 📊
 
 To test your Telegram chatbot, you can send a message to your bot on the Telegram app. You can also use the Telegram API to send messages to your bot.
 
@@ -80,9 +80,12 @@ To test your Telegram chatbot, you can send a message to your bot on the Telegra
 2. Click on the bot to start a chat.
 3. Send a message to your bot and see how it responds.
 
+### Test Pizza Bot
+
+Here is the test sample of our Pizza bot we have been working on.
+
+![Pizza bot test](/img/telegram-bot-sample.gif)
 
 ## What you learned 👨🏽‍💻
 
 In this tutorial, you learned how to connect Sarufi to Telegram and how to configure and run your chatbot in Telegram. You also learned how to test your chatbot by sending messages to it through the Telegram app or using the Telegram API. With this knowledge, you can now create your own custom chatbot and connect it to Telegram using Sarufi.
-
-
