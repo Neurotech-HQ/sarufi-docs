@@ -140,6 +140,11 @@ After veryfing and saving whatsapp webook, navigate to webhook fields --> click 
 
 You can test WhatsApp by sending a message to your bot.
 
+### Lets test our PizzaBot
+
+With the Pizza bot we have been working through, here is the bot responses deployed in whatsapp.
+![WhatsApp bot test](/img/whatsapp-bot-sample.gif)
+
 ## What you learned
 
 In this tutorial, you learned how to connect Sarufi to WhatsApp Cloud API. You also learned how to configure and run WhatsApp.
