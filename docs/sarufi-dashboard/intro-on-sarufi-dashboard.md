@@ -36,7 +36,7 @@ All you have to do is specify which states should trigger the webhook.
 
 You can read more on webhooks at [sarufi webhook integration](/docs/add-more-features/webhook-integration)
 
-### Concersation History
+### Conversation History
 
 As your bot gets to interact with users, it needs to be updated on the cases it was never trained on. How can we do this then, you might be asking. The key here is using conversation data to improve our chatbot responses and coverage.
 
