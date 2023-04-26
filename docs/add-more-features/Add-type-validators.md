@@ -96,7 +96,7 @@ After we have updated our flow, its time we update our bot. Running the command 
 
 ```python
 >>> from sarufi import Sarufi
->>> sarufi = Sarufi("client_id", "client_secret")
+>>> sarufi = Sarufi(api_key='your API KEY')
 >>> # We only update the flow
 >>> response = sarufi.update_from_file(
 ...     flow="data/flows.yaml",

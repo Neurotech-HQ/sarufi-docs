@@ -53,8 +53,7 @@ After installing packages, we need to configure our credentials. In `telegram-ch
 Open `.env` in the editor to edit the details with your credentials for sarufi and telegram. Then add the following:-
 
 ```text
-sarufi_client_id= Your sarufi client ID 
-sarufi_client_secret = Your sarufi client Secret 
+sarufi_api_key=Your Sarufi API Key
 sarufi_bot_id= bot id
 token = telegram token
 start_message= Hi {name}, Welcome To {bot_name}, How can i help you

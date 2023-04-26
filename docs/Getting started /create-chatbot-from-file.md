@@ -188,7 +188,7 @@ You can create a chatbot from YAML files using the following code.
 
 ```python
 >>> from sarufi import Sarufi
->>> sarufi = Sarufi("your client id", "your client secret")
+>>> sarufi = Sarufi(api_key='your API KEY')
 >>> response = sarufi.create_from_file(
 ...     intents="data/intents.yaml",
 ...     flow="data/flows.yaml",
@@ -200,7 +200,7 @@ You can also update a chatbot from YAML files using the following code.
 
 ```python
 >>> from sarufi import Sarufi
->>> sarufi = Sarufi("your client id", "your client secret")
+>>> sarufi = Sarufi(api_key='your API KEY')
 >>> response = sarufi.update_from_file(
 ...     intents="data/intents.yaml",
 ...     flow="data/flows.yaml",
