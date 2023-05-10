@@ -18,7 +18,7 @@ In this part of integration with whatsapp, I will walk you the journey using `py
 
 ### What you need
 
-You will need a [webhook](https://www.redhat.com/en/topics/automation/what-is-a-webhook) to receive whatsapp messages. There are several ways this can be done. This tutorial will guide you in using [ngrok](#using-ngrok) or [replit](#using-replit).
+You will need a [webhook](https://www.redhat.com/en/topics/automation/what-is-a-webhook) to receive whatsapp messages. There are several ways this can be done. This tutorial will guide you in using [ngrok](#using-ngrok) or [replit](#using-replit). In this blueprint the main library used is [heyoo](https://github.com/Neurotech-HQ/heyoo)
 
 ## Using Ngrok
 
@@ -86,9 +86,7 @@ Have [sarufi package](https://github.com/Neurotech-HQ/sarufi-python-sdk) install
 
 - Log into your [Replit](https://replit.com/) account.
   
-  Create a python repl. Download `main.py` from [Whatsapp bot using sarufi API and heyoo](https://replit.com/@neurotechafrica/sarufi-heyoo-blueprint).
-
-  Upload/copy `main.py` code into your replit repl created.  In your repl, navigate to Tools --> packages, then install `heyoo`.
+  For the repo [Whatsapp bot using sarufi API and heyoo](https://replit.com/@neurotechafrica/sarufi-heyoo-blueprint) into your account.
 
   Navigate to Tools--> Secrets to create environment variables. Read [Getting whatsapp creds](#whatsapp-cloud-creds).
 
