@@ -1,6 +1,6 @@
 ---
 slug: difference-between-whatsApp-business-app-and-api
-title: The difference between WhatsApp Business App and API
+title: Difference between WhatsApp Business App and API
 authors: [jovine]
 tags: [whatsapp]
 ---
@@ -9,21 +9,22 @@ WhatsApp has made everything easy for businesses to expand, reach out and serve 
 
 ![Whatsapp business app vs API](./img/Business-App-vs-API.png)
 
-## Know the difference between WhatsApp Business App and API
+## Difference between WhatsApp Business App and API
 
-WhatsApp is a cross-platform messaging and Voice over IP (VoIP) service owned by Facebook, Inc. It allows users to send text messages and voice messages, make voice and video calls, and share images, documents, user locations, and other media.
-WhatsApp is one of the most popular messaging apps in the world. It has over 2 billion active users and is available in 120 different languages.
+As WhatsApp is a cross-platform messaging service allowing users to send text messages, voice messages, make voice, video calls, and share media(images, documents, user locations,...), it is widely used.
 
-Its good to point out that whatsapp started with messenger app before the launch of business app. Let start with a recap on the differences between the two, messenger and business app.
+Its good to point out before starting our journey that whatsapp started with messenger app before the launch of business app. Let distinguish between the two, messenger and business app.
 
-## WhatsApp messenger Vs WhatsApp bussiness
+## Prepare for the journey
 
-### WhatsApp messenger App
+![Messenger app vs business app](./img/messenger-vs-business-app.png)
+
+### Messenger App
 
 With this app you can have personal conversations between friends and family. Besides sending text messages, you can share pictures , documents, start a video call and much more... .
 You can also use stickers to spice up your conversations. This is suited for non-business people as it will not provide the user ability to do any automation.
 
-### WhatsApp Business App
+### Business App
 
 WhatsApp Business App is built with focus of small-medium business operation to easy customer communication. The app will help you in growing the business with its rich features such as business profile, product catalog, quick messaging(away messages, greeting messages). This is focused on small to medium businesses.
 
@@ -35,37 +36,56 @@ With WhatsApp business, there are two distinct products namely whatsapp business
 
 ## What is an API?
 
-Let's do a recap of what an API is?
+Let's do a quick elaboration of what an API is?
+
 An API(Application Programming Interface) is communication mechanism that allows two software/programs to communicate together under set communication protocols.
 
 The use of WhatsApp business API is to enable advanced automation of business operations such as using A.I power chatbots, customer care services, hence likely preferred for large organizations.
 
 ![Basic working of an API](./img/What-are-APIs-Learn-How-API-Works.jpg)
 
-## WhatsApp business app vs WhatsApp business API
+### WhatsApp business API
+
+WhatsApp Business API enables businesses to automate communications with automated replies, WhatsApp chatbots and interactive messages. In short, WhatsApp Business API helps businesses to create a personalized communication flow that works best for their customers.
+
+Lets start our journey by diging into differences between business app and API.
+
+## Business app vs Business API
 
 Lets see some major diffrences between the two basing on the following criteria
 
-1. Set up
+1. WhatsApp Automation
 
-With an App, the set up is fast as you just need to download the app, register your number for whatsapp business and fill some important information about your business where as for API, you will have to apply to WhatsApp cloud or whatsapp business partners to have your business number verified. The process may take some work days though.
+This is a key part of discussion in this article. Here is where you can understand what is meant when someone says "chatbot integration with Whatsapp". Lets get into it.
 
-2. Cost
+On automation side, an app provides few automation techniques such as qiuck replies, greeting messages and away messages.
+Using API, a business will have ability to do more advanced automations mostly using A.I powered chatbots, connecting whatsapp to CRM, customer care support an much more... The focus though here is discussing on the use of chatbots in whatsapp.
 
-WhatsApp Business app is free of usage while Business API needs to be paid for to utilize it fully in production. With an API, business can obtain a verification tick.
+You can build whatsapp-ready chatbots using [sarufi](sarufi.io). With sarufi, your chatbot will be availble in whatsapp in matter of minutes.
 
-This shows your customers that the account is genuine and safe to interact with, resulting in more engagement.(Though the application process takes time).
+Whatsapp business API gives the business ability integrate with a chatbot. So whenever we speak something of chatbot integration in whatsapp, we will be referring to Business API.
 
-3. Usage
+2. Set up
 
-With the App, WhatsApp targets small to medium businesses that can manage to handle customers with few automation needs. It allows upto 5 connected devices to enable businesses to work with a shared business account.
-The API, is mainly focused on large organizations that would like to reply more on advanced automation to serve their huge customers.
+Using an App, the set up is fast as you just need to download the app ``>>`` register your number for whatsapp business `>>` fill some important information about your business.
+
+Business API, you will need a [WhatsApp cloud account](https://developers.facebook.com/docs/whatsapp/cloud-api/get-started) or using whatsapp business partners to have your business number verified. The process may take some work days.
+
+3. Cost
+
+You do not have to pay to use a Business app, just download and ready to put your business into operation. Thats why it is convient for small businesses.
+
+While Business API needs to be paid for to utilize it fully in production. With an API, business can obtain a verification tick. This shows your customers that the account is genuine and safe to interact with, resulting in more engagement.(Though the application process takes time).
+
+4. Usage and number of devices
+
+With the App, WhatsApp targets small to medium businesses that can manage to handle customers with few automation needs. It allows business operators to chat individually with customers. With it can be used on multiple devices with custom interfaces. It allows upto 5 connected devices to enable businesses to work with a shared business account.
+
+The API, is mainly focused on large organizations that would like to rely more on advanced automation to serve their huge customers.
 
 This is no limit that only large organizations can use the API, even small and medium businesses can apply for API usage in production to leverage the power of Advanced automation such as A.I powered chatbots like those built using sarufi.
 
-4. Number of device connection
-
-An app allows connection of up to 5 devices to allow business operators to chat individually with customers. With it can be used on multiple devices with custom interfaces. With an APP, you can make calls where as an API protocol does not allow making calls.
+An app allows connection of up to 5 devices to a. With an APP, you can make calls where as an API protocol does not allow making calls.
 
 5. Messaging
 
@@ -80,16 +100,6 @@ For WhatsApp Business API conversations fall into two categories that are priced
 
     A conversation that initiates a business initiates by sending a user a message outside a 24 hour customer service window. These messages use [message templates](https://developers.facebook.com/docs/whatsapp/api/messages/message-templates) which have limited contents that can be used, also templates are to be verified by whatsapp before getting into usage.
 
-6. Number of broadcasts
+## Destination words
 
-WhatsApp business App limits broadcasts to 256 contacts while an API can allow more broadcasts making it of many advantages to the businesses.
-
-7. WhatsApp Automation
-
-On automation side, an app provides few automation techniques such as qiuck replies, greeting messages and away messages.
-Using API, a business will have ability to do more advanced automations mostly important using A.I powered chatbots. You can build chatbot using sarufi.
-With whatsapp business app, you can not integrate it with a chatbot. You will need to use API to do this integration.
-
-## Final word
-
-When we talk about whatsapp integration of chatbots, we generally mean using whatsapp cloud api. By using Sarufi your business can build a production WhatsApp integration-ready chatbot.
+As we finish up our short journey on the difference between Business App and API, you must have a clear undersatnding of what is meant about chatbot integration in whatsapp. To get your business a whatsapp integration ready boat, please [contact us](https://www.neurotech.africa/#contact)
