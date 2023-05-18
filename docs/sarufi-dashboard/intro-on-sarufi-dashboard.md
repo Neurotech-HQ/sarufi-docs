@@ -96,3 +96,7 @@ Click `Create a New Bot` Button, then fill important information about the your 
 With a base language, you bot will have some default intents and flows that you can look at and make some modifications.
 
 The checkbox,☐ lets you decide to make your chat-bot publically available at [sarufi Community playground](https://playground.sarufi.io/community) for people to test. Sarufi playground is a public community where you can showcase what you were able to accomplish with sarufi.
+
+## Sarufi Video series
+
+We have prepared a very easy to learn [sarufi series](https://www.youtube.com/watch?v=4up__WcbB-w&list=PLeHPyjol4_fXXiMBwb3Wc8KYiw_nB_4Ye&index=2), please watch the series to learn more on how to utlize the platform.
