@@ -8,6 +8,6 @@ Congratulations! You have successfully created your first chatbot using Sarufi-P
 
 ## Next Steps
 
-- [Integrate with Telegram](/docs/tutorial-extras/integrate-with-telegram)
-- [Integrate with WhatsApp](/docs/tutorial-extras/integrate-with-whatsapp)
-- [Integrate with Facebook Messenger](/docs/tutorial-extras/integrate-with-messenger)
+- [Integrate with Telegram](/docs/tutorial-integration/integrate-with-telegram)
+- [Integrate with WhatsApp](/docs/tutorial-integration/integrate-with-whatsapp)
+- [Integrate with Facebook Messenger](/docs/tutorial-integration/integrate-with-messenger)
