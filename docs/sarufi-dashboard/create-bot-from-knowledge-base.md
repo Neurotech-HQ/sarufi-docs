@@ -41,7 +41,7 @@ Lets look at some basic concepts before diving into the building section. We sha
 
 ## Lets build a bot
 
-You need to have your document ready. Login to [sarufi]([sarufi.io](https://www.sarufi.io/)), then **Create a bot** 👉🏼 select **Create from knowledge base** .  Just fill in the basic info about your bot.
+You need to have your document ready. Login to [sarufi](https://www.sarufi.io/), then **Create a bot** 👉🏼 select **Create from knowledge base** .  Just fill in the basic info about your bot.
 
 ![Create bot from knowledge base](/img/create-a-bot-from-knowledge-base.png)
 
