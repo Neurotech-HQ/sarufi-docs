@@ -61,7 +61,7 @@ This is a key part of discussion in this article. Here is where you can understa
 On automation side, an app provides few automation techniques such as qiuck replies, greeting messages and away messages.
 Using API, a business will have ability to do more advanced automations mostly using A.I powered chatbots, connecting whatsapp to CRM, customer care support an much more... The focus though here is discussing on the use of chatbots in whatsapp.
 
-You can build whatsapp-ready chatbots using [sarufi](sarufi.io). With sarufi, your chatbot will be availble in whatsapp in matter of minutes.
+You can build whatsapp-ready chatbots using [sarufi](https://sarufi.io). With sarufi, your chatbot will be availble in whatsapp in matter of minutes.
 
 Whatsapp business API gives the business ability integrate with a chatbot. So whenever we speak something of chatbot integration in whatsapp, we will be referring to Business API.
 
