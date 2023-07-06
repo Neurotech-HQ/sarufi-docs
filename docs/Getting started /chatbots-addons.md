@@ -40,18 +40,9 @@ Let's add a cancel intent to our chatbot. You can use the following code to add 
 <TabItem value="go" label="Golang">
 
 ```go
-package main
+title := "cancel"
 
-import (
-	"github.com/sarufi-io/sarufi-golang-sdk"
-)
-
-func main() {
-	var bot sarufi.Bot
-	bot.Initialize("your-email", "your-password")
-	bot.GetBot(bot_id)
-	intentTitle := "cancel"
-	intentContent := []string{
+content := []string{
 		"cancel",
 		"cancel it",
 		"cancel it please",
@@ -60,13 +51,12 @@ func main() {
 		"I changed my mind, cancel it",
 		"I changed my mind, cancel it please",
 	}
-	bot.AddIntent(intentTitle, intentContent)
-}
 
-// output
+if err = example_bot.AddIntent(title, content); err != nil {
+        fmt.Println(err)
+    }
 
-INFO	2022/12/18 18:07:19 Updating bot...
-INFO	2022/12/18 18:07:19 Intent added successfully
+app.UpdateBot(example_bot) // for changes to take effect
 ```
 </TabItem>
 </Tabs>
@@ -87,33 +77,13 @@ Let's now add a cancel fallback flow to our chatbot. You can use the following c
 <TabItem value="go" label="Golang">
 
 ```go
-package main
+title := "cancel"
+content := `{"message": ["Okay we cancelled it, welcome again!","next_state": "end"}`
 
-import (
-	"github.com/sarufi-io/sarufi-golang-sdk"
-)
-
-func main() {
-	var bot sarufi.Bot
-	bot.Initialize("your-email", "your-password")
-	bot.GetBot(bot_id)
-	// Create a title string
-
-	flowTitle := "cancel"
-
-	// Create a new variable of type Flow
-
-	var cancelFlow sarufi.Flow
-
-	// Fill in the new messages and the next state
-
-	cancelFlow.Message = []string{
-		"Okay we cancelled it, welcome again!",
-	}
-	cancelFlow.NextState = "end"
-
-	bot.AddFlow(flowTitle, cancelFlow)
-}
+if err = example_bot.AddFlow(title, content); err != nil {
+        fmt.Println(err)
+    }
+app.UpdateBot(example_bot)
 
 ```
 </TabItem>

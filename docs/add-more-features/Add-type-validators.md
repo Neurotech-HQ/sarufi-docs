@@ -163,20 +163,7 @@ After we have updated our flow, its time we update our bot. Running the command 
 <TabItem value="go" label="Golang">
 
 ```go
-package main
-
-import (
-	"github.com/sarufi-io/sarufi-golang-sdk"
-)
-
-func main() {
-	var bot sarufi.Bot
-	bot.Initialize("your client id", "your client secret")
-	bot.GetBot(bot_id)
-
-  // create a string in JSON format
-
-  newFlow := `
+newFlow := `
   {
   "greets": {
     "message": ["Hi, How can I help you?"],
@@ -229,14 +216,10 @@ func main() {
   }
 }`
 
-  bot.UpdateBot(newFlow)
-}
-
-// output
-
-INFO	2022/12/18 17:52:08 Updating bot...
-INFO	2022/12/18 17:52:08 Flows updated successfully
-
+if err = example_bot.CreateFlows(newFlow); err != nil {
+        fmt.Println(err)
+    }
+app.UpdateBot(example_bot)
 ```
 
 </TabItem>

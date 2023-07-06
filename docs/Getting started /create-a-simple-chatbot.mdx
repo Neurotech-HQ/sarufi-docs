@@ -100,15 +100,12 @@ sarufi.login({client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET'})
 <TabItem value="go" label="Golang">
 
 ```go
-bot.Initialize("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+var app sarufi.Application
+
+app.GetToken("your_api_key")
 ```
 </TabItem>
 </Tabs>
-
-Please replace `YOUR_CLIENT_ID` and `YOUR_CLIENT_SECRET` with your actual client ID and secret respectively.
-
-
-
 
 
 ## Create a Chatbot
@@ -164,14 +161,14 @@ Bot(id=13, name=My First Chatbot)
 <TabItem value="go" label="Golang">
 
 ```go
-bot.CreateBot("TestBot", "Description", "Industry")
-fmt.Println(bot.Name)
+visible_on_community := true // Set it to false if you don't want it visible on the playground
 
-// output
-INFO	2022/12/18 16:27:08 Getting Token...
-INFO	2022/12/18 16:27:09 Creating new bot...
-INFO	2022/12/18 16:27:09 Bot created successfully
-TestBot
+example_bot, err := app.CreateBot("Name of your bot", "Description", "Industry", visible_on_community)
+if err != nil {
+    log.Fatal(err)
+}
+
+fmt.Println(example_bot.Name)
 ```
 
 </TabItem>
@@ -192,7 +189,7 @@ To Create a bot, each sdk has it method. Take note of the naming
   |---        |---            |---            |
   |Python     |`create_bot()` |Bot object   |
   |JavaScript |`createBot()`  |JSON object   |
-  |Golang     |`CreateBot()`  |JSON object    |
+  |Golang     |`CreateBot()`  |Sarufi Bot Type    |
 
 :::
 
@@ -314,14 +311,12 @@ To get a list of available bots use `bot.GetBots()`, this will return a json res
 To start a conversation, use `bot.Respond("message", "message_type")`. For now only `text` message types are supported:
 
 ```go
-bot.Respond("Hey", "Text")
-
-// output
-
-INFO	2022/12/18 16:43:24 Getting Response...
-INFO	2022/12/18 16:43:25 {
-  "message": "Intent for this message is missing in [FLOW]"
+if err = example_bot.Respond("Hey", "general"); err != nil {
+    log.Fatal(err)
 }
+
+fmt.Println(example_bot.Conversation.Message)
+
 ```
 
 </TabItem>
@@ -410,33 +405,22 @@ We are going to use **Sarufi UpdateBot** method we pass it a dict with `intents`
 <TabItem value="go" label="Golang">
 
 ```go
-package main
-
-import (
-	"github.com/sarufi-io/sarufi-golang-sdk"
-)
-
-func main() {
-	var bot sarufi.Bot
-	bot.Initialize("your client id", "your client secret")
-	bot.GetBot(bot_id)
-
 // Create a string in JSON format
+intents := `
+{
+    "goodbye": ["bye", "goodbye", "see ya"],
+    "greets": ["hey", "hello", "hi"],
+    "order_pizza": ["I need pizza", "I want pizza"]
+}`
 
-  intents := `
-  {
-      "goodbye": ["bye", "goodbye", "see ya"],
-      "greets": ["hey", "hello", "hi"],
-      "order_pizza": ["I need pizza", "I want pizza"]
-  }`
-
-  bot.CreateIntents(intents)
+if err := example_bot.CreateIntents(intents); err != nil {
+    log.Fatal(err)
 }
 
-// output
-
-INFO	2022/12/18 17:57:32 Updating bot...
-INFO	2022/12/18 17:57:33 Intents created successfully
+// For changes to take effect
+if err = app.UpdateBot(example_bot); err != nil {
+    log.Fatal(err)
+}
 ```
 
 </TabItem>
@@ -468,14 +452,11 @@ Now that we have successfully added some intents and utterances to our chatbot, 
 <TabItem value="go" label="Golang">
 
 ```go
-bot.Respond("Hey", "Text")
-
-// output
-
-INFO	2022/12/18 16:43:24 Getting Response...
-INFO	2022/12/18 16:43:25 {
-  "message": "Intent for this message is missing in [FLOW]"
+if err = example_bot.Respond("Hey", "general"); err != nil {
+    log.Fatal(err)
 }
+
+fmt.Println(example_bot.Conversation.Message)
 ```
 
 </TabItem>
@@ -591,58 +572,49 @@ Let's now add a flow to our chatbot. You can use the following code to add a flo
 <TabItem value="go" label="Golang">
 
 ```go
-package main
-
-import (
-	"github.com/sarufi-io/sarufi-golang-sdk"
-)
-
-func main() {
-	var bot sarufi.Bot
-	bot.Initialize("your client id", "your client secret")
-	bot.GetBot(bot_id)
-
-  // create a string in JSON format
-
-  newFlow := `
-  {
-     "greets": {
-         "message": ["Hi, How can I help you?"],
-         "next_state": "end"
-     },
+// create a string in JSON format
+newFlow := `
+{
+     "greets": {"message": ["Hi, How can I help you?"], "next_state": "end"},
      "order_pizza": {
-         "message": ["Sure, How many pizzas would you like to order?"],
-         "next_state": "number_of_pizzas"
-     },
+     "message": ["Sure, How many pizzas would you like to order?"],
+     "next_state": "number_of_pizzas"
+ },
      "number_of_pizzas": {
-         "message": ["Sure, What would you like to have on your pizza?"],
-         "next_state": "pizza_toppings"
-     },
+     "message": [
+         "Sure, What would you like to have on your pizza?",
+         "1. Cheese",
+         "2. Pepperoni",
+         "3. Both"
+     ],
+     "next_state": "choice_pizza_toppings"
+ },
+     "choice_pizza_toppings": {
+     "1": "pizza_toppings",
+     "2": "pizza_toppings",
+     "3": "pizza_toppings",
+     "fallback_message": ["Sorry, the topping you chose is not available."]
+ },
      "pizza_toppings": {
-         "message": ["Cool, Whats your address ?"],
-         "next_state": "address"
-     },
+     "message": ["Cool, Whats your address ?"],
+     "next_state": "address"
+ },
      "address": {
-         "message": ["Sure, What is your phone number ?"],
-         "next_state": "phone_number"
-     },
+     "message": ["Sure, What is your phone number ?"],
+     "next_state": "phone_number"
+ },
      "phone_number": {
-         "message": ["Your order has been placed.", "Thank you for ordering with us."],
-         "next_state": "end"
-     },
-     "goodbye": {
-         "message": ["Bye", "See you soon"],
-         "next_state": "end"
-     }
- }`
+     "message": ["Your order has been placed.", "Thank you for ordering with us."],
+     "next_state": "end"
+ },
+     "goodbye": {"message": ["Bye", "See you soon"], "next_state": "end"}
+}`
 
-  bot.CreateFlows(newFlow)
-}
+if err = example_bot.CreateFlows(newFlow); err != nil {
+        fmt.Println(err)
+    }
 
-// output
-
-INFO	2022/12/18 17:52:08 Updating bot...
-INFO	2022/12/18 17:52:08 Flows created successfully
+app.UpdateBot(example_bot) // for changes to take effect
 ```
 
 </TabItem>
