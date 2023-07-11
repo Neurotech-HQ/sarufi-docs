@@ -37,6 +37,26 @@ Let's add a cancel intent to our chatbot. You can use the following code to add 
 2022-09-18 12:25:44,209 - root - INFO - A new intents "['cancel']" has been added
 ```
 </TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+> const chatbot = await sarufi.getBot({ id: 45 });
+> const bot = {
+  intents: {
+    cancel: [
+      'cancel',
+      'cancel it',
+      'cancel it please',
+      'acha',
+      'acha sasa',
+      'I changed my mind, cancel it',
+      'I changed my mind, cancel it please',
+    ],
+  },
+};
+ await sarufi.updateBot({ bot, id: chatbot.id });
+ ```
+</TabItem>
 <TabItem value="go" label="Golang">
 
 ```go
@@ -72,6 +92,24 @@ Let's now add a cancel fallback flow to our chatbot. You can use the following c
 2022-09-18 12:37:40,147 - root - INFO - Updating bot
 2022-09-18 12:37:41,824 - root - INFO - Bot(id=15, name=My First Chatbot)
 2022-09-18 12:37:41,825 - root - INFO - A new flow "['cancel']" has been added
+```
+</TabItem>
+<TabItem valus="js" label="JavaScript">
+
+```js
+> const chatbot = await sarufi.getBot({ id: 45 });
+> const bot = {
+  flows: {
+  "cancel": {
+    "message": [
+      "Okay we cancelled it, welcome again!"
+    ],
+    "next_state": "end"
+  },
+}
+};
+
+await sarufi.updateBot({ bot, id: chatbot.id });
 ```
 </TabItem>
 <TabItem value="go" label="Golang">

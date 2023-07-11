@@ -93,7 +93,7 @@ sarufi = Sarufi(api_key='your API KEY')
 
 ```js
 import sarufi from 'sarufi'
-sarufi.login({client_id: 'YOUR_CLIENT_ID', client_secret: 'YOUR_CLIENT_SECRET'})
+sarufi.login({ api_key: YOUR_API_KEY })
 ```
 </TabItem>
 
@@ -134,26 +134,45 @@ Bot(id=13, name=My First Chatbot)
 </TabItem>
 <TabItem value="js" label="JavaScript">
 
-```js
-> import sarufi from 'sarufi'
-> sarufi.login({username: 'your-username', password: 'your-password'})
-> await sarufi.createBot({bot:{name: "My Very First Chatbot"}})
+We supply chatbot details
+
+> Request payload
+
+```JSON
 {
-  success: true,
-  bot: {
-    intents: {},
-    user_id: 5,
-    description: 'PUT DESCRIPTION HERE',
-    industry: 'general',
-    created_at: '2022-10-03T20:42:15.020288',
-    name: 'My Very First Chatbot',
-    flows: {},
-    id: 45,
-    model_name: 'models/a5e23069d80f8add72bad0969f00d5e0.pkl',
-    visible_on_community: true,
-    updated_at: '2022-10-03T20:42:15.020301'
+  "name": "YOUR AWESOME BOT NAME",
+  "description": "PUT DESCRIPTION HERE",
+  "industry": "YOUR BOT INDUSTRY",
+  "intents": {},
+  "flows": {},
+}
+```
+Then we call
+
+```JS
+// call this first if you haven't logged in.
+sarufi.login({ api_key: YOUR_API_KEY }) 
+
+sarufi.createBot({bot: REQUEST PAYLOAD})
+```
+
+> Response for successful bot creation
+
+```JSONC
+{
+  "success": true,
+  "bot": {  "name": "YOUR AWESOME BOT NAME",
+            "description": "PUT DESCRIPTION HERE",
+            "user_id": "YOUR ID",
+            "industry": "YOUR BOT INDUSTRY",
+            "intents": {},
+            "flows": {},
+            "updated_at": "DATE THE BOT WAS LAST UPDATED",
+            "id": "BOT ID",
+            "model_name": "BOT MODEL NAME",
+            "created_at": "DATE THE BOT WAS CREATED"
   },
-  chat: [Function: chat]
+  "chat": "({message: string, chat_id?: uknown}) => RETURNS CHAT RESPONSE"
 }
 ```
 
