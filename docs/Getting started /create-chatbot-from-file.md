@@ -258,25 +258,14 @@ Lets say you have an `intents.json` file with the following content:
 
 You can simply include the name of the file with the function `bot.CreateIntents("intents.json")`:
 ```go
-package main
-
-import (
-	"github.com/sarufi-io/sarufi-golang-sdk"
-)
-
-func main() {
-	var bot sarufi.Bot
-	bot.Initialize("your client id", "your client secret")
-	bot.GetBot(bot_id)
-
-  bot.CreateIntents("intents.json")
+if err := example_bot.CreateIntents("intents.json"); err != nil {
+    log.Fatal(err)
 }
 
-// output
-
-INFO	2022/12/18 18:47:15 Creating intents from file...
-INFO	2022/12/18 18:47:15 Updating bot...
-INFO	2022/12/18 18:47:15 Intents created successfully
+// For changes to take effect
+if err = app.UpdateBot(example_bot); err != nil {
+    log.Fatal(err)
+}
 
 ```
 
@@ -314,25 +303,14 @@ You can similarly create flows from json files. Assuming you have an `flows.json
 
 Then you can create a new flow as follows:
 ```go
-package main
-
-import (
-	"github.com/sarufi-io/sarufi-golang-sdk"
-)
-
-func main() {
-	var bot sarufi.Bot
-	bot.Initialize("your client id", "your client secret")
-	bot.GetBot(bot_id)
-
-  bot.CreateFlows(newFlow)
+if err := example_bot.CreateFlows("flows.json"); err != nil {
+    log.Fatal(err)
 }
 
-// output
-
-INFO	2022/12/18 18:48:36 Creating flows from file...
-INFO	2022/12/18 18:48:36 Updating bot...
-INFO	2022/12/18 18:48:36 Flows created successfully
+// For changes to take effect
+if err = app.UpdateBot(example_bot); err != nil {
+    log.Fatal(err)
+}
 ```
 
 ## What you have learned
