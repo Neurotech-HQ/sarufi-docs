@@ -53,20 +53,20 @@ After installing packages, we need to configure our credentials. In `telegram-ch
 Open `.env` in the editor to edit the details with your credentials for sarufi and telegram. Then add the following:-
 
 ```text
-sarufi_api_key=Your Sarufi API Key
-sarufi_bot_id= bot id
-token = telegram token
-start_message= Hi {name}, Welcome To {bot_name}, How can i help you
+SARUFI_API_KEY =Your Sarufi API Key
+SARUFI_BOT_ID = bot id
+TELEGRAM_TOKEN = telegram token
+START_MESSAGE = Hi {name}, Welcome To {bot_name}, How can i help you
 ```
 
-The `start_message` will be the bot's response when `/start` command is sent by user.
+The `START_MESSAGE` will be the bot's response when `/start` command is sent by user.
 
 ## How to run Telegram 🚀
 
-To run Telegram bot, simply run `app.py` file after configuring above creditials.
+To run Telegram bot, simply run `main.py` file after configuring above creditials.
 
 ```bash
-python app.py
+python3 main.py
 ```
 
 **NOTE:** _All operations are carried out in the active evironment in case you use virtual environment_
