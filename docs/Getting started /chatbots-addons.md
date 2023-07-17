@@ -94,7 +94,7 @@ Let's now add a cancel fallback flow to our chatbot. You can use the following c
 2022-09-18 12:37:41,825 - root - INFO - A new flow "['cancel']" has been added
 ```
 </TabItem>
-<TabItem valus="js" label="JavaScript">
+<TabItem value="js" label="JavaScript">
 
 ```js
 > const chatbot = await sarufi.getBot({ id: 45 });
