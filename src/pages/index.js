@@ -9,18 +9,16 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
+    <header className={clsx(styles.heroBanner)}>
+      <div style={{width: "50%"}}>
+          <h1 style={{
+            fontSize: '2.5rem',
+          }}>
             Get started with Sarufi
-          </Link>
+          </h1>
+        <p style={{fontSize: '1.5rem'}}>{siteConfig.tagline}</p>
         </div>
-      </div>
+        <img src="img/homepage/hero.png" alt="Sarufi Hero" className={styles.heroImage} />
     </header>
   );
 }
@@ -30,7 +28,9 @@ export default function Home() {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Sarufi is a Conversational AI platform tailored to excel at African languages">
+      description="Sarufi is a Conversational AI platform tailored to excel at African languages"
+      wrapperClassName='homepage'
+      >
       <HomepageHeader />
       <main>
         <HomepageFeatures />
