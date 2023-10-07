@@ -104,19 +104,26 @@ Here are some things to take note:
     With language selection(currently English and Swahili), you can choose any base language for your bot.
     Your bot will be created with some default intents and flows that you can look at and make some modifications.
 
-- Threshold settings
-
-    Lets talk a bit more about threshold. A threshold indicates how correctly a bot's model was able to evaluate user intent and determine the flow. The threshold less than 0.5 indicates that your bot was not able to pick up user intent.
-
-    So we introduce a fallback message as a fallback message will be the response in case a model evaluates user intent below the threshold set. This can be any message like "Please rephrase your message" or "Please let me know what you mean by saying this".
-
-    We shall leave the `Toggle button`(Should we use your document as your first priority fallback reply when the user messade hits below threshold?) **off** as we do not have any document available for our bot. The part of using a documents for your bot is covered in [Creating a bot using Knowledge base](/docs/sarufi-dashboard/create-bot-from-knowledge-base)
-
 - Community visibility
 
     We provide [sarufi Community playground](https://playground.sarufi.io/community) for developer to showcase what they have been able to create using Sarufi. The toogle button lets you decide to make your chatbot publically available at sarufi Community for people to test.
 
     Lets leave it **off** as we can share our bot once its completely finished.
+
+- Threshold settings
+
+    Lets talk a bit more about threshold. A threshold indicates how correct a bot's model was able to evaluate user intent(s) and determine the flow. The threshold is a value between 0 and 1.
+
+    Lets assume that the bot has confidence level of about **0.345** on certain user massage. If we set bot's threshold to **0.4**, it will not be able to pick up the intent. So we introduce a fallback message as a fallback message will be the response in case a model evaluates user intent below the threshold set.
+
+    ![Illustration on Threshold](/img/illustration-threshold.png)
+
+    Setting our threshold in general means that if the model confidence on user intent is below the threshold, the bot will fallback to the fallback message or document.
+
+    The fallback can be a simple message (as "Please rephrase your message" or "Please let me know what you mean by saying this") or the bot can be configured to fallback to a document. This is covered in [Creating a bot using Knowledge base](/docs/sarufi-dashboard/create-bot-from-knowledge-base)
+
+
+    *This setting is found in your bot's settings (General Settings)*
 
 ## Sarufi Video series
 
