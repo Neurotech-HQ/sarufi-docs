@@ -6,7 +6,7 @@ sidebar_position: 3
 
 Its super useful if you can have a bot that can answer questions from your trained intents and also answer questions from your knowledge base. With this power at hand, you bot becomes super useful and can be used in many scenarios.
 
-Lets explore the quick way to do this in [Sarufi](sarufi.io)
+Lets explore the quick way to do this in [Sarufi](https://sarufi.io/)
 
 This guide assumes that you are familiar with building chatbot from both [scratch](/docs/sarufi-dashboard/intro-on-sarufi-dashboard#create-chatbot-from-scratch) and [knowledge Base](/docs/sarufi-dashboard/create-bot-from-knowledge-base.md). As we are going to explore the simple process of combining the two.
 
