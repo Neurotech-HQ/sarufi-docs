@@ -43,8 +43,12 @@ Before doing this let take a quick recap on what threshold is.
     Setting our threshold in general means that if the model confidence on user intent is below the threshold, the bot will fallback to the fallback message or document.
 
     The fallback can be a simple message (as "Please rephrase your message" or "Please let me know what you mean by saying this") or the bot can be configured to fallback to a document. This is covered in [Creating a bot using Knowledge base](/docs/sarufi-dashboard/create-bot-from-knowledge-base)
+    
+    ![The setting in the dashboard](/img/sarufi-threshold-setting.png)
 
-With clear understanding of Threshold and Fallback, lets set our threshold to **0.6** and turn on the fallback to our document. Click Edit to save your changes.
+With clear understanding of Threshold and Fallback, lets set our threshold to **0.6** and turn on the fallback to our document. 
+
+Finally click `Save` button.
 
 ## Lets test our bot
 
