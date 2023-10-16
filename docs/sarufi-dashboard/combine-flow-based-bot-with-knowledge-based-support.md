@@ -6,7 +6,7 @@ sidebar_position: 3
 
 Its super useful if you can have a bot that can answer questions from your trained intents and also answer questions from your knowledge base. With this power at hand, you bot becomes super useful and can be used in many scenarios.
 
-Lets explore the quick way to do this in [Sarufi](sarufi.io)
+Lets explore the quick way to do this in [Sarufi](https://sarufi.io/)
 
 This guide assumes that you are familiar with building chatbot from both [scratch](/docs/sarufi-dashboard/intro-on-sarufi-dashboard#create-chatbot-from-scratch) and [knowledge Base](/docs/sarufi-dashboard/create-bot-from-knowledge-base.md). As we are going to explore the simple process of combining the two.
 
@@ -43,8 +43,12 @@ Before doing this let take a quick recap on what threshold is.
     Setting our threshold in general means that if the model confidence on user intent is below the threshold, the bot will fallback to the fallback message or document.
 
     The fallback can be a simple message (as "Please rephrase your message" or "Please let me know what you mean by saying this") or the bot can be configured to fallback to a document. This is covered in [Creating a bot using Knowledge base](/docs/sarufi-dashboard/create-bot-from-knowledge-base)
+    
+    ![The setting in the dashboard](/img/sarufi-threshold-setting.png)
 
-With clear understanding of Threshold and Fallback, lets set our threshold to **0.6** and turn on the fallback to our document. Click Edit to save your changes.
+With clear understanding of Threshold and Fallback, lets set our threshold to **0.6** and turn on the fallback to our document. 
+
+Finally click `Save` button.
 
 ## Lets test our bot
 
