@@ -13,13 +13,23 @@ Our chabot has more functionality now, we want to make it more lit by powering i
 
 Lets have a look at the `order_pizza` flow below:-
 
-![Pizza flow illustration](/img/variable-placemennt-illustraction.png)
+![Pizza flow example](/img/pizza-example-flow.png)
 
-From  the flow, we can use user's response from previous state to provide a personalized response. Variable placement is implemented in the flow by enclosing state name in double curl brackets as `{{state name}}`
+From  the flow, we can use user's response from previous state to provide a personalized response. Variable placement is implemented in the flow by enclosing state name in double curl brackets as `{{state name}}`. The same format is used Sarufi Dashboard.
 
 ## Get working
 
 We are going to update our pizza bot to provide personalized answers. Below are yaml and json files. After updating flow file, go ahead to update your bot as we did in previous article.
+
+Below is how the variable placement works:
+
+![Pizza flow with variable placement illustration](/img/variable-placement-illustration.png)
+
+The user response from previous state is stored in memory of the next state. So at state `number_of_pizzas`, a bot has a memory of response provided in previous state of `order_pizza`. But you can not use the value for reference in the same state.
+
+You can see that the value held by `number_of_pizzas` is used in `pizza_toppings` state. This can be done at any state in the same flow. The bot will let our customer know how many pizzas has ordered and kind of toppings. This is a cool experience with our bot now.
+
+Lets get started by updating our flow file. Feel free to use the dashboard as the flow is the same
 
 <Tabs>
 <TabItem value="yaml" label="YAML">
