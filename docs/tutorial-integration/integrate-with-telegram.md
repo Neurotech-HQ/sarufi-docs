@@ -31,7 +31,7 @@ In this guide we are going to use [Sarufi](https://sarufi.io/) to connect to Tel
 Deploying your chatbot to Telegram is easy. You can deploy your chatbot to Telegram using Sarufi Dashboard or using your own server. We are going to cover both methods in this guide.
 
 <Tabs>
-<TabItem value="sarufi-Dashboard" label="Sarufi Dashboard">
+<TabItem value="sarufi-dashboard" label="Sarufi Dashboard">
 
 Sarufi Dashboard provides a simple interface to deploy your chatbot to Telegram. You can create a chatbot from scratch or use one of the templates available in Sarufi Dashboard. Assuming that you already have a chatbot created in Sarufi Dashboard, you can deploy it to Telegram by following the steps below:
 
@@ -53,7 +53,7 @@ Sarufi Dashboard provides a simple interface to deploy your chatbot to Telegram.
     Hi {name}, Welcome To {bot_name}, How can i help you?
     ```
 
-    ![Adding Telegram credentials](/img/dashboard-telegram-deployment-adding-creds.png)
+    ![Adding Telegram credentials](/img/dashboard-telegram-deployment-credentials.png)
 
     Click `save` then `Deploy`
 
@@ -63,9 +63,9 @@ Sarufi Dashboard provides a simple interface to deploy your chatbot to Telegram.
 
     This means that your bot is live on Telegram. You can now test your bot by opening it in Telegram app. You have a section to view your bot's Logs. You can view the logs to see what your bot is doing.
 
-6. Test your telegram Bot by opening it in Telegram app. View the [Test your Telegram Bot](#test-your-telegram-bot) section for more details.
+6. Test your telegram Bot by opening it in Telegram app.
 
-  To make changes to your bot, you can edit your bot in Sarufi Dashboard, `Update` then `Re-deploy` it to Telegram.
+  To make changes to your bot, you can edit your bot in Sarufi Dashboard, `Update` then `Re-deploy` it to Telegram. You can view your bot logs by clicking `View Logs` button.
   
   Take look at the sample bot we have been working on [here](#test-your-telegram-bot)
 
@@ -296,7 +296,7 @@ You will have to modify some commands shown here to suite your working environme
   ```
   **NOTE:** All operations are done in activated virtual environment for convience
 
-  Open your telegram app, search for your bot --> Send it a text. You can see a sample bot [below](#chatbot-at-work)
+  Open your telegram app, search for your bot --> Send it a text. You can see a sample bot [below](#test-your-telegram-bot)
 
 
 ## Get Credentials

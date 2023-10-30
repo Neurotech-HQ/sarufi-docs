@@ -34,19 +34,21 @@ In this guide, we are going to use [Sarufi Dashboard](https://sarufi.io) to conn
 - Navigate to settings in your bot, located at top right corner. Click on `Integration` >> `WhatsApp`
 - Add your whatsapp token and phone number ID. Read on how to [get whatsapp creds](#getting-credentials). The system will create random verify token for you. You can change it if you want to.
 
-  ![WhatsApp creds](/img/dashboard-whatsapp-deployment-adding-creds.png)
+  ![WhatsApp creds](/img/dashboard-whatsapp-deployment-credentials.png)
 
 - Once you have added your whatsapp token and phone number ID, you are ready to deploy your bot to WhatsApp. Click on `Save` button then `Deloy`
 - Wait for your job to finish. Once done, you will have a webhook url presented to you. Copy the url and follow simple steps at [Setting whatsapp webhook](#finalizing-whatsapp-set-up). You will also need to copy the verification token and paste it in your whatsapp cloud account.
 
-  ![WhatsApp webhook](/img/dashboard-whatsapp-deployment-completed.png)
+  ![WhatsApp webhook url](/img/dashboard-whatsapp-deployment-webhook-url.png)
 
-- After setting up webhook, you will need to subscribe to message topic. Navigate to webhook fields --> click `manage` to subscribe to `message` topic. Read on [webhook field subscription](#webhook-field-subscription).
+- After setting up webhook, you will need to subscribe to message topic. Navigate to webhook fields --> click `manage` to subscribe to `message` topic. Read on [webhook field subscription](#finalizing-whatsapp-set-up).
 - When done ,you are good to go... fire up your bot in whatsapp by sending text.
 - In case you want to change some of your credentials from WhatsApp Cloud, just update your credentials in your dashboard and click `Update` button. Then `Re-deploy` again.
+-You can view your bot logs by clicking `View Logs` button.
+- You can see the deployed Pizza bot in whatsapp in the gif [below](#test-your-whatsapp-chatbot)
 
 </TabItem>
-<TabItem value="custom" label="Custom Deployment">
+<TabItem value="custom-deployment" label="Custom Deployment">
 
 With custom deployment, you will be able to host the deployment on your own server. This is the best option if you want to have full control of your deployment. This section shows how to do custom deployment using python. Other languages will be added soon.
 
@@ -130,7 +132,7 @@ You will have to modify some commands shown here to suite your working environme
     VERIFY_TOKEN    = Your verify token
   ```
   :::note
-  The verification token is a random string. You can just create a random string and use it as your verification token.
+  The verification token is a random string. You can just create a random string and use it as your verification token. You can use any random string, but make sure you keep it because you will need to use the same string when we are setting up the webhook.
   :::
   
 - Once you have environment variables set, you are ready to fire 🚀 your `main.py` in activated virtual envirnoment.
@@ -149,14 +151,15 @@ You will have to modify some commands shown here to suite your working environme
 
 - Finish up. After ruuning the command, you will have to copy the url ngrok provides. The url looks like `https://xxxxxxxxxxx.ngrok.io`
 
-  With the provided url, follow simple steps at [Setting whatsapp webhook](#setting-whatsapp-webhook).
+  With the provided url, follow simple steps at [Setting whatsapp webhook](#finalizing-whatsapp-set-up).
 
   Copy the `VERIFY_TOKEN`, added as environment variable. Then paste into **verify token** section in your whatsapp cloud --> **verify and save**.
 
-  We are heading a the best part of this journey. Just take time to [subscribe to message topic](#webhook-field-subscription).
+  We are heading a the best part of this journey. Just take time to [subscribe to message topic](#finalizing-whatsapp-set-up).
   When done ,you are good to go... fire up your bot in whatsapp by sending text.
 
   🏁 When done with saving the token and url, go on to text your bot.
+- See the deployed Pizza bot in whatsapp in the gif [below](#test-your-whatsapp-chatbot)
 
 </TabItem>
 <TabItem value="replit" label="Using Replit">
@@ -194,6 +197,7 @@ You will have to modify some commands shown here to suite your working environme
 
   We are reaching at a good point with the set-up. Lets [subscribe to message topic](#finalizing-whatsapp-set-up).
   When done ,you are good to go... fire 🚀 up your bot in whatsapp by sending text.
+- Take a look at the deployed Pizza bot in whatsapp in the gif [below](#test-your-whatsapp-chatbot)
 
 </TabItem>
 </Tabs>
@@ -219,7 +223,7 @@ This section will guide you on how to obtain whatsapp cloud credentials and saru
   ![How to get whatsapp token and phone number ID](/img/get_whatsapp_token.png)
 
 </TabItem>
-<TabItem value="custom" label="Custom Deployment">
+<TabItem value="custom-deployment" label="Custom Deployment">
 
 - Whatsapp cloud creds
 
@@ -259,7 +263,7 @@ In this section, we are going to finalize our whatsapp set-up. We are going to s
 
   ![Webhook fields subscription](/img/webhook_subscription.png)
 
-## Testing in WhatsApp
+## Test Your WhatsApp ChatBot
 
 Lets finish up by testing our bot in whatsapp.
 
