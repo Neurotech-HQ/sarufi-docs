@@ -24,12 +24,12 @@ In this part of integration with whatsapp, I will walk you the journey using eit
 
 All the steps shown/illustrated here assume you already created a Sarufi account and have a bot created. If you don't have an account, you can create one [here](https://sarufi.io).
 
-<Tabs groupId="whatsapp-integration">
+<Tabs groupId="whatsapp-integration" defaultValue="sarufi-dashboard">
 <TabItem value="sarufi-dashboard" label="Sarufi Dashboard">
 
 In this guide, we are going to use [Sarufi Dashboard](https://sarufi.io) to connect to WhatsApp Cloud API. Sarufi is a no-code platform that allows you to build chatbots and deploy them to different channels.
 
-- Log into your [Sarufi account](https://sarufi.io).
+- Log into your Sarufi account.
 - Create a bot. You can follow the instructions [here](/docs/Getting-started/create-a-simple-chatbot).
 - Navigate to settings in your bot, located at top right corner. Click on `Integration` >> `WhatsApp`
 - Add your whatsapp token and phone number ID. Read on how to [get whatsapp creds](#getting-credentials). The system will create random verify token for you. You can change it if you want to.
