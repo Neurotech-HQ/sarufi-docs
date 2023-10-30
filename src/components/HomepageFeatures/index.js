@@ -54,7 +54,6 @@ function Feature({ Svg, title, description, button }) {
     <div
       style={{
         color: "white",
-        fontWeight: "normal",
         border: "2px solid #2776ea",
         borderRadius: "1rem",
         padding: "1rem 0",
@@ -64,9 +63,20 @@ function Feature({ Svg, title, description, button }) {
         <Svg className={styles.featureSvg} role="img" />
       </div>
       <div className="padding-horiz--md">
-        <h3>{title}</h3>
-        <p>{description}</p>
-        <Link to={button.link} className="button" style={{ background: "#2776ea" }}>
+        <h4>{title}</h4>
+        <p
+          style={{
+            color: "#a3a3a3",
+            fontSize: ".8rem",
+          }}
+        >
+          {description}
+        </p>
+        <Link
+          to={button.link}
+          className="button"
+          style={{ background: "#2776ea" }}
+        >
           {button.text}
         </Link>
       </div>
@@ -77,18 +87,16 @@ function Feature({ Svg, title, description, button }) {
 export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
-      <div className="container">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gridGap: "1rem",
-          }}
-        >
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
-        </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gridGap: "1rem",
+        }}
+      >
+        {FeatureList.map((props, idx) => (
+          <Feature key={idx} {...props} />
+        ))}
       </div>
     </section>
   );

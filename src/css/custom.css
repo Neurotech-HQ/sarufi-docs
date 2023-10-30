@@ -36,3 +36,19 @@
 .homepage {
   background-color: var(--primaryColor);
 }
+
+.text-white {
+  color: white;
+}
+
+.text-black {
+  color: black;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-black {
+  background-color: black;
+}
