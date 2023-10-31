@@ -8,6 +8,7 @@ import styles from "./index.module.css";
 
 // Components
 import Sdks from "../components/sdks";
+import Blog from "../components/blog";
 import SarufiPlayground from "../components/playground";
 import OtherCompanies from "../components/othercompanies";
 import HomepageFeatures from "@site/src/components/HomepageFeatures";
@@ -43,7 +44,7 @@ function VideoTutorial() {
         justifyContent: "space-evenly",
         alignItems: "center",
         columnGap: "2rem",
-        marginTop: "4rem",
+        margin: "4rem 0",
       }}
     >
       <div
@@ -175,6 +176,7 @@ export default function Home() {
         >
           <SarufiPlayground />
           <VideoTutorial />
+          <Blog />
         </section>
       </main>
     </Layout>
