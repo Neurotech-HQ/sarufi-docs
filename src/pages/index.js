@@ -155,6 +155,80 @@ function VideoTutorial() {
   );
 }
 
+function CTA() {
+  return (
+    <section
+      style={{
+        display: "flex",
+        alignItems: "center",
+        margin: "-10rem 4rem 4rem 4rem",
+        padding: "4rem",
+        backgroundColor: "#2563EB",
+        borderRadius: "1rem",
+      }}
+    >
+      <div
+        className="text-white"
+        style={{
+          width: "50%",
+        }}
+      >
+        <p
+          style={{
+            fontSize: ".6rem",
+          }}
+        >
+          Cutting-Edge Chatbots in minutes today!
+        </p>
+        <h2>Conversational Power with Sarufi</h2>
+        <p>
+          Ready to revolutionize your chatbot game? Dive into Sarufi now and
+          elevate your user interactions to the next level.
+        </p>
+        <button
+          style={{
+            backgroundColor: "#050C35",
+            color: "#fff",
+            border: "none",
+            borderRadius: "4px",
+            padding: "1rem",
+            cursor: "pointer",
+          }}
+        >
+          Get started
+        </button>
+      </div>
+      <div
+        style={{
+          width: "50%",
+          position: "relative",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "120%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src="img/homepage/cta illustration.png"
+            alt="Sarufi CTA"
+            style={{
+              width: "100%",
+            }}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
   return (
@@ -171,13 +245,14 @@ export default function Home() {
         <section
           className="bg-white"
           style={{
-            padding: "4rem",
+            padding: "4rem 4rem 16rem 4rem",
           }}
         >
           <SarufiPlayground />
           <VideoTutorial />
           <Blog />
         </section>
+        <CTA />
       </main>
     </Layout>
   );
