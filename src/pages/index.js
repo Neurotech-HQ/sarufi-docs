@@ -17,15 +17,9 @@ function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
   return (
     <header className={clsx(styles.heroBanner)}>
-      <div style={{ width: "50%" }}>
-        <h1
-          style={{
-            fontSize: "2.5rem",
-          }}
-        >
-          Get started with Sarufi
-        </h1>
-        <p style={{ fontSize: "1.5rem" }}>{siteConfig.tagline}</p>
+      <div className={styles.heroBannerTextContainer}>
+        <h1 className={styles.heroTitle}>Get started with Sarufi</h1>
+        <p className={styles.heroBannerText}>{siteConfig.tagline}</p>
       </div>
       <img
         src="img/homepage/hero.png"

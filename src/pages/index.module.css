@@ -15,16 +15,49 @@
   background: #eff6ff;
 }
 
-.heroImage{
+.heroBannerTextContainer {
+  width: 50%;
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+}
+
+.heroBannerText {
+  font-size: 1.5rem;
+}
+
+.heroImage {
   position: absolute;
   width: 50%;
   bottom: 0;
   right: 0;
 }
 
-@media screen and (max-width: 996px) {
+@media screen and (max-width: 1024px) {
   .heroBanner {
-    padding: 2rem;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .heroBannerTextContainer {
+    width: 100%;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroBannerText {
+    font-size: 1rem;
+  }
+
+  .heroImage {
+    display: none;
+    /* position: relative;
+    width: 100%;
+    bottom: 0;
+    right: 0; */
   }
 }
 

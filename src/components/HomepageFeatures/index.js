@@ -51,14 +51,7 @@ const FeatureList = [
 
 function Feature({ Svg, title, description, button }) {
   return (
-    <div
-      style={{
-        color: "white",
-        border: "2px solid #2776ea",
-        borderRadius: "1rem",
-        padding: "1rem 0",
-      }}
-    >
+    <div className={styles.featureContainer}>
       <div className="text--center">
         <Svg className={styles.featureSvg} role="img" />
       </div>
@@ -87,13 +80,7 @@ function Feature({ Svg, title, description, button }) {
 export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gridGap: "1rem",
-        }}
-      >
+      <div className={styles.featuresContainer}>
         {FeatureList.map((props, idx) => (
           <Feature key={idx} {...props} />
         ))}
