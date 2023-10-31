@@ -65,14 +65,13 @@ function VideoTutorial() {
             position: "relative",
           }}
         >
-          <h3
-            className="text-white"
+          <img
+            src="img/homepage/sarufi logo.png"
+            alt="Sarufi Logo"
             style={{
-              fontSize: "1.5rem",
+              width: "200px",
             }}
-          >
-            Sarufi
-          </h3>
+          />
           <a
             href="https://youtu.be/Gtg199orO5c?si=4XOHW6at4IQlHX2w"
             target="_blank"
