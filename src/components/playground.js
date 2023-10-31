@@ -1,24 +1,10 @@
 import React from "react";
+import styles from "./playground.module.css";
 
 function SarufiPlayground() {
   return (
-    <section
-      style={{
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        columnGap: "2rem",
-        padding: "2rem",
-        backgroundImage: "url('img/playground/playground_bg.png')",
-        backgroundPosition: "center",
-        backdropFilter: "blur(16px)"
-      }}
-    >
-      <div
-        style={{
-          width: "50%",
-        }}
-      >
+    <section className={styles.playgroundContainer}>
+      <div className={styles.playgroundTextContainer}>
         <img
           src="img/playground/playground_logo.png"
           alt="Sarufi playground logo"
@@ -44,14 +30,7 @@ function SarufiPlayground() {
           Join Now
         </button>
       </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gridGap: ".5rem",
-          width: "50%",
-        }}
-      >
+      <div className={styles.playgroundImagesContainer}>
         {[...Array(15).keys()].map((i) => {
           return (
             <img

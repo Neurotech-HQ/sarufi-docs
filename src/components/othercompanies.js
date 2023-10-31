@@ -73,6 +73,9 @@ function OtherCompanies() {
             display: "flex",
             justifyContent: "space-evenly",
             alignItems: "center",
+            flexWrap: "wrap",
+            columnGap: "2rem",
+            rowGap: "2rem",
           }}
         >
           {/* Limit to 5 only */}

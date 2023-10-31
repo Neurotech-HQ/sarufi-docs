@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./trustpilot.module.css";
 
 function TrustPilot() {
   const trustPilotData = [
@@ -25,16 +26,7 @@ function TrustPilot() {
   ];
 
   return (
-    <section
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3, minmax(300px, 1fr))",
-        gap: "1rem",
-        // padding: "4rem",
-        width: "90%",
-        margin: "-6rem auto 3rem auto",
-      }}
-    >
+    <section className={styles.trustPilotContainer}>
       {trustPilotData.map((review, index) => {
         return (
           <TrustPilotCard
@@ -56,7 +48,7 @@ function TrustPilotCard({ title, review, rating }) {
       style={{
         padding: "1rem",
         backgroundColor: "#00B67A",
-        borderRadius: "10px"
+        borderRadius: "10px",
       }}
     >
       <h3>{title}</h3>

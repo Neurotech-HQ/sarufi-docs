@@ -1,17 +1,10 @@
 import React from "react";
+import styles from "./sdks.module.css";
 
 function Sdks() {
   return (
-    <section
-      className="text-black bg-white"
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "4rem 4rem 6rem 4rem",
-      }}
-    >
-      <div style={{ width: "50%" }}>
+    <section className={styles.sdksContainer}>
+      <div className={styles.sdksTextContainer}>
         <h3>Build with Ease</h3>
         <p>
           Unlock Sarufi's potential with our robust SDKs for Python, Node.js,
@@ -20,23 +13,30 @@ function Sdks() {
           experience.
         </p>
       </div>
-      <div style={{
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        width: "100%",
-      }}>
-        <img src="img/homepage/python.png" alt="python"
-        style={{
+      <div
+        className={styles.sdksImageContainer}
+      >
+        <img
+          src="img/homepage/python.png"
+          alt="python"
+          style={{
             width: "200px",
-        }}
+          }}
         />
-        <img src="img/homepage/php.png" alt="php" style={{
+        <img
+          src="img/homepage/php.png"
+          alt="php"
+          style={{
             width: "200px",
-        }} />
-        <img src="img/homepage/GO.png" alt="GO" style={{
+          }}
+        />
+        <img
+          src="img/homepage/GO.png"
+          alt="GO"
+          style={{
             width: "200px",
-        }} />
+          }}
+        />
       </div>
     </section>
   );

@@ -1,0 +1,37 @@
+.playgroundContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  column-gap: 2rem;
+  row-gap: 2rem;
+  padding: 2rem;
+  background-image: url("/static/img/playground/playground_bg.png");
+  background-position: center;
+  backdrop-filter: blur(16px);
+}
+
+.playgroundTextContainer {
+  width: 50%;
+}
+
+.playgroundImagesContainer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 0.5rem;
+  width: 50%;
+}
+
+@media screen and (max-width: 1024px) {
+  .playgroundContainer {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .playgroundTextContainer {
+    width: 100%;
+  }
+
+  .playgroundImagesContainer {
+    width: 100%;
+  }
+}
