@@ -68,7 +68,7 @@ const config = {
         title: 'Sarufi',
         logo: {
           alt: 'Sarufi Logo',
-          src: 'img/homepage/sarufi logo.png',
+          src: 'img/homepage/logo.png',
         },
         items: [
           // {
