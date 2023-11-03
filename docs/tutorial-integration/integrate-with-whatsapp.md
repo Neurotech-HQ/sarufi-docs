@@ -36,7 +36,7 @@ In this guide, we are going to use [Sarufi Dashboard](https://sarufi.io) to conn
 
   ![WhatsApp creds](/img/dashboard-whatsapp-deployment-credentials.png)
 
-- Once you have added your whatsapp token and phone number ID, you are ready to deploy your bot to WhatsApp. Click on `Save` button then `Deloy`
+- Once you have added your whatsapp token and phone number ID, you are ready to deploy your bot to WhatsApp. Click on `Save` button then `Deploy`
 - Wait for your job to finish. Once done, you will have a webhook url presented to you. Copy the url and follow simple steps at [Setting whatsapp webhook](#finalizing-whatsapp-set-up). You will also need to copy the verification token and paste it in your whatsapp cloud account.
 
   ![WhatsApp webhook url](/img/dashboard-whatsapp-deployment-webhook-url.png)

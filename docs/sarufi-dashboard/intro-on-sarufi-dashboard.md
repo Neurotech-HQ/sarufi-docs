@@ -123,7 +123,7 @@ Here are some things to take note:
     The fallback can be a simple message (as "Please rephrase your message" or "Please let me know what you mean by saying this") or the bot can be configured to fallback to a document. This is covered in [Creating a bot using Knowledge base](/docs/sarufi-dashboard/create-bot-from-knowledge-base)
 
 
-    *This setting is found in your bot's settings (General Settings)*
+*This setting is found in your bot's settings (General Settings)*
 
 ## Sarufi Video series
 
