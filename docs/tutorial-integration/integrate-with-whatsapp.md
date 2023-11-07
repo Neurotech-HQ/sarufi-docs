@@ -16,6 +16,16 @@ WhatsApp is one of the most popular messaging apps in the world. It has over 2 b
 
 To connect to WhatsApp Cloud API, you need to create a WhatsApp Business account. You can do this by following the instructions in the [Get started-cloud API](https://developers.facebook.com/docs/whatsapp/cloud-api/get-started).
 
+Here are steps to follow for you to get started: 
+- Go to your [apps](https://developers.facebook.com/apps).
+- [Create an app](https://developers.facebook.com/apps/create/).
+- Select app type >> Business.
+- You will be required to fill-in basic app informations >> click **create app** button.
+- You will be redirected to Product section. Add `WhatsApp` as your product by clicking **set up**.
+- On your left side bar, click whatsapp >> **API setup**
+- Right there you will see a your **Tempoarary Access Token** and WhatsApp test number with its **Phone number ID**.
+- Lastly verify the number you will be using for testing on the To field.
+
 
 In this part of integration with whatsapp, I will walk you the journey using either Sarufi Dashboard or self-served deployment(custom deployment) for integration.
 
