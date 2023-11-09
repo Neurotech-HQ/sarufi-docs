@@ -14,6 +14,30 @@ To get working with the dashboard requires no prior knowledge of programming as 
 
 With a dashboard, you can do a lot in a quick way. Lets look at the key features of the dashboard.
 
+### Channels Integration
+
+Sarufi dashboard enables you to integrate your chatbot with different messaging platforms such as Whatsapp, telegram, facebook messenger and many more to come. This will enable you to reach your customers on their favorite messaging platform. You can read more on [channels integration](/docs/sarufi-dashboard/channels-integration)
+
+You just need to navigate to settings of your chatbot then Integrations
+
+![Sarufi dashboard integrations](/img/sarufi-dashboard-integrations.png)
+
+### Chabot Analytics
+
+With the dashboard, you will be able to see how your chatbot is performing. You will be able to see the number of users, messages sent and received, and many more. This is handy as you will be able to see how your chatbot is performing and make some improvements.
+
+![Analytics users counts](/img/analytics-users.png)
+
+![Analytics word cloud](/img/analytics-word-cloud.png)
+
+### Chatbot as Template
+
+With the dashboard, you can create a chatbot and share it to be used as template. This will enable other developers to use your chatbot as a starting point for their chatbot idea.
+
+You just need to develop your chatbot and provide some information about it. Then you can share it to the community. Visit [sarufi templates](https://www.sarufi.io/templates) section to see what other developers have created.
+
+![Chatbot as template](/img/sarufi-chatbot-template.png)
+
 ### Web Plugin
 
 After developing your chatbot using sarufi, you need to let it get into use in the real world situation. The easiest way can be integrating you bot with your website.
