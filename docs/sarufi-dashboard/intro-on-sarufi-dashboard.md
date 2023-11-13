@@ -63,10 +63,11 @@ Building a chatbot from scratch can be a daunting task. That's why we have creat
     1. Go to the **Settings** page.
     1. Click on the **Export Bot to Template** button.
         
-        You will be required to fill in all important details about your template. Provide clear and concise information about your template's fuctionalities/features. 
-        On top of that, you will be required to provide a at least 4 screenshots of your chatbot and a gif of conversations . Make sure that you provide screenshots of all important parts of your chatbot.
+    You will be required to fill in all important details about your template. Provide clear and concise information about your template's fuctionalities/features. 
+    
+    On top of that, you will be required to provide a at least 4 screenshots of your chatbot and a gif of conversations . Make sure that you provide screenshots of all important parts of your chatbot.
 
-        ![Publish chatbot as template](/img/sarufi-template-details.png)
+    ![Publish chatbot as template](/img/sarufi-template-details.png)
     
     Once you have filled in all the details, click on the **Publish** button. Your template will be published on the Sarufi marketplace.
 
