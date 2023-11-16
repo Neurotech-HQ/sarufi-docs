@@ -356,7 +356,7 @@ To test your Telegram chatbot, you can send a message to your bot on the Telegra
 
 Here is the test sample of our Pizza bot we have been working on.
 
-![Pizza bot test](/img/telegram-bot-sample.gif)
+![Pizza bot test](/gif/telegram-bot-sample.gif)
 
 ## What you learned 👨🏽‍💻
 

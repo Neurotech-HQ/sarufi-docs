@@ -54,4 +54,4 @@ Finally click `Save` button.
 
 After saving the changes, you can now test your bot. You can test your bot by clicking the chat icon on the right side of the dashboard. I created a simple bot that could respond to some messages based on my intents and the doument provided.
 
-![Sample bot](/img/sample-bot.gif)
+![Sample bot](/gif/sample-bot.gif)

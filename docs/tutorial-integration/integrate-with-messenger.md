@@ -251,4 +251,4 @@ We are going to finalize the setup by setting up webhook and subscribe to messag
 
 With a bot deployed in messenger, here is a sample of a pizza bot.
 
-![Bot deployed in messenger](/img/messenger-bot.gif)
+![Bot deployed in messenger](/gif/messenger-bot.gif)

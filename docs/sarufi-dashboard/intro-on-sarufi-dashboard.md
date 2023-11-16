@@ -110,7 +110,7 @@ As your bot gets to interact with users, it needs to be updated on the cases it 
 
 During development of anything, you would not like to move on without testing the current state of your project. Here comes a cool chatbot live-test feature. This will enable you eliminate any guesswork and ensures that the chatbot you're developing will work as intended
 
-![Dashboard live test](/img/sarufi-dashboard-live-test.gif)
+![Dashboard live test](/gif/sarufi-dashboard-live-test.gif)
 
 ### Media support
 
