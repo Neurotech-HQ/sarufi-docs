@@ -237,7 +237,7 @@ if __name__ == "__main__":
 
 With everything set, lets make order to our chatbot.
 
-![Sample of our chatbot](/img/webhook-order-pizza.gif)
+![Sample of our chatbot](/gif/webhook-order-pizza.gif)
 
 Notification message
 

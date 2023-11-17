@@ -289,7 +289,7 @@ You can test WhatsApp by sending a message to your bot.
 
   With the Pizza bot we have been working through, here is the bot responses deployed in whatsapp.
   
-  ![WhatsApp bot test](/img/whatsapp-bot-sample.gif)
+  ![WhatsApp bot test](/gif/whatsapp-bot-sample.gif)
 
 ## What you learned
 
