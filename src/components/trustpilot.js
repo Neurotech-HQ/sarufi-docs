@@ -4,23 +4,24 @@ import styles from "./trustpilot.module.css";
 function TrustPilot() {
   const trustPilotData = [
     {
-      name: "John Doe",
-      title: "Exceptional chatbot solution",
+      name: "Micheal Wekesa",
+      userNameUrl: "https://sarufi.io/images/testimonials/micheal.jpg",
       review:
-        "Sarufi has revolutionized our customer interactions. Its multilingual support and integration with diverse platforms transformed our user engagement. A game-changer for sure!",
+        "Sarufi made building a chatbot easy and quick. Its user-friendly interface and Swahili support are perfect for businesses in East Africa. Thanks to Sarufi, my computer science learning resource chatbot was up and running in no time and integrated smoothly with Twilio.",
       rating: 5,
     },
     {
-      name: "Chisomo Mutale",
-      title: "I just really loved easy it was to use",
-      review: "I just really loved easy it was to use and integrate.",
+      name: "Fuad Habib",
+      userNameUrl: "https://sarufi.io/images/testimonials/fuad.jpg",
+      review:
+        "As a software developer, I was impressed with the user-friendliness and ease of integration of Sarufi's conversational AI platform. The API was straightforward and well-documented, making my development process a breeze. I highly recommend it to fellow developers looking to enhance their user interfaces with a real-time, intelligent AI that can respond to user inquiries in real-time.",
       rating: 5,
     },
     {
-      name: "John Doe",
-      title: "Exceptional chatbot solution",
+      name: "Nyanda Freddy",
+      userNameUrl: "https://sarufi.io/images/testimonials/nyanda.jpg",
       review:
-        "Sarufi has revolutionized our customer interactions. Its multilingual support and integration with diverse platforms transformed our user engagement. A game-changer for sure!",
+        "My 'aha' moment was the natural language processing capabilities of Sarufi's conversational AI platform, which was able to understand and respond to complex sentences. The platform can be easily integrated into social media platforms and has a no-code option, saving a lot of time. I highly recommend it to other developers.",
       rating: 5,
     },
   ];
@@ -31,9 +32,10 @@ function TrustPilot() {
         return (
           <TrustPilotCard
             key={index}
-            title={review.title}
+            name={review.name}
             review={review.review}
             rating={review.rating}
+            userNameUrl={review.userNameUrl}
           />
         );
       })}
@@ -41,7 +43,7 @@ function TrustPilot() {
   );
 }
 
-function TrustPilotCard({ title, review, rating }) {
+function TrustPilotCard({ userNameUrl, name, review, rating }) {
   return (
     <div
       className="text-black"
@@ -51,7 +53,25 @@ function TrustPilotCard({ title, review, rating }) {
         borderRadius: "10px",
       }}
     >
-      <h3>{title}</h3>
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "2rem",
+        marginBottom: "1rem",
+      }}>
+        <div style={{
+            width: "50px",
+            height: "50px"
+        }}>
+          <img src={userNameUrl} alt={name} style={{
+            borderRadius: "50%",
+            width: "100%"
+          }} />
+        </div>
+        <h3 style={{
+          marginBottom: 0,
+        }}>{name}</h3>
+      </div>
       <p>{review}</p>
     </div>
   );

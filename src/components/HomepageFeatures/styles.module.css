@@ -33,3 +33,9 @@
     grid-template-columns: repeat(1, 1fr);
   }
 }
+
+@media screen and (max-width: 640px) {
+  .features {
+    margin: 0 2rem 4rem 2rem;
+  }
+}

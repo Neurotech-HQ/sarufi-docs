@@ -1,46 +1,49 @@
 import React from "react";
+import blogStyles from "./blogStyles.module.css";
 
 function Blog() {
   const blogPosts = [
     {
-      title: "Telegram webhooks vs polling",
-      date: "2021-08-07",
-      author: "Jovine Mutelani",
+      title:
+        "Neurotech Africa's Sarufi AI Workshops Empowering University Students.",
+      date: "2023-11-27",
+      author: "Omega Seyongwe",
       description:
-        "After building your chatbot with sarufi, you might need to integrate it with other popular messaging platforms.",
-      link: "/blog/2021/08/07/sarufi-v0.1.0-is-out",
+        "Neurotech Africa,  through its comprehensive Sarufi ambassador program,  has forged partnerships with universities across the Tanzanian country, providing students with hands-on experience with Sarufi AI, a Developer Centric Conversational AI for African Languages. Sarufi AI Workshops: Empowering Students with Conversational AI Recently, Neurotech Africa's",
+      link: "https://blog.neurotech.africa/sarufi-ai-worshops/",
     },
     {
-      title: "Sarufi v0.1.0 is out!",
-      date: "2022-08-07",
+      title: "Sarufi New Features & Updates",
+      date: "2023-11-09",
       author: "Jovine Mutelani",
       description:
-        "We are excited to announce the release of Sarufi v0.1.0. This is a major release with a lot of improvements and new features. Read more about it in this blog post.",
-      link: "/blog/2021/08/07/sarufi-v0.1.0-is-out",
+        "Sarufi team is happy to keep you updated with new features. I hope you are so excited to see what new feature came to sarufi in the last few days.",
+      link: "https://blog.neurotech.africa/sarufi-october-release/",
     },
     {
-      title: "Sarufi v0.1.0 is out!",
-      date: "2022-09-04",
-      author: "Jovine Mutelani",
+      title: "MVC Kiswahili Hackathon Series",
+      date: "2023-10-30",
+      author: "Avicenna",
       description:
-        "We are excited to announce the release of Sarufi v0.1.0. This is a major release with a lot of improvements and new features. Read more about it in this blog post.",
-      link: "/blog/2021/08/07/sarufi-v0.1.0-is-out",
+        "Have you heard?! Mozilla, in partnership with Sarufi AI and Africas Talking, are hosting a four part hackathon series focusing on the potentials of voice",
+      link: "https://blog.neurotech.africa/mvc-kiswahili-hackathon-series/",
     },
     {
-      title: "Sarufi v0.1.0 is out!",
-      date: "2022-12-27",
-      author: "Jovine Mutelani",
+      title: "HEY YOO!",
+      date: "2023-10-10",
+      author: "Avicenna",
       description:
-        "We are excited to announce the release of Sarufi v0.1.0. This is a major release with a lot of improvements and new features. Read more about it in this blog post.",
-      link: "/blog/2021/08/07/sarufi-v0.1.0-is-out",
+        "It's hacktoberfest and in light of this month I'd like to write about a prominent open source package, here are its stats: 8000+ downloads",
+      link: "https://blog.neurotech.africa/hey-yoo/",
     },
     {
-      title: "Sarufi v0.1.0 is out!",
-      date: "2023-04-17",
-      author: "Jovine Mutelani",
+      title:
+        "4 Ways AI chatbots improve your customer service as we celebrate Customer Service Week",
+      date: "2023-10-08",
+      author: "Chisomo Mutale",
       description:
-        "We are excited to announce the release of Sarufi v0.1.0. This is a major release with a lot of improvements and new features. Read more about it in this blog post.",
-      link: "/blog/2021/08/07/sarufi-v0.1.0-is-out",
+        "This week, the first week of October, as we celebrate Customer Service Week, businesses across the globe are focusing on recognizing the vital role customer",
+      link: "https://blog.neurotech.africa/how-ai-chatbots-improve-your-customer-service-celebrating-customer-service-week/",
     },
   ];
 
@@ -87,9 +90,9 @@ function Blog() {
         <ActionCircle />
         <h3
           className="text-white"
-          //   style={{
-          //     fontSize: "1.5rem",
-          //   }}
+          style={{
+            marginBottom: 0,
+          }}
         >
           Blog
         </h3>
@@ -106,18 +109,7 @@ function Blog() {
           <ActionCircle withWhiteCircle />
         </div>
       </div>
-      <div
-        style={{
-          backgroundColor: "#300924",
-          padding: "2rem",
-          borderTop: "1px solid #222222",
-          borderBottomLeftRadius: "10px",
-          borderBottomRightRadius: "10px",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          rowGap: "1rem",
-        }}
-      >
+      <div className={blogStyles.blogMain}>
         {blogPosts.map((blogPost, index) => (
           <div key={index}>
             <h4

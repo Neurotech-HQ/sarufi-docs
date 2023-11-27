@@ -8,7 +8,7 @@ import styles from "./index.module.css";
 
 // Components
 import Sdks from "../components/sdks";
-import Blog from "../components/blog";
+import Blog from "../components/blog/blog";
 import SarufiPlayground from "../components/playground";
 import OtherCompanies from "../components/othercompanies";
 import HomepageFeatures from "@site/src/components/HomepageFeatures";
@@ -21,31 +21,25 @@ function HomepageHeader() {
         <h1 className={styles.heroTitle}>Get started with Sarufi</h1>
         <p className={styles.heroBannerText}>{siteConfig.tagline}</p>
       </div>
-      <img
-        src="img/homepage/hero.png"
-        alt="Sarufi Hero"
-        className={styles.heroImage}
-      />
+      <div className={styles.heroImageCont}>
+        <div className={styles.heroImage}>
+          <img
+            src="img/homepage/hero.png"
+            alt="Sarufi Hero"
+            style={{
+              width: "100%",
+            }}
+          />
+        </div>
+      </div>
     </header>
   );
 }
 
 function VideoTutorial() {
   return (
-    <section
-      style={{
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "center",
-        columnGap: "2rem",
-        margin: "4rem 0",
-      }}
-    >
-      <div
-        style={{
-          width: "50%",
-        }}
-      >
+    <section className={styles.videoContainer}>
+      <div className={styles.videoPart}>
         <div
           style={{
             display: "flex",
@@ -98,11 +92,7 @@ function VideoTutorial() {
           </a>
         </div>
       </div>
-      <div
-        style={{
-          width: "50%",
-        }}
-      >
+      <div className={styles.videoPart}>
         <h2>How to Create a Chatbot without Code using SARUFI AI</h2>
         <p>
           SARUFI is a Platform for African developers to build conversational
@@ -150,22 +140,8 @@ function VideoTutorial() {
 
 function CTA() {
   return (
-    <section
-      style={{
-        display: "flex",
-        alignItems: "center",
-        margin: "-10rem 4rem 4rem 4rem",
-        padding: "4rem",
-        backgroundColor: "#2563EB",
-        borderRadius: "1rem",
-      }}
-    >
-      <div
-        className="text-white"
-        style={{
-          width: "50%",
-        }}
-      >
+    <section className={styles.ctaContainer}>
+      <div className={styles.ctaWords}>
         <p
           style={{
             fontSize: ".6rem",
@@ -191,24 +167,8 @@ function CTA() {
           Get started
         </button>
       </div>
-      <div
-        style={{
-          width: "50%",
-          position: "relative",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "120%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+      <div className={styles.ctaImageCont}>
+        <div className={styles.ctaImagePos}>
           <img
             src="img/homepage/cta illustration.png"
             alt="Sarufi CTA"
@@ -235,12 +195,7 @@ export default function Home() {
         <HomepageFeatures />
         <Sdks />
         <OtherCompanies />
-        <section
-          className="bg-white"
-          style={{
-            padding: "4rem 4rem 16rem 4rem",
-          }}
-        >
+        <section className={styles.lowerPartSection}>
           <SarufiPlayground />
           <VideoTutorial />
           <Blog />
