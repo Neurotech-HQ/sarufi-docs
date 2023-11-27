@@ -12,6 +12,14 @@ WhatsApp is one of the most popular messaging apps in the world. It has over 2 b
 
 ![WhatsApp](/img/whatsapp-1900453_640.png)
 
+## Before we get started
+
+Before we get started with intergrating you WhatsApp, We'll need a few things:
+- A Sarufi bot, If you don’t have one, you can click here to create one [here](https://sarufi.io).
+- A whatsapp Business account
+- An Access Token from your WhatsApp cloud API
+
+
 ## How to connect to WhatsApp Cloud API
 
 To connect to WhatsApp Cloud API, you need to create a WhatsApp Business account. You can do this by following the instructions in the [Get started-cloud API](https://developers.facebook.com/docs/whatsapp/cloud-api/get-started).
@@ -22,12 +30,22 @@ Here are steps to follow for you to get started:
 - Select app type >> Business.
 - You will be required to fill-in basic app informations >> click **create app** button.
 - You will be redirected to Product section. Add `WhatsApp` as your product by clicking **set up**.
-- On your left side bar, click whatsapp >> **API setup**
+
+  ## Getting Credentials
+
+This section will guide you on how to obtain whatsapp cloud credentials and sarufi credentials if you are doing custom deployment.
+
+<Tabs groupId="whatsapp-integration">
+<TabItem value="sarufi-dashboard" label="Sarufi Dashboard">
+
+**Whatsapp cloud creds**
+
+- On your Meta Developer dashboard, Navigate to `Whatsapp`-->`API setup`
 - Right there you will see a your **Tempoarary Access Token** and WhatsApp test number with its **Phone number ID**.
 - Lastly verify the number you will be using for testing on the To field.
 
 
-In this part of integration with whatsapp, I will walk you the journey using either Sarufi Dashboard or self-served deployment(custom deployment) for integration.
+In this part of integration with whatsapp, we will walk through the journey using either Sarufi Dashboard or self-served deployment(custom deployment) for integration.
 
 
 ## Getting Started
@@ -216,21 +234,6 @@ You will have to modify some commands shown here to suite your working environme
 </TabItem>
 </Tabs>
 
-
-## Getting Credentials
-
-This section will guide you on how to obtain whatsapp cloud credentials and sarufi credentials if you are doing custom deployment.
-
-<Tabs groupId="whatsapp-integration">
-<TabItem value="sarufi-dashboard" label="Sarufi Dashboard">
-
-- Whatsapp cloud creds
-
-  Navigate to `Whatsapp`-->`API setup` to get whatsApp cloud `token` and `phone number ID` to be used.
-
-  You will have access token and phone number id.
-
-  ![How to get whatsapp token and phone number ID](/img/get_whatsapp_token.png)
 
 </TabItem>
 <TabItem value="custom-deployment" label="Custom Deployment">
