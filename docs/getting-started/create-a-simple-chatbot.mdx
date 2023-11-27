@@ -1,0 +1,682 @@
+---
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Create your first Chatbot
+
+You can use any of the supported programming languages to create your first chatbot. This documentation currently support [**Python**](https://github.com/sarufi-io/sarufi-python-sdk), [**JavaScript**](https://github.com/sarufi-io/sarufi-js) and [**Golang**](https://github.com/sarufi-io/sarufi-golang-sdk).
+
+:::note
+As mentioned Before almost all of language based SDK with exception of [**Python**](https://github.com/sarufi-io/sarufi-python-sdk) are community maintained and not officially supported by Sarufi. If you find any issues with the SDK, please create an issue on the respective GitHub repository.
+Also If you see missing documentation or typos or bugs for any of the SDK, You're welcome to contribute
+:::
+
+## Draft Architecture
+
+Before we start coding, let's first draft the architecture of our chatbot. Here an oversimplified version of the architecture for our chatbot. Sarufi will handle intents training, intent inference, and dialog management. We will be handling the application logic and the user interface.
+
+![Oversimplified Architecture](/img/chatbot-flow.png)
+
+
+## Installations
+
+Select your language of preference to get instructions on installing `SDK`
+
+<Tabs groupId="get_started">
+<TabItem value="py" label="Python">
+Its good to use virtual environment. You can read more on <a target="_blank" href="https://www.geeksforgeeks.org/python-virtual-environment/">Virtual Environment</a>. 
+So, lets create a virtual environment ➡️ activate it ➡️ install sarufi.
+
+```bash
+python -m venv chatbot
+source chatbot/bin/activate
+pip install --upgrade sarufi
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```bash
+npm install sarufi
+```
+
+</TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+go mod init chatbot
+go get github.com/sarufi-io/sarufi-golang-sdk
+```
+
+</TabItem>
+</Tabs>
+
+## Sign up to Sarufi.io
+
+To use the Sarufi.io SDK, you'll need to create an account on the [Sarufi.io](https://www.sarufi.io/) website. Here's how:
+
+1. Go to the [Sarufi.io](https://www.sarufi.io/) website and click on the "Sign Up" button in the top right corner of the screen.
+
+  ![Sarufi Dashboard](/img/sarufi.png)
+
+2. Choose your preferred sign-up method (email, GitHub, or Google).
+3. Follow the prompts to complete the sign-up process.
+4. Once you've signed up, log in to your Sarufi.io account.
+
+## Obtaining Your `API KEY`
+
+After logging in to your Sarufi.io account, you can obtain your client ID and client secret by following these steps:
+
+1. Go to your Sarufi.io profile settings page.
+2. Scroll down to the `Authorization` section.
+3. Here, you'll find your `API KEY`.
+
+  ![Sarufi Authorization](/img/sarufi_authorization.png)
+
+4. Copy these values and use them in your Sarufi.io SDK client configuration.
+
+That's it! With your `API KEY`, you can now use the Sarufi.io SDK to interact with the platform.
+
+<Tabs groupId="get_started">
+<TabItem value="py" label="Python">
+
+```python
+from sarufi import Sarufi
+sarufi = Sarufi(api_key='your API KEY')
+```
+</TabItem>
+
+<TabItem value="js" label="JavaScript">
+
+```js
+import sarufi from 'sarufi'
+sarufi.login({ api_key: YOUR_API_KEY })
+```
+</TabItem>
+
+<TabItem value="go" label="Golang">
+
+```go
+var app sarufi.Application
+
+app.GetToken("your_api_key")
+```
+</TabItem>
+</Tabs>
+
+
+## Create a Chatbot
+
+Now that we have successfully authenticated with Sarufi, we can create an empty chatbot, with 0 intents and 0 utterances.
+
+The below image shows overview of the steps it takes to create your first chatbot with Sarufi
+
+![Create Chatbot](/img/chatbot-diagram.png)
+
+### Creating an empty chatbot
+
+This is the first step in creating your first chatbot. You can use the following code to create an empty chatbot.
+
+<Tabs>
+<TabItem value="dashboard" label="Dashboard">
+
+Creating chatbot via dashboad provides a way to create either from Scratch or Knowledge Base. You will be required to fill in important details about your chatbot.
+
+![Creating chatbot using Dashboard](/img/dashboard-create-chatbot.png)
+
+Lets start by creating a flow-based chatbot. When you select a language, your chatbot will be created with some default intents and flow. You can read more on how to create Knowledge base chatbot [here](/docs/sarufi-dashboard/create-bot-from-knowledge-base) 
+
+</TabItem>
+
+<TabItem value="sdk" label="Supported SDKs">
+
+currently we support the following SDKs
+
+<Tabs groupId="get_started">
+<TabItem value="py" label="Python">
+
+```python
+>>> from sarufi import Sarufi
+>>> sarufi = Sarufi(api_key='your API KEY')
+>>> chatbot = sarufi.create_bot(name='My First Chatbot')
+2022-09-12 15:42:02,821 - root - INFO - Creating bot
+>>> chatbot
+Bot(id=13, name=My First Chatbot)
+```
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+We supply chatbot details
+
+> Request payload
+
+```JSON
+{
+  "name": "YOUR AWESOME BOT NAME",
+  "description": "PUT DESCRIPTION HERE",
+  "industry": "YOUR BOT INDUSTRY",
+  "intents": {},
+  "flows": {},
+}
+```
+Then we call
+
+```JS
+// call this first if you haven't logged in.
+sarufi.login({ api_key: YOUR_API_KEY }) 
+
+sarufi.createBot({bot: REQUEST PAYLOAD})
+```
+
+> Response for successful bot creation
+
+```JSONC
+{
+  "success": true,
+  "bot": {  "name": "YOUR AWESOME BOT NAME",
+            "description": "PUT DESCRIPTION HERE",
+            "user_id": "YOUR ID",
+            "industry": "YOUR BOT INDUSTRY",
+            "intents": {},
+            "flows": {},
+            "updated_at": "DATE THE BOT WAS LAST UPDATED",
+            "id": "BOT ID",
+            "model_name": "BOT MODEL NAME",
+            "created_at": "DATE THE BOT WAS CREATED"
+  },
+  "chat": "({message: string, chat_id?: uknown}) => RETURNS CHAT RESPONSE"
+}
+```
+
+</TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+visible_on_community := true // Set it to false if you don't want it visible on the playground
+
+example_bot, err := app.CreateBot("Name of your bot", "Description", "Industry", visible_on_community)
+if err != nil {
+    log.Fatal(err)
+}
+
+fmt.Println(example_bot.Name)
+```
+
+</TabItem>
+
+</Tabs>
+
+:::note
+To Create a bot, each sdk has it method. Take note of the naming
+
+  |SDK        | Method used   | Return Value  |
+  |---        |---            |---            |
+  |Python     |`create_bot()` |Bot object   |
+  |JavaScript |`createBot()`  |JSON object   |
+  |Golang     |`CreateBot()`  |Sarufi Bot Type    |
+
+:::
+</TabItem>
+
+</Tabs>
+
+
+
+### Start a conversation with your Chatbot
+
+Now that we have successfully created an empty chatbot, we can start a conversation with our chatbot and see how it responds. You can use the following code to start a conversation with our chatbot.
+
+Here is an example of how to start a conversation with our chatbot.
+
+<Tabs groupId="get_started">
+<TabItem value="py" label="Python">
+✅ To start conversation with a bot you can use one of the methods below
+<table>
+  <thead>
+  <tr>
+    <th>Class name</th>
+    <th>Method</th>
+    <th>Arguments</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> Sarufi </td>
+      <td> <code>chat()</code> </td>
+      <td> bot_id , chat_id and message </td>
+    </tr>
+    <tr>
+       <td> Bot </td>
+      <td><code>respond()</code></td>
+      <td> chat_id and message </td>
+    </tr>
+  </tbody>
+</table>
+
+
+By default, `chat_id` is set to a random UUID. You can pass your own `chat_id` if you want to continue the conversation with the same user.
+
+Here are examples on each method
+<Tabs>
+<TabItem value="Pysubtab1" label="Chat method">
+
+```python
+  >>> from sarufi import Sarufi
+  >>> sarufi = Sarufi(api_key='your API KEY')
+  >>> sarufi.chat(bot_id=5, message='Hello')
+```
+</TabItem>
+  
+<TabItem value="pysubtab2" label="Respond method">
+
+```python
+  >>> chatbot = sarufi.get_bot(13)
+  >>> chatbot.respond('Hey')
+  2022-09-12 15:44:02,811 - root - INFO - Sending message to bot and returning response
+  2022-09-12 15:44:07,078 - root - INFO - Status code: 200
+  2022-09-12 15:44:07,078 - root - INFO - Message sent successfully
+  #here is the response
+  {'message': 'Intent for this message is missing in [FLOW]'}
+```
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+<TabItem value="js" label="JavaScript">
+
+You can either use `sarufi.chat()` method or `chatbot.chat()` method on the bot response.
+
+<table>
+  <thead>
+  <tr>
+    <th>Class name</th>
+    <th>Method</th>
+    <th>Arguments</th>
+    <th>Return Type</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> Sarufi </td>
+      <td> <code>chat()</code> </td>
+      <td> bot_id , message and chat_id(optional) </td>
+      <td>  JSON object</td>
+    </tr>
+    <tr>
+       <td> Bot </td>
+      <td><code>chat()</code></td>
+      <td> message,chat_id </td>
+      <td> JSON object</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+You will need to pass the `chat_id` and `message` to the `chat()` method. By default, `chat_id` is set to a random UUID. 
+
+You can pass your own `chat_id` if you want to continue the conversation with the same user.
+
+```js
+
+//chatbot.chat()
+> const chatbot = await sarufi.getBot({id: 45})
+> await chatbot.chat({message: "Hey"})
+{
+  message: 'Intent for this message is missing in [FLOW]'
+}
+
+//sarufi.chat
+> await sarufi.chat({ message: 'Hey', bot_id: 1 })
+
+```
+
+</TabItem>
+<TabItem value="go" label="Golang">
+
+To get a list of available bots use `bot.GetBots()`, this will return a json response of all your bots and their details. To get a specific bot use `bot.GetBot(bot_id)`. This will return a bot object.
+
+To start a conversation, use `bot.Respond("message", "message_type")`. For now only `text` message types are supported:
+
+```go
+if err = example_bot.Respond("Hey", "general"); err != nil {
+    log.Fatal(err)
+}
+
+fmt.Println(example_bot.Conversation.Message)
+
+```
+
+</TabItem>
+</Tabs>
+
+:::note
+As you can see, our chatbot is not able to understand the message we sent but replied us with a predefined response. This is because we haven't trained our chatbot yet. We will be training our chatbot in the next section.
+:::
+
+Another cool way to test your chatbot is to use the Sarufi Playground. By Default when you create a chatbot, it is set to public. All you need to instantly test your chatbot is to go [Sarufi Community playground](https://playground.sarufi.io/community) and search for your chatbot.
+
+![Sarufi Playground](/img/community-feature.png)
+
+## Adding Intents and flow
+
+We are going to create a bot that will help us with ordering a 🍕 pizza
+
+### Add Intent
+
+Let's now create an intent that will help us order a pizza and also add some utterances to that intent. You can use the following code to create an intent and add some utterances to that intent.
+
+To make more interactive, let's general intents like `greets`, `order_pizza`, `goodbye` and add some utterances to those intents.
+
+<Tabs groupId="get_started">
+<TabItem value="py" label="Python">
+
+```python
+>>> from sarufi import Sarufi
+>>> sarufi = Sarufi(api_key='your API KEY')
+>>> chatbot = sarufi.get_bot(13)
+#We assign intents attribute a dict with intent name and and intents
+# dict {<intent name>:[list of all related keywords to trigger the intent]}
+>>> chatbot.intents = {
+...     'greets': ['hey', 'hello', 'hi', 'howdy', 'hola', 'greetings', 'good morning', 'good afternoon', 'good evening'],
+...     'goodbye': ['bye', 'goodbye', 'see you later', 'see you soon', 'see you', 'talk to you later', 'talk to you soon', 'talk to you'],
+...     'order_pizza': ['I need a pizza', 'I want a pizza', 'order a pizza', 'I want to order a pizza']}
+2022-09-12 15:55:06,696 - root - INFO - Updating bot
+2022-09-12 15:55:07,972 - root - INFO - Bot(id=13, name=My First Chatbot)
+#We get bot's intents
+>>> chatbot.intents
+{'greets': ['hey', 'hello', 'hi', 'howdy', 'hola', 'greetings', 'good morning', 'good afternoon', 'good evening'], 'goodbye': ['bye', 'goodbye', 'see you later', 'see you soon', 'see you', 'talk to you later', 'talk to you soon', 'talk to you'], 'order_pizza': ['I need a pizza', 'I want a pizza', 'order a pizza', 'I want to order a pizza']}
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+We are going to use **Sarufi UpdateBot** method we pass it a dict with `intents` and `bot_id`.
+
+```js
+> const chatbot = await sarufi.getBot({ id: 45 });
+> const bot = {
+  intents: {
+    greets: [
+      'hey',
+      'hello',
+      'hi',
+      'howdy',
+      'hola',
+      'greetings',
+      'good morning',
+      'good afternoon',
+      'good evening',
+    ],
+    goodbye: [
+      'bye',
+      'goodbye',
+      'see you later',
+      'see you soon',
+      'see you',
+      'talk to you later',
+      'talk to you soon',
+      'talk to you',
+    ],
+    order_pizza: [
+      'I need a pizza',
+      'I want a pizza',
+      'order a pizza',
+      'I want to order a pizza',
+    ],
+  },
+};
+ await sarufi.updateBot({ bot, id: chatbot.id });
+```
+
+</TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+// Create a string in JSON format
+intents := `
+{
+    "goodbye": ["bye", "goodbye", "see ya"],
+    "greets": ["hey", "hello", "hi"],
+    "order_pizza": ["I need pizza", "I want pizza"]
+}`
+
+if err := example_bot.CreateIntents(intents); err != nil {
+    log.Fatal(err)
+}
+
+// For changes to take effect
+if err = app.UpdateBot(example_bot); err != nil {
+    log.Fatal(err)
+}
+```
+
+</TabItem>
+</Tabs>
+
+### Try a conversation after adding intents 
+
+Now that we have successfully added some intents and utterances to our chatbot, let's start a conversation with our chatbot and see how it responds. You can use the following code to start a conversation with our chatbot.
+
+<Tabs groupId="get_started">
+<TabItem value="py" label="Python">
+
+```python
+>>> chatbot.respond("Hey")
+2022-09-12 15:56:16,078 - root - INFO - Sending message to bot and returning response
+2022-09-12 15:56:17,279 - root - INFO - Status code: 200
+2022-09-12 15:56:17,279 - root - INFO - Message sent successfully
+{'message': 'Intent for this message is missing in [FLOW]'}
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+> await chatbot.chat({message: 'Hey'})
+```
+
+</TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+if err = example_bot.Respond("Hey", "general"); err != nil {
+    log.Fatal(err)
+}
+
+fmt.Println(example_bot.Conversation.Message)
+```
+
+</TabItem>
+</Tabs>
+
+:::note
+You might wondering like but we trained it, yes ofcourse we trained it but we haven't given a flow on how to respond to the user. We will be adding a flow in the next section.
+:::
+
+### Lets add a flow
+
+Flow is a directed graph that defines the conversation flow between the user and the chatbot. Flow is defined using the [JSON](https://www.json.org/json-en.html) format. where each node is an intent and each edge is a response to the user message & the next intent to be triggered.
+
+:::note
+You can have nodes that are not intents. In that case, the node will be treated as a response to the user message. If you want to end the conversation, you can add a node with the name `end`.
+:::
+
+Let's now add a flow to our chatbot. You can use the following code to add a flow to our chatbot.
+
+<Tabs groupId="get_started">
+<TabItem value="py" label="Python">
+
+```python
+>>> chatbot.flow = {
+...     'greets': {
+...         'message': ['Hi, How can I help you?'],
+...         'next_state': 'end'
+...     },
+...     'order_pizza': {
+...         'message': ['Sure, How many pizzas would you like to order?'],
+...         'next_state': 'number_of_pizzas'
+...     },
+...     'number_of_pizzas': {
+...         'message': ['Sure, What would you like to have on your pizza?'],
+...         'next_state': 'pizza_toppings'
+...     },
+...     'pizza_toppings': {
+...         'message': ['Cool, Whats your address ?'],
+...         'next_state': 'address'
+...     },
+...     'address': {
+...         'message': ['Sure, What is your phone number ?'],
+...         'next_state': 'phone_number'
+...     },
+...     'phone_number': {
+...         'message': ['Your order has been placed.', 'Thank you for ordering with us.'],
+...         'next_state': 'end'
+...     },
+...     'goodbye': {
+...         'message': ['Bye', 'See you soon'],
+...         'next_state': 'end'
+...     }
+... }
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```js
+> const chatbot = await sarufi.getBot({ id: 45 });
+> const bot = {
+  flows: {
+  "greets": {
+    "message": [
+      "Hi, How can I help you?"
+    ],
+    "next_state": "end"
+  },
+  "order_pizza": {
+    "message": [
+      "Sure, How many pizzas would you like to order?"
+    ],
+    "next_state": "number_of_pizzas"
+  },
+  "number_of_pizzas": {
+    "message": [
+      "Sure, What would you like to have on your pizza?"
+    ],
+    "next_state": "pizza_toppings"
+  },
+  "pizza_toppings": {
+    "message": [
+      "Cool, Whats your address ?"
+    ],
+    "next_state": "address"
+  },
+  "address": {
+    "message": [
+      "Sure, What is your phone number ?"
+    ],
+    "next_state": "phone_number"
+  },
+  "phone_number": {
+    "message": [
+      "Your order has been placed.",
+      "Thank you for ordering with us."
+    ],
+    "next_state": "end"
+  },
+  "goodbye": {
+    "message": [
+      "Bye",
+      "See you soon"
+    ],
+    "next_state": "end"
+  }
+}
+};
+ await sarufi.updateBot({ bot, id: chatbot.id });
+```
+
+</TabItem>
+<TabItem value="go" label="Golang">
+
+```go
+// create a string in JSON format
+newFlow := `
+{
+     "greets": {"message": ["Hi, How can I help you?"], "next_state": "end"},
+     "order_pizza": {
+     "message": ["Sure, How many pizzas would you like to order?"],
+     "next_state": "number_of_pizzas"
+ },
+     "number_of_pizzas": {
+     "message": [
+         "Sure, What would you like to have on your pizza?",
+         "1. Cheese",
+         "2. Pepperoni",
+         "3. Both"
+     ],
+     "next_state": "choice_pizza_toppings"
+ },
+     "choice_pizza_toppings": {
+     "1": "pizza_toppings",
+     "2": "pizza_toppings",
+     "3": "pizza_toppings",
+     "fallback_message": ["Sorry, the topping you chose is not available."]
+ },
+     "pizza_toppings": {
+     "message": ["Cool, Whats your address ?"],
+     "next_state": "address"
+ },
+     "address": {
+     "message": ["Sure, What is your phone number ?"],
+     "next_state": "phone_number"
+ },
+     "phone_number": {
+     "message": ["Your order has been placed.", "Thank you for ordering with us."],
+     "next_state": "end"
+ },
+     "goodbye": {"message": ["Bye", "See you soon"], "next_state": "end"}
+}`
+
+if err = example_bot.CreateFlows(newFlow); err != nil {
+        fmt.Println(err)
+    }
+
+app.UpdateBot(example_bot) // for changes to take effect
+```
+
+</TabItem>
+</Tabs>
+
+### Conversation with our chatbot after adding flow
+
+Now that we have successfully added a flow to our chatbot, let's start a conversation with our chatbot and see how it responds. You can use the following code to start a conversation with our chatbot.
+
+```python
+>>> chatbot.respond('Hey')
+{'message': ['Hi, How can I help you?']}
+>>> chatbot.respond('Bye')
+{'message': ['Bye', 'See you soon']}
+>>> chatbot.respond('I want to order pizza')
+{'message': ['Sure, How many pizzas would you like to order?']}
+>>> chatbot.respond('3')
+{'message': ['Sure, What would you like to have on your pizza?']}
+>>> chatbot.respond('tomato')
+{'message': ['Cool, Whats your address ?']}
+>>> chatbot.respond('123, Main Street, New York')
+{'message': ['Sure, What is your phone number ?']}
+>>> chatbot.respond('+255783483934')
+{'message': ['Your order has been placed.', 'Thank you for ordering with us.']}
+```
+
+:::note
+You can see that our chatbot is able to understand the user message and respond to the user message. This is because we have trained our chatbot with intents and utterances and also added a flow to our chatbot.
+:::
+
+## Conclusion
+
+In this tutorial, we have learned how to create a chatbot using Sarufi. We have also learned how to train our chatbot with intents and utterances and also how to add a flow to our chatbot. We have also learned how to start a conversation with our chatbot and how to respond to the user message.

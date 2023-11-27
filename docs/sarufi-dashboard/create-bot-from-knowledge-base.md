@@ -87,4 +87,4 @@ After making the changes, you don't forget to save. Click **save**. Then your ch
 
 I created  a sample bot using some of the documents about sarufi. Here is the live test
 
-![Sarufi chabot created from Knowledge base](/img/sarufi-chabot-from-knowledge-base.gif)
+![Sarufi chabot created from Knowledge base](/gif/sarufi-chabot-from-knowledge-base.gif)
