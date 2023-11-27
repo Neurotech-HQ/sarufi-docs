@@ -9,7 +9,7 @@ const FeatureList = [
     Svg: require("@site/static/img/built.svg").default,
     button: {
       text: "Learn more",
-      link: "/docs/Getting started /create-a-simple-chatbot",
+      link: "/docs/getting-started/create-a-simple-chatbot",
     },
     description: (
       <>
