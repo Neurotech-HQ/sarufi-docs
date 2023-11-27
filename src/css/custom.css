@@ -18,6 +18,9 @@
   --ifm-code-font-size: 95%;
   --ifm-font-family-base: 'Nunito', sans-serif;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --primaryColor: #050C35;
+  --primaryWhite: #FFFFFF;
+  --primaryBlack: #242526;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -30,4 +33,27 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --primaryColor: #050C35;
+  --primaryWhite: #242526;
+  --primaryBlack: #FFFFFF;
+}
+
+.homepage {
+  background-color: var(--primaryColor);
+}
+
+.text-white {
+  color: var(--primaryWhite);
+}
+
+.text-black {
+  color: var(--primaryBlack);
+}
+
+.bg-white {
+  background-color: var(--primaryWhite);
+}
+
+.bg-black {
+  background-color: var(--primaryBlack);
 }

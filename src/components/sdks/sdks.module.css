@@ -1,0 +1,36 @@
+.sdksContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem 4rem 6rem 4rem;
+  color: var(--primaryBlack);
+  background-color: var(--primaryWhite);
+}
+
+.sdksTextContainer {
+  width: 50%;
+}
+
+.sdksImageContainer {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+  .sdksContainer {
+    flex-direction: column;
+  }
+
+  .sdksTextContainer {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sdksContainer {
+    padding: 2rem;
+  }
+}

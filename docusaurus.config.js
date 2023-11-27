@@ -68,16 +68,41 @@ const config = {
         title: 'Sarufi',
         logo: {
           alt: 'Sarufi Logo',
-          src: 'img/logo-blank.png',
+          src: 'img/homepage/logo.png',
         },
         items: [
+          // {
+          //   type: 'doc',
+          //   docId: 'intro',
+          //   position: 'left',
+          //   label: 'Tutorial',
+          // },
           {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Documentation'
           },
-          { to: '/blog', label: 'Blog', position: 'left' },
+          {
+            href: 'https://developers.sarufi.io/docs',
+            position: 'left',
+            label: 'API '
+          },
+          // {
+          //   position: 'left',
+          //   label: 'Changelog'
+          // },
+          {
+            href: 'https://playground.sarufi.io/',
+            position: 'left',
+            label: 'Playground'
+          },
+          {
+            href: 'https://sarufi.io/',
+            position: 'left',
+            label: 'Free Trial'
+          },
+          // { to: '/blog', label: 'Blog', position: 'left' },
           {
             href: 'https://github.com/Neurotech-HQ/sarufi-python-sdk',
             label: 'GitHub',

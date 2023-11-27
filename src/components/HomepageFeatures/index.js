@@ -1,49 +1,77 @@
-import React from 'react';
-import clsx from 'clsx';
-import styles from './styles.module.css';
+import React from "react";
+import clsx from "clsx";
+import styles from "./styles.module.css";
+import Link from "@docusaurus/Link";
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/built.svg').default,
+    title: "Supported languages",
+    Svg: require("@site/static/img/built.svg").default,
+    button: {
+      text: "Learn more",
+      link: "/docs/Getting started /create-a-simple-chatbot",
+    },
     description: (
       <>
-      Sarufi is aiming to be the go to <strong>developer platform</strong> to build conversational
-      experience in african languages.
+        Sarufi supports Python, Node.js, and Go, providing flexibility and ease
+        for developers in crafting powerful chatbot solutions.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/simple-chatbot.svg').default,
+    title: "Supported platforms",
+    Svg: require("@site/static/img/simple-chatbot.svg").default,
+    button: {
+      text: "See Integrations",
+      link: "/docs/category/integrations",
+    },
     description: (
       <>
-        Sarufi abstract away the complexity of building a conversational experience,
-        like <strong>intent detection</strong> and dialog management. so you can focus on what matters.
+        Sarufi bots are compatible with platforms like Telegram, WhatsApp, and
+        Messenger, ensuring wide-reaching engagement possibilities for your
+        chatbots.
       </>
     ),
   },
   {
-    title: 'Built for Africa',
-    Svg: require('@site/static/img/language.svg').default,
+    title: "Need help",
+    Svg: require("@site/static/img/language.svg").default,
+    button: {
+      text: "Contact Support",
+      link: "https://sarufi.io/contact",
+    },
     description: (
       <>
-        Sarufi core priority is having a strong support for African languages like Swahili, Luganda,  Kinyarwanda, Yoruba, etc.
-        Perhaps, We also have a strong support for major languages like English, French, Spanish, etc.
+        Our dedicated support team is ready to assist you with any queries,
+        ensuring a smooth chatbot development experience.
       </>
     ),
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({ Svg, title, description, button }) {
   return (
-    <div className={clsx('col col--4')}>
+    <div className={styles.featureContainer}>
       <div className="text--center">
         <Svg className={styles.featureSvg} role="img" />
       </div>
-      <div className="text--center padding-horiz--md">
-        <h3>{title}</h3>
-        <p>{description}</p>
+      <div className="padding-horiz--md">
+        <h4>{title}</h4>
+        <p
+          style={{
+            color: "#a3a3a3",
+            fontSize: ".8rem",
+          }}
+        >
+          {description}
+        </p>
+        <Link
+          to={button.link}
+          className="button"
+          style={{ background: "#2776ea" }}
+        >
+          {button.text}
+        </Link>
       </div>
     </div>
   );
@@ -52,12 +80,10 @@ function Feature({Svg, title, description}) {
 export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
-      <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
-        </div>
+      <div className={styles.featuresContainer}>
+        {FeatureList.map((props, idx) => (
+          <Feature key={idx} {...props} />
+        ))}
       </div>
     </section>
   );
