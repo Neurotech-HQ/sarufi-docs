@@ -14,6 +14,70 @@ To get working with the dashboard requires no prior knowledge of programming as 
 
 With a dashboard, you can do a lot in a quick way. Lets look at the key features of the dashboard.
 
+### Channels Integration
+
+Sarufi dashboard enables you to integrate your chatbot with different messaging platforms such as Whatsapp, telegram, facebook messenger and many more to come. This will enable you to reach your customers on their favorite messaging platform. You can read more on [channels integration](/docs/category/integrations)
+
+You just need to navigate to settings of your chatbot then Integrations
+
+![Sarufi dashboard integrations](/img/sarufi-dashboard-integrations.png)
+
+### Chabot Analytics
+
+With the dashboard, you will be able to see how your chatbot is performing. You will be able to see the number of users, messages sent and received, and many more. This is handy as you will be able to see how your chatbot is performing and make some improvements.
+
+![Analytics users counts](/img/analytics-users.png)
+
+![Analytics word cloud](/img/analytics-word-cloud.png)
+
+### Chatbot as Template
+
+With the dashboard, you can create a chatbot and share it to be used as template. This will enable other developers to use your chatbot as a starting point for their chatbot idea.
+
+Building a chatbot from scratch can be a daunting task. That's why we have created a few templates to help you get started quickly. You can use these templates to create a chatbot for your business in a few minutes. Templates will help you to get started quickly and you can customize them as per your needs.
+
+- How to use a template?
+
+    To use a template, you need to follow these steps:
+
+    1. Go to the [Templates](https://sarufi.ai/templates) page.
+        
+        ![Sarufi template marketplace](/img/sarufi-chatbot-template.png)
+    
+    1. Select a template that you want to use. Click **View Details** button to view the details of the template.
+    1. Try out the demo of the template by clicking **Live chat**. You can also view the screenshots and gif of the template.
+    1. Click on the **Use Template** button if you want to use the template.
+    1. You will be required to log in into your Sarufi account. If you don't have an account, you can create one for [free](https://sarufi.io).
+    1. You can edit the chatbot as per your needs.
+
+    Its that simple! You can create a chatbot for your business in a few minutes. 
+
+- How to create a template?
+
+    To create a template, you need to follow these steps:
+
+    1. Log in into your Sarufi account.
+    1. Create a chatbot.
+        The chatbot created should not have any ambiguity in the flow. It should be a complete chatbot. 
+    1. Test out your chatbot. Make sure that it is working as expected.
+    1. Go to the **Settings** page.
+    1. Click on the **Export Bot to Template** button.
+        
+    You will be required to fill in all important details about your template. Provide clear and concise information about your template's fuctionalities/features. 
+    
+    On top of that, you will be required to provide a at least 4 screenshots of your chatbot and a gif of conversations . Make sure that you provide screenshots of all important parts of your chatbot.
+
+    ![Publish chatbot as template](/img/sarufi-template-details.png)
+    
+    Once you have filled in all the details, click on the **Publish** button. Your template will be published on the Sarufi marketplace.
+
+- Available Templates
+
+    Currently, we have templates coveing areas around restaurants, hotels, ecommerce, customer support, lead generation and survey. We will be adding more templates in the future. 
+
+You just need to develop your chatbot and provide some information about it. Then you can share it to the community. Visit [sarufi templates](https://www.sarufi.io/templates) section to see what other developers have created.
+
+
 ### Web Plugin
 
 After developing your chatbot using sarufi, you need to let it get into use in the real world situation. The easiest way can be integrating you bot with your website.
@@ -46,7 +110,7 @@ As your bot gets to interact with users, it needs to be updated on the cases it 
 
 During development of anything, you would not like to move on without testing the current state of your project. Here comes a cool chatbot live-test feature. This will enable you eliminate any guesswork and ensures that the chatbot you're developing will work as intended
 
-![Dashboard live test](/img/sarufi-dashboard-live-test.gif)
+![Dashboard live test](/gif/sarufi-dashboard-live-test.gif)
 
 ### Media support
 
@@ -104,19 +168,26 @@ Here are some things to take note:
     With language selection(currently English and Swahili), you can choose any base language for your bot.
     Your bot will be created with some default intents and flows that you can look at and make some modifications.
 
-- Threshold settings
-
-    Lets talk a bit more about threshold. A threshold indicates how correctly a bot's model was able to evaluate user intent and determine the flow. The threshold less than 0.5 indicates that your bot was not able to pick up user intent.
-
-    So we introduce a fallback message as a fallback message will be the response in case a model evaluates user intent below the threshold set. This can be any message like "Please rephrase your message" or "Please let me know what you mean by saying this".
-
-    We shall leave the `Toggle button`(Should we use your document as your first priority fallback reply when the user messade hits below threshold?) **off** as we do not have any document available for our bot. The part of using a documents for your bot is covered in [Creating a bot using Knowledge base](/docs/sarufi-dashboard/create-bot-from-knowledge-base)
-
 - Community visibility
 
     We provide [sarufi Community playground](https://playground.sarufi.io/community) for developer to showcase what they have been able to create using Sarufi. The toogle button lets you decide to make your chatbot publically available at sarufi Community for people to test.
 
     Lets leave it **off** as we can share our bot once its completely finished.
+
+- Threshold settings
+
+    Lets talk a bit more about threshold. A threshold indicates how correct a bot's model was able to evaluate user intent(s) and determine the flow. The threshold is a value between 0 and 1.
+
+    Lets assume that the bot has confidence level of about **0.345** on certain user massage. If we set bot's threshold to **0.4**, it will not be able to pick up the intent. So we introduce a fallback message as a fallback message will be the response in case a model evaluates user intent below the threshold set.
+
+    ![Illustration on Threshold](/img/illustration-threshold.png)
+
+    Setting our threshold in general means that if the model confidence on user intent is below the threshold, the bot will fallback to the fallback message or document.
+
+    The fallback can be a simple message (as "Please rephrase your message" or "Please let me know what you mean by saying this") or the bot can be configured to fallback to a document. This is covered in [Creating a bot using Knowledge base](/docs/sarufi-dashboard/create-bot-from-knowledge-base)
+
+
+*This setting is found in your bot's settings (General Settings)*
 
 ## Sarufi Video series
 
