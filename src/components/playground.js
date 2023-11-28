@@ -17,7 +17,8 @@ function SarufiPlayground() {
           Ready to revolutionize your chatbot game? Dive into Sarufi now and
           elevate your user interactions to the next level.
         </p>
-        <button
+        <a
+          href="https://sarufi.io"
           style={{
             backgroundColor: "#a855f7",
             color: "#fff",
@@ -25,10 +26,11 @@ function SarufiPlayground() {
             borderRadius: "4px",
             padding: "1rem",
             cursor: "pointer",
+            textDecoration: "none",
           }}
         >
           Join Now
-        </button>
+        </a>
       </div>
       <div className={styles.playgroundImagesContainer}>
         {[...Array(15).keys()].map((i) => {

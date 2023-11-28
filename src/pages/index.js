@@ -99,7 +99,10 @@ function VideoTutorial() {
           chatbots around African languages and deploy the chatbot to messaging
           platforms like WhatsApp and Telegram
         </p>
-        <button
+        <a
+          href="https://youtube.com/playlist?list=PLeHPyjol4_fXXiMBwb3Wc8KYiw_nB_4Ye&si=LV7xSyTMCUWKt-RW"
+          target="_blank"
+          rel="noreferrer"
           style={{
             backgroundColor: "#2776ea",
             color: "#fff",
@@ -132,7 +135,7 @@ function VideoTutorial() {
               />
             </svg>
           </span>
-        </button>
+        </a>
       </div>
     </section>
   );
@@ -154,7 +157,8 @@ function CTA() {
           Ready to revolutionize your chatbot game? Dive into Sarufi now and
           elevate your user interactions to the next level.
         </p>
-        <button
+        <a
+          href="https://sarufi.io"
           style={{
             backgroundColor: "#050C35",
             color: "#fff",
@@ -162,10 +166,11 @@ function CTA() {
             borderRadius: "4px",
             padding: "1rem",
             cursor: "pointer",
+            textDecoration: "none",
           }}
         >
           Get started
-        </button>
+        </a>
       </div>
       <div className={styles.ctaImageCont}>
         <div className={styles.ctaImagePos}>
