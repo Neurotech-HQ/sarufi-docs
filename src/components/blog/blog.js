@@ -9,7 +9,7 @@ function Blog() {
       date: "2023-11-27",
       author: "Omega Seyongwe",
       description:
-        "Neurotech Africa,  through its comprehensive Sarufi ambassador program,  has forged partnerships with universities across the Tanzanian country, providing students with hands-on experience with Sarufi AI, a Developer Centric Conversational AI for African Languages. Sarufi AI Workshops: Empowering Students with Conversational AI Recently, Neurotech Africa's",
+        "Neurotech Africa,  through its comprehensive Sarufi ambassador program,  has forged partnerships with universities across the Tanzanian country, providing students with hands-on experience with Sarufi AI.",
       link: "https://blog.neurotech.africa/sarufi-ai-worshops/",
     },
     {
@@ -54,7 +54,7 @@ function Blog() {
           width: "30px",
           height: "30px",
           borderRadius: "50%",
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -66,7 +66,7 @@ function Blog() {
               width: "50%",
               height: "50%",
               borderRadius: "50%",
-              backgroundColor: "#fff",
+              backgroundColor: "rgba(255, 255, 255, 0.6)",
             }}
           />
         )}
@@ -82,20 +82,20 @@ function Blog() {
           justifyContent: "space-between",
           alignItems: "center",
           backgroundColor: "#222222",
-          padding: "5px 10px",
+          padding: "1rem 1.8rem",
           borderTopLeftRadius: "10px",
           borderTopRightRadius: "10px",
         }}
       >
         <ActionCircle />
-        <h3
+        <h4
           className="text-white"
           style={{
             marginBottom: 0,
           }}
         >
           Blog
-        </h3>
+        </h4>
         <div
           style={{
             display: "flex",
@@ -112,25 +112,31 @@ function Blog() {
       <div className={blogStyles.blogMain}>
         {blogPosts.map((blogPost, index) => (
           <div key={index}>
-            <h4
+            <a
+              href={blogPost.link}
+              target="_blank"
+              rel="noreferrer"
               style={{
                 color: "#2EA56F",
-                fontSize: "1.5rem",
+                fontSize: "1.3rem",
+                lineHeight: "1.5rem",
               }}
             >
               {blogPost.title}
-            </h4>
+            </a>
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
+                fontSize: ".9rem",
+                margin: ".4rem 0",
               }}
             >
               <p
                 className="text-white"
                 style={{
-                  fontSize: "1rem",
                   marginRight: "1rem",
+                  marginBottom: 0,
                 }}
               >
                 {new Date(blogPost.date).toLocaleDateString("en-US", {
@@ -141,8 +147,8 @@ function Blog() {
               </p>
               <p
                 style={{
-                  fontSize: "1rem",
                   color: "#2EA56F",
+                  marginBottom: 0,
                 }}
               >
                 {blogPost.author}
@@ -151,7 +157,7 @@ function Blog() {
             <p
               className="text-white"
               style={{
-                fontSize: ".9rem",
+                fontSize: ".8rem",
               }}
             >
               {blogPost.description}
