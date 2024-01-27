@@ -33,7 +33,7 @@ Here are steps to follow for you to get started:
 
   ## Getting Credentials
 
-This section will guide you on how to obtain whatsapp cloud credentials and sarufi credentials if you are doing custom deployment.
+This section will guide you on how to obtain whatsapp cloud credentials and sarufi credentials if you are doing custom deployment. More details on how to create permanet token and phone number can be found at [creating permanet token](#create-permanent-token)
 
 <Tabs groupId="whatsapp-integration">
 <TabItem value="sarufi-dashboard" label="Sarufi Dashboard">
@@ -257,6 +257,60 @@ You will have to modify some commands shown here to suite your working environme
 </TabItem>
 </Tabs>
 
+## Create Permanent token
+
+With just few steps, you will be able to create a permanent token and add your phone number. This token will be used to authorize your bot to send messages to whatsapp.
+
+1. Create System user
+
+- Navigate to [Meta business suite](https://business.facebook.com/) --> Your account --> Setting gear icon
+
+  ![Business settings: Users](/img/business-settings-users.png)
+
+- Navigate to `users` --> `system users` --> Click on `Add` --> Read policy(if it pops up)
+- Add name of system user --> Set role to `admin` --> click `save`
+
+  ![Create system user](/img/create-system-user.png)
+
+2. Add your App to Assets
+
+- After creating system user, navigate to `Assign Assets`
+
+  ![Assign Assets](/img/assign-assets.png)
+
+- Naviagate to `Apps` --> Select your add name --> Grant it full control --> `Save changes`
+
+  ![Adding App to assets](/img/add-app-to-assets.png)
+
+3. Generate Permanent Access token
+
+  After adding app to your assets, the next step is to generate permanent access token. You will have a page that looks like the one below.
+
+  ![Adding permanent access token](/img/added-app-to-assets.png)
+
+- Click on `Generate new Token` --> Select an App --> Select your token expiration time
+- Add Permisions. Basically you need to add `whatsapp_business_management` and `whatsapp_business_messaging` permisions.
+- Click `Generate Token` --> Copy the token and save it somewhere safe. You will need it in your script.
+
+    ![Generate permanent token](/img/generate-permanent-access-token.png)
+
+  You will have time to view your token. So make sure you copy it and save it somewhere safe. It is only shown once.
+
+4. Add your production phone number
+
+  Do this if you want to use your production phone number. If you want to use your test number, you can skip this step. Follow few steps to step your phone number
+
+- Naviagate to your [meta developer account](https://developers.facebook.com/apps/) --> Your app --> `WhatsApp` --> `API setup` --> `Add phone number`
+
+  ![Add phone number in meta app](/img/meta-add-phone-number.png)
+
+- Provide required details. Then verify your phone number by filling in the code sent.
+- After adding phone number, scroll up(in Meta developer app dashboard) to send and receive section. In the From field, select your phone number.
+- You will have to copy `phone number ID` and generate permanent `acess token` then paste them to sarufi for deployment.
+
+5. Add payment method
+
+You will need to add payment method to your meta app. This is required for you to be able to send messages to whatsapp. You can add payment method by following the steps by navigating to your meta App dashboard  --> Products --> Whatsapp --> API setup then follow instructions provided 
 
 ## Finalizing Whatsapp set-up
 
