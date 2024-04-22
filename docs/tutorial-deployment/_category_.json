@@ -1,0 +1,8 @@
+{
+  "label": "Deployment",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "With Deployment, you can connect your app to other services. Its super easy to setup and use."
+  }
+}
