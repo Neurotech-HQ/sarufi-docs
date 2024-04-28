@@ -13,7 +13,7 @@ import TabItem from '@theme/TabItem';
 - Integrate with existing accounting/Enterprise Resource Planning (ERP) systems
 - Provide bespoke solutions for local, regional, and international transactions
 
-![azampay](/img/azampay.png)
+![azampay](/img/azampay.PNG)
 
 ## Before we get started
 
