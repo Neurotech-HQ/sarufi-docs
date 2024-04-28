@@ -13,7 +13,7 @@ import TabItem from '@theme/TabItem';
 - Integrate with existing accounting/Enterprise Resource Planning (ERP) systems
 - Provide bespoke solutions for local, regional, and international transactions
 
-![azampay](/img/azampay.PNG)
+![azampay](/img/azampay-image.png)
 
 ## Before we get started
 
@@ -52,7 +52,7 @@ Follow these steps to integrate Azam Pay into your application:
 
 Log in to your chatbot platform and navigate to the AzamPay integration section.
 
-![integration-interface](/img/integration_interface.PNG)
+![integration-interface](/img/integration_interface_image.png)
 
 **2: Enter App Name, Enter Client ID, Enter Client Secret**
 
@@ -61,25 +61,25 @@ Enter the name of your application, client ID provided by Azam Pay, client secre
 click the "next" button to proceed
 
 
-![azampay_int](/img/azam-int.png)
+![azampay_int](/img/azam-integration.png)
 
 **3: Select Triggered Intents**
 
 Select the intents that will trigger AzamPay functionality. 
 
-![azampay_int](/img/azam-int2.png)
+![azampay_int](/img/azam-integration2.png)
 
 **4: Choose State for Mobile Number**
 
 Select the state for the mobile number associated with the payment.
 
-![azampay_int](/img/azm-int3.png)
+![azampay_int](/img/azam-integration3.png)
 
 **5: Enter Amount**
 
 Enter the amount to be paid via AzamPay.  Here you can enter the amout manual or choose the state for the amount.
 
-![azampay_int](/img/azam-int4.png)
+![azampay_int](/img/azam-integration4.png)
 
 **6: Activate Azam Pay Integration**
 

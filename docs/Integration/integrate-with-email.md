@@ -30,13 +30,13 @@ Follow these steps to integrate email functionality into your chatbot:
 
 Log in to your chatbot platform and navigate to the email integration section.
 
-![integration-interface](/img/integration_interface.PNG)
+![integration-interface](/img/integration_interface_image.png)
 
 **2: Configure Triggered Intents**
 
 Select the intents that will trigger the email functionality. These are the actions or commands from the user that will prompt the chatbot to send an email.
 
-![email-intent](/img/email_intent.png)
+![email-intent](/img/email_intent_image.png)
 
 **3: Enter Email Details**
 
@@ -47,7 +47,7 @@ Enter the subject line and body of the email. Customize these fields based on th
 Enter the email address of the recipient to whom the email will be sent. Here you can input  the email or choose from the state
 
 
-![email](/img/email.png)
+![email](/img/email_image.png)
 
 
 **5: Activate Email Integration**
