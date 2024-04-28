@@ -52,7 +52,7 @@ Follow these steps to integrate Azam Pay into your application:
 
 Log in to your chatbot platform and navigate to the AzamPay integration section.
 
-![integration-interface](/img/integration_interface.png)
+![integration-interface](/img/integration_interface.PNG)
 
 **2: Enter App Name, Enter Client ID, Enter Client Secret**
 
