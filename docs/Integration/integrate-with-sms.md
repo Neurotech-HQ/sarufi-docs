@@ -11,15 +11,13 @@ SMS integration allows your chatbot to send SMS  to users based on specific trig
 ## Interface Overview
 The SMS integration interface consists of the following components:
 
-1.	Triggered Intents: Select the intents that will trigger the SMS functionality.
-
-2.	Message: Enter the content of the message to be sent.
-
-3.	Mobile: Enter the mobile number of the recipient.
-
-4.	Activate Toggle: Toggle to activate or deactivate the SMS integration.
-
-5.	Save Button: Click to save the SMS integration settings.
+| Component          | Description                                                     |
+|--------------------|-----------------------------------------------------------------|
+| Triggered Intents | Select the intents that will trigger the SMS functionality.     |
+| Message            | Enter the content of the message to be sent.                    |
+| Mobile             | Enter the mobile number of the recipient.                       |
+| Activate Toggle    | Toggle to activate or deactivate the SMS integration.           |
+| Save Button        | Click to save the SMS integration settings.                     |
 
 ## Step-by-Step Integration Guide
 
@@ -35,7 +33,7 @@ Log in to your chatbot platform and navigate to the SMS integration section.
 
 Select the intents that will trigger the SMS functionality. These are the actions  from the user that will prompt the chatbot to send an SMS message.
 
-![sms-intent](/img/sms_intent_image.png)
+![sms-intent](/img/sms-intents.png)
 
 **3: Enter Message Content**
 
@@ -45,7 +43,8 @@ Enter the content of the SMS message. Customize this message based on the inform
 
 Enter the mobile number of the recipient to whom the SMS message will be sent. Ensure that the mobile number is entered correctly to avoid delivery issues. Here you can input mobile number or choose from the state
 
-![sms-mobile](/img/sms_mobile_image.png)
+![sms-mobile](/img/sms-mobile.png)
+
 
 **5: Activate SMS Integration**
 
@@ -60,10 +59,7 @@ Click the "Save" button to save your SMS integration settings. Ensure that all c
 
 After configuring the SMS integration settings, thoroughly test the functionality to ensure that SMS messages are sent correctly in response to the specified intents.
 
-
-
-
-
+## See the outcomes
 
 
 
