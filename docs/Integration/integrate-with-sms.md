@@ -27,7 +27,7 @@ Follow these steps to integrate SMS functionality into your chatbot:
 
 Log in to your chatbot platform and navigate to the SMS integration section.
 
-![integration-interface](/img/integration_interface.png)
+![integration-interface](/img/integration_interface_image.png)
 
 **2: Configure Triggered Intents**
 
@@ -44,6 +44,7 @@ Enter the content of the SMS message. Customize this message based on the inform
 Enter the mobile number of the recipient to whom the SMS message will be sent. Ensure that the mobile number is entered correctly to avoid delivery issues. Here you can input mobile number or choose from the state
 
 ![sms-mobile](/img/sms-mobile.png)
+
 
 **5: Activate SMS Integration**
 

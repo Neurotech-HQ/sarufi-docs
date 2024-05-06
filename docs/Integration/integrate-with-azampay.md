@@ -15,7 +15,7 @@ AzamPay integration enables your chatbot to process payments seamlessly through 
 - Integrate with existing accounting/Enterprise Resource Planning (ERP) systems
 - Provide bespoke solutions for local, regional, and international transactions
 
-![azampay](/img/azampay.png)
+![azampay](/img/azampay-image.png)
 
 To know more about azampay go  [AzamPay website](https://azampay.com/).
 
@@ -50,14 +50,13 @@ Follow these steps to integrate Azam Pay into your application:
 
 Log in to your chatbot platform and navigate to the AzamPay integration section.
 
-![integration-interface](/img/integration_interface.png)
+![integration-interface](/img/integration_interface_image.png)
 
 **2: Enter App Name, Enter Client ID, Enter Client Secret**
 
 Enter the name of your application, client ID provided by Azam Pay, client secret provided by Azam Pay.
 
 click the "next" button to proceed
-
 
 ![azampay_interface1](/img/azampay-interface1.png)
 
