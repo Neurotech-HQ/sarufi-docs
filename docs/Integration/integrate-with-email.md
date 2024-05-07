@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import Tabs from '@theme/Tabs';
@@ -13,51 +13,57 @@ Email integration allows your chatbot to send and receive emails, enabling commu
 
 The email integration interface consists of the following components:
 
-Triggered Intents: Select the intents that will trigger the email functionality.
-
-Subject: Enter the subject line for the email.
-
-Body: Enter the main content of the email.
-
-Activate Toggle: Toggle to activate or deactivate the email integration.
-
-Save Button: Click to save the email integration settings
+| Components          | Description                                                |
+|-------------------|------------------------------------------------------------|
+| Triggered Intents| Select the intents that will trigger the email functionality. |
+| Subject           | Enter the subject line for the email.                     |
+| Body              | Enter the main content of the email.                       |
+| Activate Toggle   | Toggle to activate or deactivate the email integration.    |
+| Save Button       | Click to save the email integration settings.             |
 
 ## Step-by-Step Integration Guide
 Follow these steps to integrate email functionality into your chatbot:
 
-1: Access Email Integration Interface
+**1: Access Email Integration Interface**
+
 Log in to your chatbot platform and navigate to the email integration section.
 
-![email-interface](/img/email_interface.png)
+![integration-interface](/img/integration_interface_image.png)
 
-2: Configure Triggered Intents
+**2: Configure Triggered Intents**
 
 Select the intents that will trigger the email functionality. These are the actions or commands from the user that will prompt the chatbot to send an email.
 
-![email-intent](/img/email_intent.png)
+![email-intent](/img/email-intent.png)
 
-3: Enter Email Details
+
+**3: Enter Email Details**
 
 Enter the subject line and body of the email. Customize these fields based on the information you want to include in the email message.
 
-4: Enter Recipient's Email Address
+**4: Enter Recipient's Email Address**
 
 Enter the email address of the recipient to whom the email will be sent. Here you can input  the email or choose from the state
 
+![email](/img/email-details.png)
 
-![email](/img/email.png)
 
-
-5: Activate Email Integration
+**5: Activate Email Integration**
 
 Toggle the switch to activate the email integration. When activated, the chatbot will send emails based on the specified intents, subject, and body.
 
-6: Save Settings
+**6: Save Settings**
+
 Click the "Save" button to save your email integration settings. Ensure that all configurations are correctly saved before proceeding.
 
 
 ## Testing
 After configuring the email integration settings, thoroughly test the functionality to ensure that emails are sent correctly in response to the specified intents.
+## See the outcomes
 
-Integrating email functionality into your chatbot enhances its communication capabilities and enables smooth interaction with users via email. Follow this guide to successfully integrate email into your chatbot application.
+
+
+
+<!-- 
+Integrating email functionality into your chatbot enhances its communication capabilities and enables smooth interaction with users via email.
+Follow this guide to successfully integrate email into your chatbot application. -->
