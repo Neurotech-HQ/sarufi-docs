@@ -53,7 +53,7 @@ here's a step-by-step guide for integrating Mpesa into your application:
 
 Log in to your chatbot platform and navigate to the Mpesa integration section.
 
-![integration-interface](/img/integration_interface.png)
+![integration-interface](/img/integration_interface_image.png)
 
 **2.Enter Credentials**
 

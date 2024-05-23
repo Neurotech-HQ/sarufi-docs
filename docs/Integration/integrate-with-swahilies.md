@@ -45,7 +45,7 @@ here's a step-by-step guide for integrating Swahilies into your application:
 
 Log in to your chatbot platform and navigate to the Swahilies integration section.
 
-![integration-interface](/img/integration_interface.png)
+![integration-interface](/img/integration_interface_image.png)
 
 **2.Business Name**
 
