@@ -28,6 +28,8 @@ Before we get started with intergrating with AzamPay, We'll need a few things:
     - Client ID
     - Client Secret
 
+To get azampay credentials, visit [here](https://azampay.com/create-developer-account/).
+
 ## Interface Overview
 
 The AzamPay integration interface consists of the following components:
@@ -43,12 +45,12 @@ The AzamPay integration interface consists of the following components:
 | Activate Toggle   | Toggle to activate or deactivate the AzamPay integration. |
 | Save Button       | Click to save the AzamPay integration settings.           |
 
-## Step-by-Step Integration Guide
+## Steps
 Follow these steps to integrate Azam Pay into your application:
 
 **1: Access AzamPay Integration Interface**
 
-Log in to your chatbot platform and navigate to the AzamPay integration section.
+Log in to your your sarufi account and  navigate to  your chatbot --> `settings` --> `Integration` --> `Azam Pay`
 
 ![integration-interface](/img/integration_interface_image.png)
 
@@ -90,11 +92,8 @@ Click the "Save" button to save your Azam Pay integration settings. Ensure that 
 ## Testing
 
 After configuring the Azam Pay integration settings, thoroughly test the payment functionality to ensure that users can make payments using Azam Pay within your application.
-## See the outcomes
 
-
-
-<!-- Integrating Azam Pay into your application enhances the payment processing capabilities and provides users with a convenient and secure payment experience. Follow this guide to successfully integrate Azam Pay into your application. -->
+See the outcomes
 
 
 

@@ -21,12 +21,12 @@ The email integration interface consists of the following components:
 | Activate Toggle   | Toggle to activate or deactivate the email integration.    |
 | Save Button       | Click to save the email integration settings.             |
 
-## Step-by-Step Integration Guide
+## Steps
 Follow these steps to integrate email functionality into your chatbot:
 
 **1: Access Email Integration Interface**
 
-Log in to your chatbot platform and navigate to the email integration section.
+Log in to your your sarufi account and  navigate to  your chatbot --> `settings` --> `Integration` --> `Email`. 
 
 ![integration-interface](/img/integration_interface_image.png)
 
@@ -51,19 +51,18 @@ Enter the email address of the recipient to whom the email will be sent. Here yo
 **5: Activate Email Integration**
 
 Toggle the switch to activate the email integration. When activated, the chatbot will send emails based on the specified intents, subject, and body.
+If you no longer want to use your integration, toggle the `Activate` switch off to deactivate the integration.
 
 **6: Save Settings**
 
 Click the "Save" button to save your email integration settings. Ensure that all configurations are correctly saved before proceeding.
 
-
 ## Testing
 After configuring the email integration settings, thoroughly test the functionality to ensure that emails are sent correctly in response to the specified intents.
-## See the outcomes
 
+See example
+With everything set, lets test our integration.
 
+![Sample email integration](/gif/Chatbot_integration_with_email.gif)
 
-
-<!-- 
-Integrating email functionality into your chatbot enhances its communication capabilities and enables smooth interaction with users via email.
-Follow this guide to successfully integrate email into your chatbot application. -->
+Follow this guide to successfully integrate email into your chatbot application.

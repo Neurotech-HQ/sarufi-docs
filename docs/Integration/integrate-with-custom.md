@@ -6,6 +6,3 @@ import TabItem from '@theme/TabItem';
 
 # Custom integration
 
-
-
-

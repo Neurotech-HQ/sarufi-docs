@@ -22,6 +22,8 @@ Before we get started with intergrating with Swahilies, We'll need a few things:
 - Integration Credentials, this is the essential components provided by Swahilies for integrating their services into your application, These are
     - Business  name
     - API key
+
+To get swahilies credentials,[visit here](https://pay.swahilies.com/contact-us) to get in touch with swahilies Team
    
 ## Interface Overview
 
@@ -38,14 +40,14 @@ Swahilies integration interface consists of the following components:
 
 
 
-## Step-by-Step Integration Guide
+## Steps
 here's a step-by-step guide for integrating Swahilies into your application:
 
 **1: Access  Swahilies Integration Interface**
 
-Log in to your chatbot platform and navigate to the Swahilies integration section.
+Log in to your your sarufi account and  navigate to  your chatbot --> `settings` --> `Integration` --> `Swahilies`*. 
 
-![integration-interface](/img/integration_interface.png)
+![integration-interface](/img/integration_interface_image.png)
 
 **2.Business Name**
 
@@ -78,6 +80,7 @@ Enter the amount to be paid via Swahilies.  Here you can enter the amout manual 
 **7.Activate Swahilies Integration**
 
 Toggle the switch to activate or deactivate the Swahilies integration. This allows you to enable or disable the payment functionality as needed.
+If you no longer want to use your integration, toggle the `Activate` switch off to deactivate the integration.
 
 **8.Save integration**
 
@@ -87,4 +90,10 @@ Click the "Save" button to save the Swahilies integration settings. Ensure that 
 
 After configuring the swahilies integration settings, thoroughly test the payment functionality to ensure that users can make payments using swahilies within your application.
 
-## See the outcomes
+See example
+
+With everything set, lets test our integration.
+
+![Sample swahilies integration](/gif/Chatbot_integration_with_Swahilies.gif)
+
+Follow this guide to successfully integrate swahilies payment integration into your chatbot application.

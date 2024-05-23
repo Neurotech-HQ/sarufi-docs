@@ -46,14 +46,14 @@ Mpesa integration interface consists of the following components:
 | Activate                     | Toggle to activate or deactivate the Mpesa integration                    |
 
 
-## Step-by-Step Integration Guide
-here's a step-by-step guide for integrating Mpesa into your application:
+## Steps
+Log in to your your sarufi account and  navigate to  your chatbot --> `settings` --> `Integration` --> `Mpesa`.
 
 **1: Access  Mpesa Integration Interface**
 
 Log in to your chatbot platform and navigate to the Mpesa integration section.
 
-![integration-interface](/img/integration_interface.png)
+![integration-interface](/img/integration_interface_image.png)
 
 **2.Enter Credentials**
 
@@ -92,8 +92,5 @@ Click the "Save" button to save the Mpesa integration settings. Ensure that all 
 
 After configuring the Mpesa integration settings, thoroughly test the payment functionality to ensure that users can make payments using Mpesa within your application.
 
-
-## See the outcomes
-
-
+ See the outcomes
 

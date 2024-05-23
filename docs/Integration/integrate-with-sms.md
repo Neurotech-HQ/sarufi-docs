@@ -19,13 +19,15 @@ The SMS integration interface consists of the following components:
 | Activate Toggle    | Toggle to activate or deactivate the SMS integration.           |
 | Save Button        | Click to save the SMS integration settings.                     |
 
-## Step-by-Step Integration Guide
+Triggered Intent:
+
+## Steps
 
 Follow these steps to integrate SMS functionality into your chatbot:
 
 **1: Access  SMS Integration Interface**
 
-Log in to your chatbot platform and navigate to the SMS integration section.
+Log in to your your sarufi account and  navigate to  your chatbot --> `settings` --> `Integration` --> `sms`. 
 
 ![integration-interface](/img/integration_interface_image.png)
 
@@ -53,13 +55,14 @@ Toggle the switch to activate the SMS integration. When activated, the chatbot w
 **6: Save Settings**
 
 Click the "Save" button to save your SMS integration settings. Ensure that all configurations are correctly saved before proceeding.
-
+If you no longer want to use your integration, toggle the `Activate` switch off to deactivate the integration.
 
 ## Testing
 
 After configuring the SMS integration settings, thoroughly test the functionality to ensure that SMS messages are sent correctly in response to the specified intents.
 
-## See the outcomes
+See example
+With everything set, lets test our integration.
 
-
+![Sample sms integration](/gif/Chatbot_integration_with_SMS.gif)
 
