@@ -98,7 +98,7 @@ All you have to do is specify which states should trigger the webhook.
 
 ![Sarufi webhook setup](/img/sarufi-webhook-setup.png)
 
-You can read more on webhooks at [sarufi webhook integration](/docs/add-more-features/webhook-integration)
+You can read more on webhooks at [sarufi webhook integration](/docs/integration/webhook-integration)
 
 ### Conversation History
 
