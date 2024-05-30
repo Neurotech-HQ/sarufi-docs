@@ -59,7 +59,7 @@ Log in to your chatbot platform and navigate to the Mpesa integration section.
 
 Enter  the API key and public key provided by M-Pesa. These credentials are necessary for authenticating your application's requests to the M-Pesa API.Also,enter the service code provided by M-Pesa. This code identifies the specific service or transaction type you are integrating with M-Pesa
 
-![integration-interface](/img/mpesa-interface1.png)
+![integration-interface](/img/mpesa-interfacee1.png)
 
 **3.Configure Triggered Intent:**
 
