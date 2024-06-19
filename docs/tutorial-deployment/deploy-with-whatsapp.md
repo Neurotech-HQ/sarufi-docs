@@ -14,38 +14,38 @@ WhatsApp is one of the most popular messaging apps in the world. It has over 2 b
 
 ## Before we get started
 
-Before we get started with intergrating you WhatsApp, We'll need a few things:
-- A Sarufi bot, If you don’t have one, you can click here to create one [here](https://sarufi.io).
-- A whatsapp Business account
-- An Access Token from your WhatsApp cloud API
+Before we get started with intergrating WhatsApp, we need a few things:
+- A Sarufi bot. If you don’t have one, you can click here to create one [here](https://sarufi.io).
+- A WhatsApp business account
+- An access token from your WhatsApp Cloud API
 
 
 ## How to connect to WhatsApp Cloud API
 
-To connect to WhatsApp Cloud API, you need to create a WhatsApp Business account. You can do this by following the instructions in the [Get started-cloud API](https://developers.facebook.com/docs/whatsapp/cloud-api/get-started).
+To connect to WhatsApp Cloud API, you need to create a WhatsApp Business account. You can do this by following the instructions in [Get started (Cloud API)](https://developers.facebook.com/docs/whatsapp/cloud-api/get-started).
 
-Here are steps to follow for you to get started: 
+Here are steps to follow to get started:
 - Go to your [apps](https://developers.facebook.com/apps).
 - [Create an app](https://developers.facebook.com/apps/create/).
 - Select app type >> Business.
-- You will be required to fill-in basic app informations >> click **create app** button.
-- You will be redirected to Product section. Add `WhatsApp` as your product by clicking **set up**.
+- You will be required to fill-in basic app information >> click **create app** button.
+- You will be redirected to the Product section. Add `WhatsApp` as your product by clicking **set up**.
 
   ## Getting Credentials
 
-This section will guide you on how to obtain whatsapp cloud credentials and sarufi credentials if you are doing custom deployment. More details on how to create permanet token and phone number can be found at [creating permanet token](#create-permanent-token)
+This section will guide you on how to obtain whatsapp cloud credentials and Sarufi credentials if you are doing custom deployment. More details on how to create a permanent token and phone number can be found [here](#create-permanent-token).
 
 <Tabs groupId="whatsapp-integration">
 <TabItem value="sarufi-dashboard" label="Sarufi Dashboard">
 
-**Whatsapp cloud creds**
+**Whatsapp Cloud Credentials**
 
 - On your Meta Developer dashboard, Navigate to `Whatsapp`-->`API setup`
-- Right there you will see a your **Tempoarary Access Token** and WhatsApp test number with its **Phone number ID**.
-- Lastly verify the number you will be using for testing on the To field.
+- There, you will see a **Temporary Access Token** and WhatsApp test number with its **Phone Number ID**.
+- Finally, verify the number you will be using for testing in the To field.
 
 
-In this part of integration with whatsapp, we will walk through the journey using either Sarufi Dashboard or self-served deployment(custom deployment) for integration.
+In this part of integration with WhatsApp, we will walk through the journey using either Sarufi Dashboard or self-served deployment (custom deployment) for integration.
 
 
 ## Getting Started
@@ -55,30 +55,30 @@ All the steps shown/illustrated here assume you already created a Sarufi account
 <Tabs groupId="whatsapp-integration" defaultValue="sarufi-dashboard">
 <TabItem value="sarufi-dashboard" label="Sarufi Dashboard">
 
-In this guide, we are going to use [Sarufi Dashboard](https://sarufi.io) to connect to WhatsApp Cloud API. Sarufi is a no-code platform that allows you to build chatbots and deploy them to different channels.
+In this guide, we are going to use [Sarufi Dashboard](https://sarufi.io) to connect to the WhatsApp Cloud API. Sarufi is a no-code platform that allows you to build chatbots and deploy them to different channels.
 
 - Log into your Sarufi account.
 - Create a bot. You can follow the instructions [here](/docs/Getting-started/create-a-simple-chatbot).
 - Navigate to settings in your bot, located at top right corner. Click on `Integration` >> `WhatsApp`
-- Add your whatsapp token and phone number ID. Read on how to [get whatsapp creds](#getting-credentials). The system will create random verify token for you. You can change it if you want to.
+- Add your WhatsApp token and Phone Number ID. Read on how to get WhatsApp credentials [here](#getting-credentials). The system will create a random verification token for you. You can change it if you want to.
 
   ![WhatsApp creds](/img/dashboard-whatsapp-deployment-credentials.png)
 
-- Once you have added your whatsapp token and phone number ID, you are ready to deploy your bot to WhatsApp. Click on `Save` button then `Deploy`
-- Wait for your job to finish. Once done, you will have a webhook url presented to you. Copy the url and follow simple steps at [Setting whatsapp webhook](#finalizing-whatsapp-set-up). You will also need to copy the verification token and paste it in your whatsapp cloud account.
+- Once you have added your WhatsApp token and Phone Number ID, you are ready to deploy your bot to WhatsApp. Click on `Save` button then `Deploy`
+- Wait for your job to finish. Once done, you will have a webhook URL presented to you. Copy the URL and follow the steps at [Setting up a WhatsApp webhook](#finalizing-whatsapp-set-up). You will also need to copy the verification token and paste it in your WhatsApp cloud account.
 
   ![WhatsApp webhook url](/img/dashboard-whatsapp-deployment-webhook-url.png)
 
-- After setting up webhook, you will need to subscribe to message topic. Navigate to webhook fields --> click `manage` to subscribe to `message` topic. Read on [webhook field subscription](#finalizing-whatsapp-set-up).
-- When done ,you are good to go... fire up your bot in whatsapp by sending text.
+- After setting up webhook, you will need to subscribe to the message topic. Navigate to webhook fields --> click `manage` to subscribe to `message` topic. Read more on webhook field subscription [here](#finalizing-whatsapp-set-up).
+- When this is done, the bot is ready... fire up your bot in whatsapp by sending text.
 - In case you want to change some of your credentials from WhatsApp Cloud, just update your credentials in your dashboard and click `Update` button. Then `Re-deploy` again.
--You can view your bot logs by clicking `View Logs` button.
-- You can see the deployed Pizza bot in whatsapp in the gif [below](#test-your-whatsapp-chatbot)
+- You can view your bot logs by clicking `View Logs` button.
+- You can see the deployed Pizza bot in whatsapp in the GIF [below](#test-your-whatsapp-chatbot).
 
 </TabItem>
 <TabItem value="custom-deployment" label="Custom Deployment">
 
-With custom deployment, you will be able to host the deployment on your own server. This is the best option if you want to have full control of your deployment. This section shows how to do custom deployment using python. Other languages will be added soon.
+With custom deployment, you will be able to host the bot on your own server. This is the best option if you want to have full control over your deployment. This section shows how to do custom deployment using Python. Other languages will be added soon.
 
 - What you need
 
@@ -238,61 +238,61 @@ You will have to modify some commands shown here to suite your working environme
 </TabItem>
 <TabItem value="custom-deployment" label="Custom Deployment">
 
-- Whatsapp cloud creds
+- Whatsapp Cloud Credentials
 
-  Navigate to `Whatsapp`-->`API setup` to get whatsApp cloud `token` and `phone number ID` to be used.
+  Navigate to `Whatsapp`-->`API setup` to get your WhatsApp cloud `token` and `Phone Number ID` to be used.
 
-  You will have access token and phone number id.
+  You will have the access token and Phone Number ID.
 
-  ![How to get whatsapp token and phone number ID](/img/get_whatsapp_token.png)
+  ![How to get whatsapp token and Phone Number ID](/img/get_whatsapp_token.png)
 
 - Getting Sarufi Credentials
 
-  To authorize our chabot, we are are going to use authorization keys from sarufi. Log in into your [sarufi account](https://sarufi.io). Go to your Profile on account to get Authorization keys
+  To authorize our chatbot, we are going to use our authorization keys from Sarufi. Log in into your [Sarufi Account](https://sarufi.io). Go to your Profile in your Account to get your authorization keys.
 
-  ![Sarufi authorazation keys](/img/sarufi_authorization.png)
+  ![Sarufi authorization keys](/img/sarufi_authorization.png)
 
-  For **Bot ID**, Navigate to settings(in your bot)>> copy `bot ID`.
+  For **Bot ID**, Navigate to Settings in your bot and copy the `Bot ID`.
 
 </TabItem>
 </Tabs>
 
 ## Create Permanent token
 
-With just few steps, you will be able to create a permanent token and add your phone number. This token will be used to authorize your bot to send messages to whatsapp.
+With just few steps, you will be able to create a permanent token and add your phone number. This token will be used to authorize your bot to send messages on WhatsApp.
 
-1. Create System user
+1. Create a System User
 
-- Navigate to [Meta business suite](https://business.facebook.com/) --> Your account --> Setting gear icon
+- Navigate to [Meta Business Suite](https://business.facebook.com/) --> Your account --> Settings (gear icon)
 
-  ![Business settings: Users](/img/business-settings-users.png)
+  ![Business Settings: Users](/img/business-settings-users.png)
 
-- Navigate to `users` --> `system users` --> Click on `Add` --> Read policy(if it pops up)
-- Add name of system user --> Set role to `admin` --> click `save`
+- Navigate to `Users` --> `System Users` --> Click on `Add`
+- Add name of system user --> Set role to `Admin` --> click `Save`
 
-  ![Create system user](/img/create-system-user.png)
+  ![Create System User](/img/create-system-user.png)
 
 2. Add your App to Assets
 
-- After creating system user, navigate to `Assign Assets`
+- After creating a system user, navigate to `Assign Assets`
 
   ![Assign Assets](/img/assign-assets.png)
 
-- Naviagate to `Apps` --> Select your add name --> Grant it full control --> `Save changes`
+- Naviagate to `Apps` --> Select your app --> Grant it full control --> `Save changes`
 
   ![Adding App to assets](/img/add-app-to-assets.png)
 
-3. Generate Permanent Access token
+3. Generate Permanent Access Token
 
-  After adding app to your assets, the next step is to generate permanent access token. You will have a page that looks like the one below.
+  After adding the app to your assets, the next step is to generate a permanent access token. You will have a page that looks like the one below.
 
   ![Adding permanent access token](/img/added-app-to-assets.png)
 
-- Click on `Generate new Token` --> Select an App --> Select your token expiration time
-- Add Permisions. Basically you need to add `whatsapp_business_management` and `whatsapp_business_messaging` permisions.
+- Click on `Generate New Token` --> Select an App --> Select your token expiration time.
+- Add Permisions. Uou need to add the `whatsapp_business_management` and `whatsapp_business_messaging` permisions.
 - Click `Generate Token` --> Copy the token and save it somewhere safe. You will need it in your script.
 
-    ![Generate permanent token](/img/generate-permanent-access-token.png)
+  ![Generate permanent token](/img/generate-permanent-access-token.png)
 
   You will have time to view your token. So make sure you copy it and save it somewhere safe. It is only shown once.
 
@@ -300,54 +300,54 @@ With just few steps, you will be able to create a permanent token and add your p
 
   Do this if you want to use your production phone number. If you want to use your test number, you can skip this step. Follow few steps to step your phone number
 
-- Naviagate to your [meta developer account](https://developers.facebook.com/apps/) --> Your app --> `WhatsApp` --> `API setup` --> `Add phone number`
+- Naviagate to your [Meta Developer Account](https://developers.facebook.com/apps/) --> Your app --> `WhatsApp` --> `API setup` --> `Add phone number`
 
   ![Add phone number in meta app](/img/meta-add-phone-number.png)
 
-- Provide required details. Then verify your phone number by filling in the code sent.
-- After adding phone number, scroll up(in Meta developer app dashboard) to send and receive section. In the From field, select your phone number.
-- You will have to copy `phone number ID` and generate permanent `acess token` then paste them to sarufi for deployment.
+- Provide required details, then verify your phone number by entering the code received.
+- After adding the phone number, scroll up in Meta Developer app dashboard to send and receive section. In the From field, select your phone number.
+- You will have to copy your `Phone Number ID` and generate a permanent `access token` then paste them into Sarufi for deployment.
 
 5. Add payment method
 
-You will need to add payment method to your meta app. This is required for you to be able to send messages to whatsapp. You can add payment method by following the steps by navigating to your meta App dashboard  --> Products --> Whatsapp --> API setup then follow instructions provided 
+You will need to add a payment method to your Meta app. This is required for you to be able to send messages in WhatsApp. You can add a payment method by navigating to your Meta App dashboard  --> Products --> WhatsApp --> API setup then follow the instructions provided.
 
-## Finalizing Whatsapp set-up
+## Finalizing Whatsapp setup
 
-In this section, we are going to finalize our whatsapp set-up. We are going to set webhook and subscribe to message topic.
+In this section, we are going to finalize our WhatsApp setup. We are going to setup a webhook and subscribe to message topic.
 
-- Setting whatsapp webhook
+- Setting up a WhatsApp webhook
 
-  Navigate to your whatsapp cloud account --> `configuration` -->(Webhook) edit --> then paste the url into callback url.
+  Navigate to your WhatsApp cloud account --> `Configuration` --> (Webhook) edit --> paste the URL into the Callback URL field.
 
-  You will also need a verification token. So copy the token from either dashboard or your script's environment variable  --> paste into verify token in your whatsapp cloud --> **verify and save**.
+  You will also need a verification token. Copy the token from either the dashboard or your script's environment variables  --> paste into verify token in your whatsapp cloud --> **verify and save**.
     
-  ![Web hook setup](/img/webhook_setup.png)
+  ![Webhook setup](/img/webhook_setup.png)
 
 - Webhook field subscription
 
-  After veryfing and saving whatsapp webook, navigate to webhook fields --> click `manage` to subscribe to `message` topic.
+  After verifing and saving your WhatsApp webook, navigate to webhook fields --> click `manage` to subscribe to the `message` topic.
 
   ![Webhook fields subscription](/img/webhook_subscription.png)
 
-## Test Your WhatsApp ChatBot
+## Test your WhatsApp chatbot
 
-Lets finish up by testing our bot in whatsapp.
+Let's finish by testing our bot in WhatsApp.
 
-Navigate to your _whatsapp cloud account_ >> _API setup_ >> scroll down to a field written `To`. Click manage phone number to add you phone number. Follow instructions till you finish
+Navigate to your _WhatsApp cloud account_ >> _API Setup_ >> scroll down to a field named `To`. Click `manage phone number` to add your phone number. Follow the instructions until the phone number is added.
 
 Click **send message** to start testing your bot. You will receive a message from your test number which your will use in testing your bot.
 
-![Send Test Message to Your Number](/img/whatsapp-send-test-message.png)
+![Send test message to your number](/img/whatsapp-send-test-message.png)
 
 You can test WhatsApp by sending a message to your bot.
 
 - Lets test our PizzaBot
 
-  With the Pizza bot we have been working through, here is the bot responses deployed in whatsapp.
+  Showcasing the PizzaBot we have been working on, here are the responses of the bot deployed in WhatsApp.
   
   ![WhatsApp bot test](/gif/whatsapp-bot-sample.gif)
 
 ## What you learned
 
-In this tutorial, you learned how to connect Sarufi to WhatsApp Cloud API. You also learned how to configure and run WhatsApp.
+In this tutorial, you learned how to connect Sarufi to the WhatsApp Cloud API. You also learned how to configure and run WhatsApp.

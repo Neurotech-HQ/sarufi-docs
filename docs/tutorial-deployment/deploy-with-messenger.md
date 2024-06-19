@@ -13,61 +13,60 @@ Messenger is one of the most popular messaging apps in the world. It has over 2 
 
 ## How to connect to Messenger
 
-To get started using this blueprint, you will need credentials which you can get from [Facebook Developer Portal](https://developers.facebook.com/) after creating an app. Note that the bot will be used on a page so you will need to create a page.
+To get started using this blueprint, you will need credentials which you can get from the [Facebook Developer Portal](https://developers.facebook.com/) after creating an app. Note that the bot will be used on a page so you will need to create a page.
 
 Here are steps to follow for you to get started:
 
-- [Go to your apps](https://developers.facebook.com/apps)
-- [create an app](https://developers.facebook.com/apps/create/)
-- On `Which use case do you want to add to your app?`, select **Other** >> Next
-- Select Business >> Business
-- It will prompt you to enter basic app informations
-- It will ask you to add products to your app. Add Messenger
-- Create a page if you have none as the bot will be used on the page
-- Get `access token`.
+- [Go to your apps](https://developers.facebook.com/apps).
+- [Create an app](https://developers.facebook.com/apps/create/).
+- On `Which use case do you want to add to your app?`, select **Other** >> Next.
+- Select Business >> Business (it will prompt you to enter basic app information)
+- It will ask you to add products to your app. Add Messenger.
+- Create a page if you do not already have a page.
+- Get an `access token`.
 
 ## Getting Started
 
-Deploying your messenger bot can be either done using either Sarufi Dashboard or your own server. We are going to cover both ways.
+Deploying your Messenger bot can be either done using either Sarufi Dashboard or your own server. We are going to cover both ways.
 
 <Tabs defaultValue="sarufi-dashboard">
 <TabItem value="sarufi-dashboard" label="Sarufi Dashboard">
 
-Sarufi Dashboard provide a quick way to deploy your bot. You can deploy your bot in just a few clicks. You can also use it to manage your bot. You can view your bot logs and many more. To get started, you will need to have a [sarufi account](https://sarufi.io).
+The Sarufi Dashboard provides a quick way to deploy your bot. You can deploy your bot in just a few clicks. You can also use it for bot management, viewing bot logs and much more. To get started, you will need to have a [Sarufi account](https://sarufi.io).
 
 Steps:
-- Log in into your [sarufi account](https://sarufi.io). 
+- Log in into your [Sarufi account](https://sarufi.io).
 
     Go to your Dashboard to create a bot. Click `Create Bot` button. Enter your bot name and click `Create Bot` button
 
 - Add messenger credentials
 
-    Navigate to settings >> Integrations >> Facebook Messenger. Enter your page access token and Verify token. Click Save button. Then click `Deploy` button.
+    Navigate to Settings >> Integrations >> Facebook Messenger. Enter your page access token and Verify token. Click the `Save` button. Then click `Deploy`.
 
-    ![Adding Messenger credentials in sarufi dashboard](/img/dashboard-messenger-deployment-credentials.png)
+    ![Adding Messenger credentials in Sarufi dashboard](/img/dashboard-messenger-deployment-credentials.png)
 
-- Wait for your job to finish. Once done, you will have a webhook url presented to you. Copy the url and follow simple steps at [setting messenger webhook](#finalize-messenger-setup).
+- Wait for your job to finish. Once done, you will have a webhook URL presented to you. Copy the URL and follow the steps about setting up a messenger webhook [here](#finalize-messenger-setup).
 
-    ![Messenger webhook url](/img/dashboard-messenger-deployment-webhook-url.png)
+    ![Messenger webhook URL](/img/dashboard-messenger-deployment-webhook-url.png)
 
-- In case you want to change some of your credentials, just update your credentials in your dashboard and click `Update` button. Then `Re-deploy` again.
-- You can view your bot logs by clicking `View Logs` button.
+- In case you want to change some of your credentials, just update your credentials in your dashboard and click `Update`. Then `Re-deploy` again.
+- You can view your bot logs by clicking `View Logs`.
 
 </TabItem>
 
 <TabItem value="custom-deployment" label="Custom Deployment">
 
-This section covers how you can set up your own server to deploy your bot. We are going to use python as our programming language. The guide on other languages will be added soon.
+This section covers how you can set up your own server to deploy your bot. We are going to use Python as our programming language. A guide for other languages will be added soon.
 
-We are going to cover the work-how of either using [ngrok](https://ngrok.com) or [replit](https://replit.com) to deploy our bot.
+We are going to cover the workflow of either using [ngrok](https://ngrok.com) or [Replit](https://replit.com) to deploy our bot.
 
-The main library used in the deployement is [Pymessenger](https://github.com/davidchua/pymessenger).
+The main library used in the deployement is [pymessenger](https://github.com/davidchua/pymessenger).
 
 <Tabs>
 
 <TabItem value="Replit" label="Using Replit">
 
-Replit provides an in-browser IDE and compute resources to develop and host applications from a web browser. It is an online IDE, which means you can access it from any modern web browser without having to install or configure anything. Its a good place to deploy your bot.
+Replit provides an in-browser IDE and compute resources to develop and host applications from a web browser. It is an online IDE which means you can access it from any modern web browser without having to install or configure anything. It is a good place to deploy your bot.
 
 Steps
 
@@ -75,9 +74,9 @@ We are going to cover the steps briefly here.
 
 - Log into your [Replit](https://replit.com/) account.
 
-  Fork the repo [Sarufi bot deployed on messenger](https://replit.com/@neurotechafrica/sarufi-messenger-blueprint) into your account.
+  Fork [Sarufi Bot repository deployed on Messenger](https://replit.com/@neurotechafrica/sarufi-messenger-blueprint).
 
-  Navigate to `Tools`--> `Secrets` to create environment variables. We have discussed on how to get page access token at introduction part where as for sarufi view instructions here [get sarufi credentials](#getting-sarufi-credentials).
+  Navigate to `Tools`--> `Secrets` to create environment variables. As a reminder, we have discussed how to get page access token in the Introduction. For Sarufi, a guide is available [here](#getting-sarufi-credentials).
 
      Create
     |Key | Description|
@@ -87,53 +86,49 @@ We are going to cover the steps briefly here.
     |SARUFI_BOT_ID| Id of bot to be deployed|
     |VERIFY_TOKEN| A random string to be used as verification token|
 
-- Run your repl
+- Run your REPL
 
-    After adding the secret keys, click `Run` button. A small webview window will open up with a url that looks like `https://{your repl name}.{your replit username}.repl.co`. Copy the url as it will be needed when setting up the webhook.
+    After adding the secret keys, click `Run`. A small webview window will open up with a url that looks like `https://{your REPL name}.{your Replit username}.repl.co`. Copy the url as it will be needed when setting up the webhook.
 
-- Finish up the setup
+- Finish setup
 
-    To finalize the process, we are going to set up webhook and subscribe to webhook fields. Read [Finalize Messenger Setup](#finalize-messenger-setup) to finish up the setup.
+    To finalize the process, we are going to set up the webhook and subscribe to its fields. Read [Finalize Messenger Setup](#finalize-messenger-setup).
 
 - Test your bot
 
-    Open your messenger app/web, search for your page name. Send messages to it. The messages will be redirected to your bot. Here is the sample of our pizza bot deployed. View a sample of our [pizza bot](#pizza-bot-test).
+    Open Messenger and search for your page name. Send messages to it. The messages will be redirected to your bot. Here is the sample of our PizzaBot deployed. You can wiew a sample of our PizzaBot [here](#pizza-bot-test).
 
 
 </TabItem>
 <TabItem value="ngrok" label="Using Ngrok">
 
-This section illustrate how to use Ngrok to create a webhook. Ngrok is a multiplatform tunnelling, reverse proxy software that establishes secure tunnels from a public endpoint such as the internet to a locally running network service while capturing all traffic for detailed inspection and replay.
+This section illustrates how to use Ngrok to create a webhook. Ngrok is a multiplatform tunnelling, reverse proxy software that establishes secure tunnels from a public endpoint such as the internet to a locally running network service while capturing all traffic for detailed inspection and replay.
 
 
 Steps
 
-You will have to modify some commands shown here to suite your working environment. The commands like `python3` and `pip3` will depend on your working environment. You may have to use `python` and `pip` instead.
+You will have to modify some commands shown here to adapt to your working environment. Commands like `python3` and `pip3` will depend on your environment. You may have to use `python` and `pip` instead.
 
-1. Make sure you have [ngrok](https://ngrok.com) installed in your machine.
-2. Make Project folder and Virtual environment
+1. Make sure you have [ngrok](https://ngrok.com) installed on your machine.
+2. Make project folder and virtual environment
 
-    Lets Make a project folder named `messenger-bot`. Navigate into it to create virtual evironment `messsenger-bot-env`. Activate the environment.
-
-    Run the command to make the magic happen
-
-    - Create a project directory `Telegram bot`.
+    Make a project folder named `messenger-bot`. Navigate into it and create a virtual evironment named `sarufi-messenger`. Activate the environment.
 
     This is the directory that will hold our project. You can name it anything you want.
 
     ```bash
-    mkdir 'Messenger chatbot'
-    cd 'Messenger chatbot'
+    mkdir 'messenger-bot'
+    cd 'messenger-bot'
     ```
 
   - Make Virtual Environment
 
-    Using virtual environment is a good practice, so we are going to create one. You can read more on [why use virtual environment](https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/). We shall install all necessary packages in the environment
+    Using virtual environment is a good practice, so we are going to create one. You can read more on why a virtual environment is advantageous [here](https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/). The required packages should be installed in the environment.
 
     - Unix based systems
         - Install virtual environment
         
-        This step is optional as you may have python virtual environment already installed. If not, you can install it by running the command below.
+        This step is optional as you may have a Python virtual environment already installed. If not, you can install it by running the command below.
 
         ```bash
         sudo apt install python3-venv
@@ -177,9 +172,9 @@ You will have to modify some commands shown here to suite your working environme
 
 4. Add credentials
 
-    We are going to keep our credentials in `.env` file. You can use either a text editor or command line to creat it. With messenger page access token, we covered it previously. Then for sarufi api key, just follow this to [get sarufi credentials](#getting-sarufi-credentials)
+    We are going to keep our credentials in an `.env` file. You can use either a text editor or command line to create it. As a reminder, we have covered how to get an access token for the page. For the Sarufi API key, follow [this](#getting-sarufi-credentials) guide to get sarufi credentials.
 
-    In the file, we are going to add the following
+    The contents of the file should be the following.
 
     ```bash
     SARUFI_API_KEY=Your sarufi API key
@@ -188,12 +183,12 @@ You will have to modify some commands shown here to suite your working environme
     VERIFY_TOKEN = A random string to be used as verification token
     ```
     :::note
-    The verification token is a random string. You can just create a random string and use it as your verification token. You can use any random string, but make sure you keep it because you will need to use the same string when we are setting up the webhook.
+    The verification token is a random string. It is possible to create a random string and use it as your verification token. You can use any random string but please ensure you don't lose it because you will need to use the verification token when setting up the webhook.
     :::
 
 6. Start the server and ngrok
 
-    - Run the script to start the server
+    - Run the script to start the server.
 
         ```bash
         python3 main.py
@@ -201,24 +196,24 @@ You will have to modify some commands shown here to suite your working environme
 
     - Start ngrok
 
-        This will create a public url to access the local server. The url looks like `https://xxxxxxxxxxx.ngrok.io`. We shall use this url to set up our webhook.
+        This will create a public url to access the local server. The url looks like `https://xxxxxxxxxxx.ngrok.io`. We will use this URL to set up our webhook.
 
         ```bash
         ./ngrok http 8000
         ```
     
-    **`Note:`** Keep the port number is the same as used in `main.py`.
-7. Chatbot at work
+    **`Note:`** Keep the port number the same as used in `main.py`.
+7. Running the chatbot
 
-    Open your messenger app/web, search for your page name. Send messages to it. The messages will be redirected to your bot. Here is the sample of our pizza bot deployed. View a sample of our [pizza bot](#test-your-messenger-chatbot).
+    Open Messenger and search for your page name and send messages to it. The messages will be redirected to your bot. View a deployed sample of our PizzaBot [here](#test-your-messenger-chatbot).
 
 </TabItem>
 
 </Tabs>
 
-- Getting sarufi credentials
+- Getting Sarufi credentials
 
-    To authorize our chabot, we are are going to use authorization keys from sarufi. Log in into your [sarufi account](https://sarufi.io). Go to your Profile to get API key.
+    To authorize our chatbot, we are are going to use authorization keys from Sarufi. Login into your [Sarufi Account](https://sarufi.io). Go to your Profile to get your API key.
 
     ![Sarufi API key](/img/sarufi_authorization.png)
 
@@ -230,25 +225,25 @@ You will have to modify some commands shown here to suite your working environme
 
 ## Finalize Messenger Setup
 
-We are going to finalize the setup by setting up webhook and subscribe to messages and messaging_postback.
+We are going to finalize our setup process by setting up the webhook and subscribing to the messages and messaging_postback.
 
 1. Setting webhook
 
-    After starting ngrok, you will have a public url to access the local server. The url looks like `https://xxxxxxxxxxx.ngrok.io`. Navigate into your facebook developer account. On the webhooks section, click `messenger` >> `settings`.
+    After starting ngrok, you will have a public URL to access the local server. The url looks like `https://xxxxxxxxxxx.ngrok.io`. Navigate into your Meta developer account. In the webhooks section, click `Messenger` >> `Settings`.
 
-    ![messenger settings section](/img/messenger-settings-section.png)
+    ![Messenger Settings section](/img/messenger-settings-section.png)
 
-    Scroll down to webhook section of messenger, click `Add callback url`. Then paste the provided url into url section. Copy the `VERIFY_TOKEN`, paste it into verify token in messenger >> **Verify and save**.
+    Scroll down to webhook section of messenger, click `Add Callback URL`. Then paste the provided URL into the URL section. Copy the `VERIFY_TOKEN` and paste it into the `verify token` field in messenger >> **Verify and save**.
 
     ![Messenger webhook setup](/img/messenger-webhook-setup.png)
 
-2. webhook field subscription
+2. Webhook field subscription
 
-    We have to subscribe to webhook fields in order to receive messages sent by user. We shall subscribe to `messages` and `messaging_postback` topic. Just scroll down to webhook section of messenger, click `Add subscriptions`. Then select `messages` and `messaging_postback` >> **Save**.
+    We have to subscribe to webhook fields in order to receive messages sent by user. We will subscribe to the `messages` and `messaging_postback` topics. Scroll down to webhook section and click `Add subscriptions`. Then select `messages` and `messaging_postback` >> **Save**.
 
 
 ## Test Your Messenger ChatBot
 
-With a bot deployed in messenger, here is a sample of a pizza bot.
+Here is a demonstration of the PizzaBot deployed in Messenger.
 
-![Bot deployed in messenger](/gif/messenger-bot.gif)
+![Bot deployed in Messenger](/gif/messenger-bot.gif)
