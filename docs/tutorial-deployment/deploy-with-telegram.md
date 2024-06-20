@@ -165,7 +165,7 @@ You will have to modify some commands shown here to suit your working environmen
 
   **NOTE:** _All operations are carried out in the active virtual evironment in case you use a virtual environment._
 
-  Below is a sample of our Pizza Bot we have been working on, [view chatbot](#test-your-telegram-bot).
+  Below is a sample of our PizzaBot we have been working on, [view chatbot](#test-your-telegram-bot).
 
 </TabItem>
 
@@ -354,9 +354,9 @@ To test your Telegram chatbot, you can send a message to your bot on the Telegra
 3. Send a message to your bot and see how it responds.
 
 
-Here is the test sample of our Pizza bot we have been working on.
+Here is the test sample of our PizzaBot we have been working on.
 
-![Pizza bot test](/gif/telegram-bot-sample.gif)
+![PizzaBot test](/gif/telegram-bot-sample.gif)
 
 ## What you learned 👨🏽‍💻
 

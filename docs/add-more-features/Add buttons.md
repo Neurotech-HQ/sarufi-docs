@@ -5,24 +5,24 @@ sidebar_position: 3
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Interactive button
+# Interactive Buttons
 
-Adding interactive buttons for our bot will provide a user more experience. A user can make quick selections.
+Adding interactive buttons for our bot will provide a better user experience and less chance for input validation problems. The user can make selections quickly without typing using buttons.
 
 ## What to know about buttons
 
-As your bot can be deployed in many platforms such as WhatsApp, Messenger, Telegram and many more, we have to abide to their rules on how buttons should appear.
-Here are general rules we are going to follow.
+As your bot can be deployed in various platforms like WhatsApp, Messenger, Telegram and many more, we have to ensure that every platform supports the type of button we want to make.
+Here are general rules we will follow.
 
 - A state can have only 3 buttons
-- Button name should not exceed 20 characters
+- The button name should not exceed 20 characters
 
 A button will be connected to a state with a response if a particular button is pressed.
 
 ## Update the flow
 
-All other flows we have looked at used default type, `text` but buttons will be added in a flow with type as `interactive`.
-Buttons will take a list with a dictionary with pair of `button's state` and `button's name`.
+All other flows we have looked at used the default type, `text`.  Buttons use a different flow type called `interactive`.
+The buttons will take a list of dictionaries with the key being the `button's state` and value being the `button's name`.
 
 We are going to update our flow by adding the buttons to let customer confirm the order.
 
@@ -36,20 +36,20 @@ message:
     - Please confirm.
 next_state: end
 # adding buttons
-type: interactive,
+type: interactive
 buttons:
     - customer_accepts: I confirm
     - customer_denies: I don't confirm
 
 customer_accepts:
 message:
-    - - Thank you for ordering with us.
-    - We shall have your pizza delivered soon
+    - Thank you for ordering with us.
+    - Your pizza will be delivered soon.
 next_state: end
 
 customer_denies:
 message:
-    - Sorry, You are welcome to shop with us
+    - See you next time!
 ```
 
 </TabItems>
@@ -64,7 +64,7 @@ message:
             "Please confirm."
         ],
         "next_state": "end",
-        "type": "interactive,",
+        "type": "interactive",
         "buttons": [
             {
                 "customer_accepts": "I confirm"
@@ -78,14 +78,14 @@ message:
         "message": [
             [
                 "Thank you for ordering with us.",
-                "We shall have your pizza delivered soon"
+                "Your pizza will be delivered soon."
             ]
         ],
         "next_state": "end"
     },
     "customer_denies": {
         "message": [
-            "Sorry, You are welcome to shop with us"
+            "See you next time!"
         ]
     }
 }
@@ -94,11 +94,12 @@ message:
 </TabItems>
 </Tabs>
 
-We have two buttons, `I confirm` that connects to **customer_accepts** state and `I don't confirm` that connects to **customer_denies** state. States connected to the buttons can be as long as your bot demands.
+We have two buttons. `I confirm` connects to the **customer_accepts** state and `I don't confirm` connects to the **customer_denies** state. States connected to the buttons can be any length
+depending your bot's needs.
 
-## The conversion
+## The conversation
 
-Search for your bot at [sarufi playground](https://playground.sarufi.io/community) to see bot's ability.
-Here is our Pizza bot example with `I confirm` button pressed.
+Search for your bot in the [Sarufi Playground](https://playground.sarufi.io/community) to see our bot's abilities.
+Here is our PizzaBot example with the `I confirm` button pressed.
 
 ![Conversation after adding buttons](/img/playground-buttons.png)
