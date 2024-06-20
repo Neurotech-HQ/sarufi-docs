@@ -69,11 +69,11 @@ In this guide, we are going to use [Sarufi Dashboard](https://sarufi.io) to conn
 
   ![WhatsApp webhook url](/img/dashboard-whatsapp-deployment-webhook-url.png)
 
-- After setting up webhook, you will need to subscribe to the message topic. Navigate to webhook fields --> click `manage` to subscribe to `message` topic. Read more on webhook field subscription [here](#finalizing-whatsapp-set-up).
-- When this is done, the bot is ready... fire up your bot in whatsapp by sending text.
+- After setting up the webhook, you will need to subscribe to the message topic. Navigate to webhook fields --> click `manage` to subscribe to the `message` topic. Read more on webhook field subscription [here](#finalizing-whatsapp-set-up).
+- When this is done, the bot is ready. Activate your bot in WhatsApp by sending it a text.
 - In case you want to change some of your credentials from WhatsApp Cloud, just update your credentials in your dashboard and click `Update` button. Then `Re-deploy` again.
 - You can view your bot logs by clicking `View Logs` button.
-- You can see the deployed Pizza bot in whatsapp in the GIF [below](#test-your-whatsapp-chatbot).
+- You can see the deployed PizzaBot in whatsapp in the GIF [below](#test-your-whatsapp-chatbot).
 
 </TabItem>
 <TabItem value="custom-deployment" label="Custom Deployment">
@@ -98,15 +98,15 @@ You will have to modify some commands shown here to suite your working environme
 
 - Create project folder.
 
-  Lets Make a project folder named `whatsapp-bot`. Navigate into it to create virtual evironment `whatsapp-bot-env`. Activate the environment
+  Create a project folder named `whatsapp-bot`. Navigate into it to create a virtual evironment named `whatsapp-bot-env`. Activate the environment.
 
   Run the command to make the magic 🔥 happen.
 
-  - For unix based systems __[Linux and Mac]__
+  - For Unix-based systems __[Linux and Mac]__
 
     - Install virtual environment
 
-      This step is optional as you may have python virtual environment already installed. If not, you can install it by running the command below.
+      This step is optional as you may have a Python virtual environment already installed. If not, you can install it by running the command below.
 
       ```bash
       sudo apt install python3-venv
@@ -120,16 +120,16 @@ You will have to modify some commands shown here to suite your working environme
       source  whatsapp-bot-env/bin/activate
       ```
   
-  - For windows
+  - For Windows
 
-    - Install virtual environment
+    - Install a virtual environment
 
-      This step is optional as you may have python virtual environment already installed. If not, you can install it by running the command below.
+      This step is optional as you may have Python virtual environment already installed. If not, you can install it by running the command below.
 
       ```bash
       pip install virtualenv
       ```
-    - Create project folder and virtual environment
+    - Create the project folder and a virtual environment
 
       ```bash
       mkdir whatsapp-bot
@@ -140,7 +140,7 @@ You will have to modify some commands shown here to suite your working environme
 
 - Clone Blueprint repo
 
-  We are going to clone a [blueprint repo](https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint.git) and install required packages in our virtual environment.
+  We are going to clone a [blueprint repo](https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint.git) and install the required packages in our virtual environment.
 
   ```bash
   git clone https://github.com/Neurotech-HQ/sarufi-heyoo-blueprint.git
@@ -148,7 +148,7 @@ You will have to modify some commands shown here to suite your working environme
   pip3 install -r requirements.txt
   ```
 
-- Create a file named `.env` in your working folder to hold environment variables. Use your text editor to create the file.
+- Create a file named `.env` in your working folder to hold environment variables. You can use a text editor to create the file.
   
    In the file add the following. Read on how to [get WhatsApp and Sarufi creds](#getting-credentials)
 
@@ -160,16 +160,16 @@ You will have to modify some commands shown here to suite your working environme
     VERIFY_TOKEN    = Your verify token
   ```
   :::note
-  The verification token is a random string. You can just create a random string and use it as your verification token. You can use any random string, but make sure you keep it because you will need to use the same string when we are setting up the webhook.
+  The verification token is a random string. You can just create a random string and use it as your verification token. You can use any random string, but make sure you don't lose it because you will need to use the same string when we are setting up the webhook.
   :::
   
-- Once you have environment variables set, you are ready to fire 🚀 your `main.py` in activated virtual envirnoment.
+- Once you have environment variables set, you are ready to fire 🚀 your `main.py` up in the activated virtual envirnoment.
 
   ```bash
   python3 main.py
   ```
 
-  Then run the command below to start ngrok
+  Run the command below to start ngrok.
 
   ```bash
   ./ngrok http 5000
@@ -177,26 +177,25 @@ You will have to modify some commands shown here to suite your working environme
 
   **`Note:`** keep the port number the same as used in `main.py`
 
-- Finish up. After ruuning the command, you will have to copy the url ngrok provides. The url looks like `https://xxxxxxxxxxx.ngrok.io`
+- Finish up. After running the command, you will have to copy the URL ngrok provides. The URL looks like `https://xxxxxxxxxxx.ngrok.io`.
 
-  With the provided url, follow simple steps at [Setting whatsapp webhook](#finalizing-whatsapp-set-up).
+  With the provided URL, follow the steps at [Setting up WhatsApp webhooks](#finalizing-whatsapp-set-up).
 
   Copy the `VERIFY_TOKEN`, added as environment variable. Then paste into **verify token** section in your whatsapp cloud --> **verify and save**.
 
-  We are heading a the best part of this journey. Just take time to [subscribe to message topic](#finalizing-whatsapp-set-up).
-  When done ,you are good to go... fire up your bot in whatsapp by sending text.
+  You can read more about subscribing to message topics up [here](#finalizing-whatsapp-set-up).
+  When this step is done, the bot is complete. Activate your WhatsApp bot by sending it a text.
 
-  🏁 When done with saving the token and url, go on to text your bot.
-- See the deployed Pizza bot in whatsapp in the gif [below](#test-your-whatsapp-chatbot)
+- See the deployed WhatsApp PizzaBot in the gif [below](#test-your-whatsapp-chatbot).
 
 </TabItem>
 <TabItem value="replit" label="Using Replit">
 
 - Log into your [Replit](https://replit.com/) account.
   
-- Fork the repo [Whatsapp bot using sarufi API and heyoo](https://replit.com/@neurotechafrica/sarufi-heyoo-blueprint) into your account.
+- Fork the repo [WhatsApp bot using Sarufi API and heyoo](https://replit.com/@neurotechafrica/sarufi-heyoo-blueprint) into your account.
 
-- Navigate to Tools--> Secrets to create environment variables. Read [Getting whatsapp and sarufi creds](#getting-credentials).
+- Navigate to Tools--> Secrets to create environment variables. Read [Getting WhatsApp and Sarufi credentials](#getting-credentials).
 
   Create Secrets as shown below.
 
@@ -215,7 +214,7 @@ You will have to modify some commands shown here to suite your working environme
 
 - Run the script
   
-  After creating the secret keys, click `Run` button. A small webview window will open up with a url that looks like `https://{your repl name}.{your replit username}.repl.co`.
+  After creating the secret keys, click `Run` button. A small webview window will open up with a URL that looks like `https://{your repl name}.{your replit username}.repl.co`.
 
   With the url, follow simple steps at [Setting whatsapp webhook](#finalizing-whatsapp-set-up).
 
@@ -223,9 +222,9 @@ You will have to modify some commands shown here to suite your working environme
 
   Go into your repl, copy the `VERIFY_TOKEN` --> paste into verify token in your whatsapp cloud --> **verify and save**.
 
-  We are reaching at a good point with the set-up. Lets [subscribe to message topic](#finalizing-whatsapp-set-up).
-  When done ,you are good to go... fire 🚀 up your bot in whatsapp by sending text.
-- Take a look at the deployed Pizza bot in whatsapp in the gif [below](#test-your-whatsapp-chatbot)
+  You can read more about subscribing to message topics up [here](#finalizing-whatsapp-set-up).
+  When this step is done, the bot is complete. Activate your WhatsApp bot by sending it a text.
+- See the deployed WhatsApp PizzaBot in the gif [below](#test-your-whatsapp-chatbot).
 
 </TabItem>
 </Tabs>
