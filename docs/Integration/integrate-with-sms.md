@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 
 # SMS integration
 
-SMS integration allows your chatbot to send SMS  to users based on specific triggers. With this functionality, you can enhance the communication capabilities of your chatbot and provide users with important information or notifications via SMS
+SMS integration allows your chatbot to send SMS to users based on specific triggers. With this functionality, you can enhance the communication capabilities of your chatbot and provide users with important information or notifications via SMS.
 
 ## Interface Overview
 The SMS integration interface consists of the following components:
@@ -57,9 +57,4 @@ Click the "Save" button to save your SMS integration settings. Ensure that all c
 
 ## Testing
 
-After configuring the SMS integration settings, thoroughly test the functionality to ensure that SMS messages are sent correctly in response to the specified intents.
-
-## See the outcomes
-
-
-
+After configuring the SMS integration settings, test the functionality to ensure that SMS messages are sent correctly in response to the specified intents.
