@@ -17,13 +17,13 @@ AzamPay integration enables your chatbot to process payments seamlessly through 
 
 ![azampay](/img/azampay-image.png)
 
-To know more about azampay go  [AzamPay website](https://azampay.com/).
+To know more about AzamPay, visit the [AzamPay website](https://azampay.com/).
 
 ## Before we get started
 
-Before we get started with intergrating with AzamPay, We'll need a few things:
-- A Sarufi bot, If you don’t have one, you can click here to create one [here](https://sarufi.io).
-- Integration Credentials, this is the essential components provided by AzamPay for integrating their services into your application, These are
+There are a few prerequisites before intergrating with AzamPay:
+- A Sarufi bot. If you don’t have one, you can click [here](https://sarufi.io) to create one.
+- Integration credentials provided by AzamPay. These are used for integrating AzamPay services into your application. They consist of the following:
     - App name
     - Client ID
     - Client Secret
@@ -44,26 +44,26 @@ The AzamPay integration interface consists of the following components:
 | Save Button       | Click to save the AzamPay integration settings.           |
 
 ## Step-by-Step Integration Guide
-Follow these steps to integrate Azam Pay into your application:
+Follow these steps to integrate AzamPay into your application:
 
 **1: Access AzamPay Integration Interface**
 
-Log in to your chatbot platform and navigate to the AzamPay integration section.
+Login to Sarufi dashboard and navigate to the AzamPay integration section.
 
 ![integration-interface](/img/integration_interface_image.png)
 
 **2: Enter App Name, Enter Client ID, Enter Client Secret**
 
-Enter the name of your application, client ID provided by Azam Pay, client secret provided by Azam Pay.
+Enter the name of your application, the AzamPay Client ID and the AzamPay Client Secret.
 
-click the "next" button to proceed
+Click "Next" to proceed.
 
 ![azampay_interface1](/img/azampay-interface1.png)
 
 **3: Select Triggered Intents**
 
 Select the intents that will trigger AzamPay functionality. You'll need to identify and define these intents based on the user interactions you want to enable for payments through AzamPay.
-By selecting the relevant triggered intents, you ensure that AzamPay's payment features are integrated into your application's user experience, aligning with the actions users want to take when making payments
+By selecting the relevant triggered intents, you ensure that AzamPay's payment features are integrated into your application's user experience, aligning with the actions users want to take when making payments.
 
 ![azampay_interface2](/img/azampay-interface2.png)
 
@@ -81,7 +81,7 @@ Enter the amount to be paid via AzamPay.  Here you can enter the amout manual or
 
 **6: Activate Azam Pay Integration**
 
-Toggle the switch to activate the Azam Pay integration. When activated, users will be able to make payments using Azam Pay within your application.
+Toggle the switch to activate the Azam Pay integration. When activated, users will be able to make payments using AzamPay within your application.
 
 **7: Save integration**
 
@@ -89,9 +89,7 @@ Click the "Save" button to save your Azam Pay integration settings. Ensure that 
 
 ## Testing
 
-After configuring the Azam Pay integration settings, thoroughly test the payment functionality to ensure that users can make payments using Azam Pay within your application.
-## See the outcomes
-
+After configuring the AzamPay integration settings, test the payment functionality to ensure that users can make payments using AzamPay within your application.
 
 
 <!-- Integrating Azam Pay into your application enhances the payment processing capabilities and provides users with a convenient and secure payment experience. Follow this guide to successfully integrate Azam Pay into your application. -->

@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Email integration
 
-Email integration allows your chatbot to send and receive emails, enabling communication with users via email.It allows your chatbot to send emails in response to specific user interactions . With this functionality, you can enhance the communication capabilities of your chatbot and provide users with important notifications or updates via email.
+Email integration allows your chatbot to send and receive emails, enabling communication with users via email. It allows your chatbot to send emails in response to specific user interactions. With this functionality, you can enhance the communication capabilities of your chatbot and provide users with important notifications or updates via email.
 
 ## Interface Overview
 
@@ -15,7 +15,7 @@ The email integration interface consists of the following components:
 
 | Components          | Description                                                |
 |-------------------|------------------------------------------------------------|
-| Triggered Intents| Select the intents that will trigger the email functionality. |
+| Triggered Intents | Select the intents that will trigger the email functionality. |
 | Subject           | Enter the subject line for the email.                     |
 | Body              | Enter the main content of the email.                       |
 | Activate Toggle   | Toggle to activate or deactivate the email integration.    |
@@ -58,10 +58,7 @@ Click the "Save" button to save your email integration settings. Ensure that all
 
 
 ## Testing
-After configuring the email integration settings, thoroughly test the functionality to ensure that emails are sent correctly in response to the specified intents.
-## See the outcomes
-
-
+After configuring the email integration settings, test the functionality to ensure that emails are sent correctly in response to the specified intents.
 
 
 <!-- 

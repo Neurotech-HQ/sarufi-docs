@@ -5,95 +5,91 @@ sidebar_position: 5
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Mpesa integration
+# M-PESA integration
 
 
 
-## Mpesa
-Mpesa is Africa's most successful mobile money service and the region’s largest fintech platform. 
-Mpesa  is the preferred way to make payments across the continent both for the banked 
+## M-PESA
+M-PESA is Africa's most successful mobile money service and the region’s largest fintech platform.
+M-PESA is the preferred way to make payments across the continent both for the banked
 and unbanked due to its safety and unmatched convenience.
 It also provides financial services to millions of people who have mobile phones, but do not have bank accounts, or only have limited access to banking services. 
 
 ![mpesa](/img/Mpesa.png)
 
-To know more go to  Mpesa developer portal [here](https://www.m-pesa.africa/partners-developers).
+To know more go to  M-PESA developer portal [here](https://www.m-pesa.africa/partners-developers).
 
 ## Before we get started
 
-Before we get started with intergrating with Mpesa, We'll need a few things:
-- A Sarufi bot, If you don’t have one, you can click here to create one [here](https://sarufi.io).
-- Register for M-Pesa API Access:
-    - Visit the M-Pesa developer portal and sign up for an account [here](https://uat.openapiportal.m-pesa.com/login).
-    - Follow the registration process to obtain access to the M-Pesa API.
+There are a few prerequisites for intergrating with M-PESA:
+- A Sarufi bot. If you don’t have one, you can click [here](https://sarufi.io) to create one.
+- Register for M-PESA API Access:
+    - Visit the M-PESA developer portal and sign up for an account [here](https://uat.openapiportal.m-pesa.com/login).
+    - Follow the registration process to obtain access to the M-PESA API.
 - Obtain API Credentials:  obtain the necessary API credentials for integration.
     - API key
-    - public key
-    - service code
+    - Public key
+    - Service code
 
 ## Interface Overview
 
-Mpesa integration interface consists of the following components:
+The M-PESA integration interface consists of the following components:
 
 | components                      | Description                                                               |
 |------------------------------|---------------------------------------------------------------------------|
-| API key                      | Enter the API key provided by Mpesa                                       |
-| Public key                   | Enter the public key provided by Mpesa                                    |
-| Service code                 | Enter the service code provided by Mpesa                                                                                                           |
-| Triggered intent             | Specify the intents that will trigger Mpesa payment                       |
+| API key                      | Enter the API key provided by M-PESA                                       |
+| Public key                   | Enter the public key provided by M-PESA                                    |
+| Service code                 | Enter the service code provided by M-PESA                                                                                                           |
+| Triggered intent             | Specify the intents that will trigger M-PESA payment                       |
 | Choose state for mobile number | Select the state for the mobile number associated with the payment      |
-| Amount                       | Enter the amount to be paid via Mpesa                                     |
+| Amount                       | Enter the amount to be paid via M-PESA                                     |
 | Activate                     | Toggle to activate or deactivate the Mpesa integration                    |
 
 
 ## Step-by-Step Integration Guide
-here's a step-by-step guide for integrating Mpesa into your application:
+here's a step-by-step guide for integrating M-PESA into your application:
 
-**1: Access  Mpesa Integration Interface**
+**1: Access M-PESA Integration Interface**
 
-Log in to your chatbot platform and navigate to the Mpesa integration section.
+Login to the Sarufi dashboard and navigate to the M-PESA integration section.
 
 ![integration-interface](/img/integration_interface_image.png)
 
-**2.Enter Credentials**
+**2: Enter Credentials**
 
-Enter  the API key and public key provided by M-Pesa. These credentials are necessary for authenticating your application's requests to the M-Pesa API.Also,enter the service code provided by M-Pesa. This code identifies the specific service or transaction type you are integrating with M-Pesa
+Enter the API key and public key provided by M-PESA. These credentials are necessary for authenticating your application's requests to the M-PESA API. Enter the service code provided by M-PESA. This code identifies the specific service or transaction type you are integrating with M-PESA.
 
 ![integration-interface](/img/mpesa-interfacee1.png)
 
-**3.Configure Triggered Intent:**
+**3: Configure Triggered Intent:**
 
-Specify the intents within your chatbot that will trigger M-Pesa payments. These are the actions or user inputs that will prompt the chatbot to initiate a payment transaction.
+Specify the intents within your chatbot which will trigger M-PESA payments. These are the actions or user inputs that will prompt the chatbot to initiate a payment transaction.
 
 ![integration-interface](/img/mpesa-interface2.png)
 
-**4.Choose State for Mobile Number:**
+**4: Choose State for Mobile Number:**
 
 Select the state for the mobile number associated with the payment. This ensures that the payment is processed correctly and that the user receives the payment confirmation.
 
 ![integration-interface](/img/mpesa-interface3.png)
 
-**5.Enter Amount:**
+**5: Enter Amount:**
 
-Enter the amount to be paid via M-Pesa.  Here you can enter the amout manual or choose the state for the amount.
+Enter the amount to be paid via M-PESA.  Here you can enter the amount manually or choose the state for the amount.
 
 ![integration-interface](/img/mpesa-interface4.png)
 
 
-**6.Activate Mpesa Integration**
+**6: Activate M-PESA Integration**
 
-Toggle the activation switch to activate or deactivate the M-Pesa integration in your application. Activation is necessary for the integration to be functional.
+Toggle the activation switch to activate or deactivate the M-PESA integration in your application. Activation is necessary for the integration to be functional.
 
-**7.Save integration**
+**7: Save integration**
 
-Click the "Save" button to save the Mpesa integration settings. Ensure that all the required information is correctly entered before saving to ensure smooth integration.
+Click the "Save" button to save the M-PESA integration settings. Ensure that all the required information is correctly entered before saving to ensure smooth integration.
 
 ## Testing
 
-After configuring the Mpesa integration settings, thoroughly test the payment functionality to ensure that users can make payments using Mpesa within your application.
-
-
-## See the outcomes
-
+After configuring the M-PESA integration settings, thoroughly test the payment functionality to ensure that users can make payments using M-PESA within your application.
 
 
