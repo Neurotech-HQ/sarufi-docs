@@ -7,16 +7,16 @@ import TabItem from "@theme/TabItem";
 
 # Create your first Chatbot
 
-You can use any of the supported programming languages to create your first chatbot. This documentation currently support [**Python**](https://github.com/sarufi-io/sarufi-python-sdk), [**JavaScript**](https://github.com/sarufi-io/sarufi-js) and [**Golang**](https://github.com/sarufi-io/sarufi-golang-sdk).
+You can use any of the supported programming languages to create your first chatbot. This documentation currently supports [**Python**](https://github.com/sarufi-io/sarufi-python-sdk), [**JavaScript**](https://github.com/sarufi-io/sarufi-js) and [**Golang**](https://github.com/sarufi-io/sarufi-golang-sdk).
 
 :::note
-As mentioned Before almost all of language based SDK with exception of [**Python**](https://github.com/sarufi-io/sarufi-python-sdk) are community maintained and not officially supported by Sarufi. If you find any issues with the SDK, please create an issue on the respective GitHub repository.
-Also If you see missing documentation or typos or bugs for any of the SDK, You're welcome to contribute
+As mentioned before, almost all of the SDK languages with the exception of [**Python**](https://github.com/sarufi-io/sarufi-python-sdk) are maintained by the community and not officially supported by Sarufi. If you find any issues with the SDK, please create an issue in the respective GitHub repository.
+Furthermore, if you see missing documentation, typos or bugs in any of the SDKs, feel free to contribute.
 :::
 
 ## Draft Architecture
 
-Before we start coding, let's first draft the architecture of our chatbot. Here an oversimplified version of the architecture for our chatbot. Sarufi will handle intents training, intent inference, and dialog management. We will be handling the application logic and the user interface.
+Before we start coding, let's first draft the architecture of our chatbot. Here is an oversimplified version of the architecture for our chatbot. Sarufi will handle intents training, intent inference, and dialog management. We will be handling the application logic and the user interface.
 
 ![Oversimplified Architecture](/img/chatbot-flow.png)
 
@@ -27,8 +27,8 @@ Select your language of preference to get instructions on installing `SDK`
 
 <Tabs groupId="get_started">
 <TabItem value="py" label="Python">
-Its good to use virtual environment. You can read more on <a target="_blank" href="https://www.geeksforgeeks.org/python-virtual-environment/">Virtual Environment</a>. 
-So, lets create a virtual environment ➡️ activate it ➡️ install sarufi.
+It's recommended to use a virtual environment for easier package management. You can read more on virtual environments <a target="_blank" href="https://www.geeksforgeeks.org/python-virtual-environment/">here</a>.
+So, let's create a virtual environment, activate it and install sarufi.
 
 ```bash
 python -m venv chatbot
@@ -110,9 +110,9 @@ app.GetToken("your_api_key")
 
 ## Create a Chatbot
 
-Now that we have successfully authenticated with Sarufi, we can create an empty chatbot, with 0 intents and 0 utterances.
+Now that we have successfully authenticated with Sarufi, we can create an empty chatbot with 0 intents and 0 utterances.
 
-The below image shows overview of the steps it takes to create your first chatbot with Sarufi
+The below image shows overview of the steps it takes to create your first chatbot with Sarufi.
 
 ![Create Chatbot](/img/chatbot-diagram.png)
 
@@ -123,7 +123,7 @@ This is the first step in creating your first chatbot. You can use the following
 <Tabs>
 <TabItem value="dashboard" label="Dashboard">
 
-Creating chatbot via dashboad provides a way to create either from Scratch or Knowledge Base. You will be required to fill in important details about your chatbot.
+Creating a chatbot via the dashboard provides a way to create it either from scratch or from a knowledge base. You will be required to fill in important details about your chatbot.
 
 ![Creating chatbot using Dashboard](/img/dashboard-create-chatbot.png)
 
@@ -133,7 +133,7 @@ Lets start by creating a flow-based chatbot. When you select a language, your ch
 
 <TabItem value="sdk" label="Supported SDKs">
 
-currently we support the following SDKs
+Currently we support the following SDKs:
 
 <Tabs groupId="get_started">
 <TabItem value="py" label="Python">
@@ -149,9 +149,9 @@ Bot(id=13, name=My First Chatbot)
 </TabItem>
 <TabItem value="js" label="JavaScript">
 
-We supply chatbot details
+First, we supply chatbot details.
 
-> Request payload
+> The payload for the request
 
 ```JSON
 {
@@ -162,7 +162,7 @@ We supply chatbot details
   "flows": {},
 }
 ```
-Then we call
+Then we call the Sarufi API.
 
 ```JS
 // call this first if you haven't logged in.
@@ -171,7 +171,7 @@ sarufi.login({ api_key: YOUR_API_KEY })
 sarufi.createBot({bot: REQUEST PAYLOAD})
 ```
 
-> Response for successful bot creation
+> Response for successful bot creation:
 
 ```JSONC
 {
@@ -210,7 +210,7 @@ fmt.Println(example_bot.Name)
 </Tabs>
 
 :::note
-To Create a bot, each sdk has it method. Take note of the naming
+The method of creating a bot differs in each SDK. Please observe the different naming conventions.
 
   |SDK        | Method used   | Return Value  |
   |---        |---            |---            |
@@ -233,7 +233,7 @@ Here is an example of how to start a conversation with our chatbot.
 
 <Tabs groupId="get_started">
 <TabItem value="py" label="Python">
-✅ To start conversation with a bot you can use one of the methods below
+✅ To start a conversation with a bot you can use one of the methods below:
 <table>
   <thead>
   <tr>
@@ -246,7 +246,7 @@ Here is an example of how to start a conversation with our chatbot.
     <tr>
       <td> Sarufi </td>
       <td> <code>chat()</code> </td>
-      <td> bot_id , chat_id and message </td>
+      <td> bot_id, chat_id and message </td>
     </tr>
     <tr>
        <td> Bot </td>
@@ -288,7 +288,7 @@ Here are examples on each method
 
 <TabItem value="js" label="JavaScript">
 
-You can either use `sarufi.chat()` method or `chatbot.chat()` method on the bot response.
+You can either use `sarufi.chat()` or `chatbot.chat()` on the bot response.
 
 <table>
   <thead>
@@ -303,7 +303,7 @@ You can either use `sarufi.chat()` method or `chatbot.chat()` method on the bot 
     <tr>
       <td> Sarufi </td>
       <td> <code>chat()</code> </td>
-      <td> bot_id , message and chat_id(optional) </td>
+      <td> bot_id, message and chat_id(optional) </td>
       <td>  JSON object</td>
     </tr>
     <tr>
@@ -338,7 +338,7 @@ You can pass your own `chat_id` if you want to continue the conversation with th
 </TabItem>
 <TabItem value="go" label="Golang">
 
-To get a list of available bots use `bot.GetBots()`, this will return a json response of all your bots and their details. To get a specific bot use `bot.GetBot(bot_id)`. This will return a bot object.
+To get a list of available bots use `bot.GetBots()`. This will return a JSON response with all your chatbots and their details. To get a specific bot, call `bot.GetBot(bot_id)`. This will return a bot object.
 
 To start a conversation, use `bot.Respond("message", "message_type")`. For now only `text` message types are supported:
 
@@ -395,7 +395,7 @@ To make more interactive, let's general intents like `greets`, `order_pizza`, `g
 </TabItem>
 <TabItem value="js" label="JavaScript">
 
-We are going to use **Sarufi UpdateBot** method we pass it a dict with `intents` and `bot_id`.
+We are going to use **Sarufi UpdateBot** method. We pass it a dict with `intents` and `bot_id`.
 
 ```js
 > const chatbot = await sarufi.getBot({ id: 45 });
@@ -495,12 +495,12 @@ fmt.Println(example_bot.Conversation.Message)
 </Tabs>
 
 :::note
-You might wondering like but we trained it, yes ofcourse we trained it but we haven't given a flow on how to respond to the user. We will be adding a flow in the next section.
+You might wondering if we trained our chatbot, why doesn't it respond to us. This is because we haven't given it a conversation flow showing it how to respond to the user. We will be adding a flow in the next section.
 :::
 
-### Lets add a flow
+### Adding a flow
 
-Flow is a directed graph that defines the conversation flow between the user and the chatbot. Flow is defined using the [JSON](https://www.json.org/json-en.html) format. where each node is an intent and each edge is a response to the user message & the next intent to be triggered.
+The flow is a directed graph that defines the conversation flow between the user and the chatbot. Flow is defined using the [JSON](https://www.json.org/json-en.html) format where each node is an intent and each edge is a response to the user message & the next intent to be triggered.
 
 :::note
 You can have nodes that are not intents. In that case, the node will be treated as a response to the user message. If you want to end the conversation, you can add a node with the name `end`.
@@ -674,9 +674,9 @@ Now that we have successfully added a flow to our chatbot, let's start a convers
 ```
 
 :::note
-You can see that our chatbot is able to understand the user message and respond to the user message. This is because we have trained our chatbot with intents and utterances and also added a flow to our chatbot.
+You can see that our chatbot is able to understand the user message and respond to the user message. This is because we have trained our chatbot with intents and utterances, and w added a flow to our chatbot.
 :::
 
 ## Conclusion
 
-In this tutorial, we have learned how to create a chatbot using Sarufi. We have also learned how to train our chatbot with intents and utterances and also how to add a flow to our chatbot. We have also learned how to start a conversation with our chatbot and how to respond to the user message.
+In this tutorial, we have learned how to create a chatbot using Sarufi. We have also learned how to train our chatbot with intents and utterances and also how to add a flow to our chatbot. We have also learned how to start a conversation with our chatbot and how to respond to the user's message.

@@ -5,143 +5,140 @@ sidebar_position: 7
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# Know about webhook
+# Webhook integration
 
-As our chatbot(talking about our `PizzaBot`) has ability to handle conversational as we needed to be. We can add extra ability to let it interact with other systems, such as databases, APIs, and third-party applications.
+As our PizzaBot has the ability to handle conversations as we need it to, we can add extra functionality to let it interact with other systems, such as databases, APIs, and third-party applications.
+This is possible by utilizing Sarufi's webhook functionality to automate workflows. This will make our previous chatbot more powerful and useful. We can integrate webhooks into our chatbot to handle things like payments, update inventories, and update delivery tracking systems.
 
-This is possible by utilizing sarufi's webhook functionality to automate workflows. This will make our previous chatbot so powerful and useful. We can integrate webhook into our chatbot to handle things like payments,update inventories, update delivery tracking system.
+## Webhooks
 
-## Webhook
-
-Lets have a simple explanation on webhook.
-
-A webhook is a  HTTP-based callback mechanism that allows two systems to communicate in real-time. It is triggered when an event occurs, such as a order confirmation. When the event is triggered, the webhook sends a request to a specified URL, which can be used to trigger an action, such as updating a database or sending a payment push, updating delivery system, sending message notification.
+A webhook is an HTTP-based callback mechanism that allows two systems to communicate in real-time. It is triggered when an event occurs, such as an order confirmation. When the event is triggered, the webhook sends a request to a specified URL, which can be used to trigger an action, such as updating a database, sending a payment push, updating a delivery system, or sending a message notification.
 
 :::note
-Remember that webhook is only one way communication.
+Remember that a webhook only communicates one way!
 :::
 
-All you have to do is specify which states should trigger the webhook and set webhook url in sarufi.
+All you have to do is specify which states should trigger the webhook and set the webhook URL in Sarufi.
 
-## Preparing the runway🛣
+## Preparations🛣
 
-With our pizza bot, we shall set up the webhook to send a person in charge a notification of new confirmed order.
+With our PizzaBot, we will set up the webhook to send a person in charge a notification of the new confirmed order.
 
 ![Webhook illustration](/img/webhook-illustration.png)
 
 Steps:
 
-- Have a public url
+- Set up a public URL endpoint. This can be either a webserver or a cloud-hosted web service. Make sure you have a domain name set up.
 
-- Set trigger intents
+- Set Trigger Intents
 
-    Navigate to your sarufi account --> `settings` --> `Webhook`. Select the intent(s) that will trigger sending of data to your webhook url. Then `save`
+Navigate to the Sarufi dashboard --> `Settings` --> `Webhook`. Select the intents that will trigger sending of data to your webhook URL, then click `save`.
 
 ![Sarufi webhook field](/img/sarufi-webhook-setup.png)
 
-- Process received data
+- Process received data in your endpoint. This is specific to your setup.
 
-- Send request to other system
+- Optionally, send requests to other services to handle the message.
 
-## The take-off🛫
+## Implementation🛫
 
-Lets use flask to set up our server and twilio to send message notification to alert me when new order is confirmed.
+An option is to use Flask to set up your server and Twilio to send message notifications to alert the operator when a new order is created.
 
-You can use [replit](https://replit.com) or [ngrok](https://ngrok.com) to make your server available online. The webhook is based on our pizza bot we have been working on.
+You can use [Replit](https://replit.com) or [Ngrok](https://ngrok.com) to make your server available online. The webhook is based on our PizzaBot we have been working on.
 
-Lets make a minor chanages on the current state of the bot. I will add a choice confirmation to let user confirm.
+We will make changes in our bot. We will add a choice to let the user confirm the order.
 
 ### Adding Choices in the flow
 
-Here is the updated sketch of our chatbot
+Here is an updated flowchart of our chatbot.
+
 ![Updated version of pizza bot](/img/pizz-bot-with-choices.png)
 
-You might be asking yourself about choice menu. `Choice menu` basically ensures that the user choses from the given choices. In case a user selects a choice that was not provided, the `fallback message` will be displayed to alert him/her.
+The `choice menu` ensures that the user can only choose from the provided options. In case they enter something else, the `fallback message` will be displayed to the user.
 
-We shall modify the message of the bot at `phone_number` to let user know that he/she has to select from the choices displayed.
+We will modify the message of the bot at the `phone_number` state to let user know that they have to select from the displayed choices.
 
-To add choice menu, navigate(in the dashboard) to your state to be connected to choice menu. Click `connect` button --> `Connect to Choice Menu`.
-You will have to create a new choice menu, where you will be provided with a small window to add basic information. Here is what we are going to add:-
+To add a choice menu, in the Sarufi dashboard navigate to your state which is to be connected to the choice menu. Click the `connect` button --> `Connect to Choice Menu`.
+You will have to create a new choice menu A small window will pop up prompting for details. Here are the fields which need to be added:
 
 - Choice name
 
-    The choice name is by default to start with `choice_`. Lets call our choice, `choice_confirmation`.
+    Choices start with `choice_`. Our choice will be called `choice_confirmation`.
 
 - Fallback message
 
-    This a message that will be displayed when user choses unavailable choice.
+    This a message that will be displayed when user choses an invalid choice.
 
 - Add a choice
 
-    Each choice is to have a `text` and connected `state`. A text will be the user input where as `state` will be the state connected when the choice text is fed by the user.
+    Each choice has a `text` and a connected `state`. `text` corresponds to the user input and `state` is the state which the bot will transition to when the user selects that choice.
 
-    Lets add 1 to let one confirm the order and 2 to cancel the order.
+    1 will be the choice to confirm the order and 2 will be the choice to cancel the order.
 
     ![Sarufi choice menu](/img/sarufi-choice-menu.png)
 
-    With our choices in place we need to connect each to a state. Lets start with choice `1`, click `Connect` ➡️ `Create a state` ➡️ Enter state name, eg *customer_confirms*.
+    With our choices in place, we need to connect each choice to a state. We will start with choice `1`. Click on `Connect` ➡️ `Create a state` ➡️ and enter a state name, for example *customer_confirms*.
 
-    We shall be using text message component, select `Text component` then add message eg: *Thank you for ordering with us, you order will be available soon*. Then click **Save**. Do the same for choice `2`. Then click **Save**.
+    We will be using a text message component for this. Select `Text component` then add a message like `Thank you for ordering with us, you order will be available soon`. Click **Save** afterwards. Do the same for choice `2`. Finally, click **Save**.
 
-    It will be looking like this.
+    If everything went successful, it will look like this.
 
     ![Complete choice menu](/img/sarufi-choice-menu-completed.png)
 
 ## The Journey✈️
 
-In our journey, we are going to set up a webhook server. You can use either ngrok or replit to make your local server publically available by having an `https` path.
+In our journey, we are going to set up a webhook server. You can use either Ngrok or Replit to make your local server publicly available to the internet.
 
 <Tabs>
 
 <TabItem value="replit" label="Replit">
 
-Way to go
+Steps to set up Replit:
 
-1. Fork the [Pizza bot sample webhook](https://replit.com/@jovyinny/sarufi-bot-webhook) into your replit account.
+### 1. Create repository
+  Fork the [PizzaBot sample webhook](https://replit.com/@jovyinny/sarufi-bot-webhook) repository into your Replit account.
 
-2. Create secret keys
+### 2. Create secret keys. They are listed in the table below.
 
-    |Secret key| Description|
-    |---|---|
-    |phone_number|"Your twilio phone number"|
-    |twilio_SID|"Your Twilio SID"|
-    |twilio_assigned_phone_number|"Youe twilio assigned number"|
-    |twilio_auth_token|"Twilio auth token"|
+  |Secret key| Description|
+  |---|---|
+  |phone_number|"Your twilio phone number"|
+  |twilio_SID|"Your Twilio SID"|
+  |twilio_assigned_phone_number|"Youe twilio assigned number"|
+  |twilio_auth_token|"Twilio auth token"|
 
-3. Webhook url
+### 3. Obtain the Webhook URL
 
-    To obtain a public url for your flask server, run your script. Then a small web preview window will open up with url in format like `https://{your repl name}.{your replit usermae}.repl.co`
+  Start your Flask server to obtain a public URL. Afterwards, a small web preview window will open up with the URL. It will be in the format of `https://{your repl name}.{your replit usermae}.repl.co`.
 
-4. Set up sarufi webhook
+### 4. Set up the webhook in Sarufi
 
-    Navigate to your sarufi account --> `settings` --> `Webhook`. Select the intent(s) that will trigger sending of data to your webhook url. Then `save`
-
-    **Note:** The route that receives new order is `/new-order`. So your url will be like `https://{your repl name}.{your replit usermae}.repl.co/new-order`
+  Navigate to the Sarufi dashboard --> `settings` --> `Webhook`. Select the intents which will trigger sending data to your webhook URL. Click `save`.
 
 </TabItem>
 
 <TabItem value="ngrok" label="Ngrok">
 
-STEPS:
+Steps to set up Ngrok:
 
-1. Clone  the repository, simply run
+### 1. Run the command below:
 
     ```bash
     git clone https://github.com/jovyinny/sample-webhook.git
     ```
 
-2. Install requirements
+### 2. Install requirements
 
-    Lets install need packages to get our webhook fired. Run
+  There are a few packages required to setup our webhook. We can install them using the command below:
 
     ```bash
     cd sample-webhook
     pip install -r requirements.txt
     ```
 
-3. Create `.env` file
+### 3. Create an `.env` file
 
-    We are going to create `.env` file to hold our secret keys from Twilio
+  We are going to create an `.env` file to hold our secret keys from Twilio securely. This is not committed into the Git repository to prevent the keys from being leaked.
 
     ```text
     phone_number="Your twilio phone number"
@@ -150,29 +147,28 @@ STEPS:
     twilio_auth_token="Twilio auth token"
     ```
 
-4. Run the script
+### 4. Run the website
 
     ```bash
     python3 main.py
     ```
 
-5. Start ngrok server
+### 5. Start the Ngrok server
 
     ```bash
     ./ngrok http 5000
     ```
 
-    **Note:** Keep the port number same as used in `main.py`
+  **Note:** Ensure that the port number is same as used in `main.py`.
 
-6. Finish up
+### 6. Finish up
 
-    After running the command, you will have to copy the url ngrok provides. The url looks like `https://xxxxxxxxxxx.ngrok.io`
+  After running the command, copy the URL Ngrok provides. The url looks like this: `https://xxxxxxxxxxx.ngrok.io`.
 
-7. Set sarufi webhook
+### 7. Set sarufi webhook
 
-    With url from ngrok, its time to set up our new pizza order alert.Navigate to your sarufi account --> `settings` --> `Webhook`. Select the intent(s) that will trigger sending of data to your webhook url. Then `save`.
-
-    **Note:** The route that receives new order is `/new-order`. So your url will be like `https://xxxxxxxxxxx.ngrok.io/new-order`.
+  With the URL from Ngrok, it's time to set up our new pizza order alert. Navigate to the Sarufi dashboard --> `Settings` --> `Webhook`. Select the intents that will trigger sending data to your webhook URL.
+  Click `save`.
 
 </TabItem>
 
@@ -180,9 +176,9 @@ STEPS:
 
 ## Code Snippet
 
-Here a few lines of code that were used to accomplish the task. It easy to manage your webhook with even more intents specified.
+Here is a code example to demonstrate the usage of webhooks with Sarufi. It is easy to use webhooks with even multiple intents specified.
 
-All you need to know is the `structure of data` being sent when a particular intent is triggered.
+The only thing you need to know is the structure of the data being sent when a particular intent is triggered.
 
 ```python
 import os
@@ -213,7 +209,7 @@ def extract_data(data:dict)->str:
   phone_number=data.get("phone_number")
   
   # formated message
-  message=f"🔔New order alert.\n A customer with phone number {phone_number} has place an order of {number_of_pizza} pizza with {toppings} toppings to be delivered to {address}"
+  message=f"🔔New order alert.\n A customer with phone number {phone_number} has placed an order of {number_of_pizza} pizza with {toppings} toppings to be delivered to {address}"
 
   return message
 
@@ -233,12 +229,12 @@ if __name__ == "__main__":
   app(port=5000,debug=True)
 ```
 
-## Landing🛬
+## Finish🛬
 
-With everything set, lets make order to our chatbot.
+With everything set, let's order something from our chatbot.
 
 ![Sample of our chatbot](/gif/webhook-order-pizza.gif)
 
-Notification message
+Here is the notification message received from the bot after the order:
 
 ![Twilio notification](/img/twilio-notification.jpeg)

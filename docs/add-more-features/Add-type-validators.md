@@ -7,17 +7,17 @@ import TabItem from "@theme/TabItem";
 
 # Adding Type Validators
 
-After we have created our basic bot, We may need a way to validate the type of data a user gives the bot. We are going to make the bot more classic.
+After we have created our basic bot, we might need a way to validate the type of data a user enters to prevent errors.
 
-For example, you want the bot to receive a phone number for Pizza delivery or you want a user to provide an email address. Thats all **type validation** has to do.
+For example, you might want the bot to ask the user a phone number for pizza delivery or to provide an email address. **Type validation** ensures the entered data is in a valid format.
 
-Using type validation we are going to achieve this fuctionality with few statements.
+Using type validation we can achieve this functionality with only a few statements!
 
 ## What we have now
 
-By now, we support following validations:- `Alphanumeric` , `Date` , `Email` , `Length` , `numeric` , `Phone number` , `response message type`, `required field` , `time` , `Zipcode` and `custom validation`.
+Currently, we support the following validations:- `alphanumeric` , `date` , `email` , `length` , `numeric` , `phone number` , `response message type`, `required field` , `time` , `zipcode` and `custom validation`.
 
-Lets have a quick walk through these validators.
+Let's have a quick run through these validators.
 
 | Validator Type | Required Parameters | Description |
 | --- | --- | --- |
@@ -35,14 +35,14 @@ Lets have a quick walk through these validators.
 
 ## Get into action
 
-Validators will be added in the flow of your chatbot. The **validator type** will be one of the validators we have discussed above and *error_message* as a response from the bot whenever a user enters non valid input.
+Validators are added in the flow of your chatbot. The **validator type** will be one of the validators mentioned above. The *error_message* is a response from the bot whenever a user enters invalid input.
 
-We are going to use add validator to our Pizza bot. Lets add numeric and phone number validators.
+We are going to add validators to our PizzaBot. We will add numeric and phone number validators.
 
 <Tabs groupId="type_validator">
 <TabItem value="py" label="Python">
 
-Lets update our `flows.yaml` file by adding few lines.
+Update your `flows.yaml` file by adding a few lines.
 
 ```yaml
 greets:
@@ -66,12 +66,12 @@ number_of_pizzas:
 
 pizza_toppings:
   message:
-    - 'Cool, Whats your address ?'
+    - 'Cool, what is your address?'
   next_state: address
 
 address:
   message:
-    - 'Sure, What is your phone number ?'
+    - 'Sure, What is your phone number?'
   #phone number validation added
   validators:
     - type: 'phone_number_validation'
@@ -92,7 +92,7 @@ goodbye:
   next_state: end
 ```
 
-After we have updated our flow, its time we update our bot. Running the command below magic all magic happen.
+After we have updated our flow, it is time to update our bot. Running the command below will make the magic happen.
 
 ```python
 >>> from sarufi import Sarufi
@@ -130,11 +130,11 @@ After we have updated our flow, its time we update our bot. Running the command 
     "next_state": "pizza_toppings"
   },
   "pizza_toppings": {
-    "message": ["Cool, Whats your address ?"],
+    "message": ["Cool, what is your address?"],
     "next_state": "address"
   },
   "address": {
-    "message": ["Sure, What is your phone number ?"],
+    "message": ["Sure, What is your phone number?"],
     "validators": [
       {
         "type": "phone_number_validation",
@@ -187,12 +187,12 @@ newFlow := `
   },
   
   "pizza_toppings": {
-    "message": ["Cool, Whats your address ?"],
+    "message": ["Cool, what is your address?"],
     "next_state": "address"
   },
   
   "address": {
-    "message": ["Sure, What is your phone number ?"],
+    "message": ["Sure, What is your phone number?"],
     "validators": [
       {
         "type": "phone_number_validation",
@@ -225,33 +225,33 @@ app.UpdateBot(example_bot)
 </TabItem>
 </Tabs>
 
-Length validation takes some additional information, i have it explained at [more on length validation](#one-thing-to-note).
+Length validation takes some additional information. More information on length validation can be found [here](#one-thing-to-note).
 
 ## See the outcome
 
-Now we have validators added to our bot, lets test our bot in the playground. Go to [sarufi playground](https://playground.sarufi.io/community), search for your bot to see what the bot can do.
+Now that we have validators added to our bot, let's test our bot in the Playground. Go to [Sarufi Playground](https://playground.sarufi.io/community) and search for your bot to see what the bot can do.
 
 - ❌ Unexpected input
 
-  Here is when the user enters a wrong/unexxpected input that does not match selected validator rules. I will try providing a *string* instead of a *number*. The bot responds with **error_message** we set.
+  Here is when the user enters a wrong/unexpected input that does not match the selected validator rules. Let's try providing a *string* instead of a *number*. The bot responds with the **error_message** we set.
 
   ![Validator: Wrong input](/img/validator-wrong-input.png)
 
 - ☑️ Expected input
 
-  When the user sends a matching input to the set validator, the conversion will go on. Here are some conversations.
+  When the user sends a matching input to the set validator, the conversiation will continue. Here are some sample conversations.
 
   ![Validators: Matching inputs](/img/validator-correct-input.png)
 
-You can see how the use of validators will give your bot more meaningful conversation experience 🚀.
+You can see how the use of validators will give your bot a more meaningful conversational experience 🚀.
 
 ## One thing to note
 
-Some validators take more parameters apart from **type** and **error_messsage**. Below are examples containing yaml and json file illustrating their usage.
+Some validators take more parameters in addition to **type** and **error_messsage**. Here are somne examples in YAML and JSON format illustrating their usage.
 
 - Length validation
 
-  For length validation, we are going to add **min_length** and **max_length**.
+  For length validation, we need to add a **min_length** and **max_length**.
 
   <Tabs groupId="additional_explanations">
   <TabItem value="yaml" label="YAML">
@@ -259,11 +259,11 @@ Some validators take more parameters apart from **type** and **error_messsage**.
   ```yaml
   get_name:
   message:
-    - Please provide Your full name
+    - Please provide your full name
   next_state: get_email
   validators:
     - type: length_validation
-      error_message: sorry, provide a name with characters between 7 and 30
+      error_message: Please provide a name with a length between 7 and 30
       min_length: 7
       max_length: 30
   ```
@@ -273,12 +273,12 @@ Some validators take more parameters apart from **type** and **error_messsage**.
 
   ```js
   "get_name": {
-    "message": ["Please provide Your full name"],
+    "message": ["Please provide your full name"],
     "next_state": "get_email",
     "validators": [
       {
         "type": "length_validation",
-        "error_message": "sorry, provide a name with characters between 7 and 30",
+        "error_message": "Please provide a name with a length between 7 and 30",
         "min_length": 7,
         "max_length": 30
       }
@@ -291,9 +291,9 @@ Some validators take more parameters apart from **type** and **error_messsage**.
 
 - Response type validation
   
-  If we deploy our bot in defferent platforms such as whatsapp, we can get specific response from the user. We may let the user send image of his/her ID or send their location for delivery or a short voice note describing their concern. 
-  
-  This validator comes in hand with suppport of different types such as `audio` , `file` , `image` , `interactive` ,  `location` , `text` , `video`.
+  If we deploy our bot in platforms like WhatsApp, we can get different types of responses from the user. For example, the user might send their ID as an image or send their location for delivery or send a short voice note describing their concern.
+  This validator ensures the user sends the correct type of response.
+  This validator suppports different types such as `audio` , `file` , `image` , `interactive` ,  `location` , `text` , `video`.
 
   <Tabs groupId="additional_explanations">
   <TabItem value="yaml" label="YAML">
@@ -301,12 +301,12 @@ Some validators take more parameters apart from **type** and **error_messsage**.
   ```yaml
   get_id_image:
   message:
-    - Please send your ID image
+    - Please send an image of your ID.
   next_state: get_email
   validators:
     - type: response_message_validation
       response_type: image
-      error_message: sorry, please image of your ID
+      error_message: Please send an image for your ID.
   ```
 
   </TabItem>
@@ -314,13 +314,13 @@ Some validators take more parameters apart from **type** and **error_messsage**.
 
   ```js
   "get_id_image: {
-    "message": ["Please send your ID image"],
+    "message": ["Please send an image of your ID."],
     "next_state": "get_email",
     "validators": [
       {
         "type": "response_message_validation",
         "response_type": "image",
-        "error_message": "sorry, please image of your ID"
+        "error_message": "Please send an image for your ID."
       }
     ]
   }
@@ -331,7 +331,7 @@ Some validators take more parameters apart from **type** and **error_messsage**.
 
 - Custom response
 
-  With custom response, we can write our own pattern to meet chatbot needs. You can write `regex` and try it at [test your regex](https://regex101.com/) to check if it works properly.
+  With `custom response`, we can write our own pattern to meet our chatbot's needs. You can write `regex` and try it at [test your regex](https://regex101.com/) to check if it works properly.
 
   <Tabs groupId="additional_explanations">
     <TabItem value="yaml" label="YAML">
@@ -339,12 +339,12 @@ Some validators take more parameters apart from **type** and **error_messsage**.
     ```yaml
     get_time_24hrs:
     message:
-      - Enter time in 24hrs format
+      - Enter the time you want the pizza to be delivered by in 24-hr format.
     next_state: get_email
     validators:
       - type: custom_validation
         regex: ^[0-2][0-3]:?[0-5][0-9]$
-        error_message: sorry, Your time should be in 24 hours format 
+        error_message: Sorry, please enter the time again. The time should be in 24-hour format.
     ```
 
     </TabItem>
@@ -352,13 +352,13 @@ Some validators take more parameters apart from **type** and **error_messsage**.
 
     ```js
     "get_id_image: {
-      "message": ["Enter time in 24 hrs format"],
+      "message": ["Enter the time you want the pizza to be delivered by in 24-hr format."],
       "next_state": "get_email",
       "validators": [
         {
           "type": "custom_validation",
           "regex": "^[0-2][0-3]:?[0-5][0-9]$",
-          "error_message": "sorry, Your time should be in 24 hours format"
+          "error_message": "Sorry, please enter the time again. The time should be in 24-hour format."
         }
       ]
     }

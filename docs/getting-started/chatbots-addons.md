@@ -6,13 +6,13 @@ import TabItem from '@theme/TabItem';
 
 # Chatbot Addons
 
-We have seen how to create a simple chatbot in the previous section. In this section, we will see how to add addons to our chatbot. Addons are a set of functionalities that can be added to our chatbot to make it more interactive, things like: handling choices, canceling intents in the middle of a conversation, and etc.
+We have seen how to create a simple chatbot in the previous section. In this section, we will see how to add addons to our chatbot. Addons are a set of functionalities that can be added to our chatbot to make it more interactive. For example, handling choices, canceling intents in the middle of a conversation, etc.
 
-In the previous section, we created a chatbot that can order pizza. but what if the user what to cancel the order in the middle of the conversation? What if we are to give the user a choice to pick pizza toppings? We will see how to handle these scenarios in this section.
+In the previous section, we created a chatbot that can order pizza. But what if the user wants to cancel the order in the middle of the conversation? What if we give the user a choice to pick pizza toppings? We will see how to handle these scenarios in this section.
 
-## Cancel intent [Special Intent]
+## Cancel Intent [Special Intent]
 
-if you name your intent `cancel` then it will be treated as a special intent. If the user says something that matches the cancel intent in the middle of a conversation, the conversation will be canceled and the chatbot will respond with the message defined in the `cancel flow`.
+If you name your intent `cancel` then it will be treated as a special intent. If the user says something that matches the cancel intent in the middle of a conversation, the conversation will be canceled and the chatbot will respond with the message defined in the `cancel flow`.
 
 Let's add a cancel intent to our chatbot. You can use the following code to add a cancel intent to our chatbot.
 

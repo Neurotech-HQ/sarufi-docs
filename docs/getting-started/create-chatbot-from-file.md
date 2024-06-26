@@ -8,19 +8,19 @@ import TabItem from '@theme/TabItem';
 <Tabs>
 <TabItem value="py" label="Python">
 
-[Sarufi-Python-SDK](https://github.com/Neurotech-HQ/sarufi-python-sdk) allows you to create a chatbot from a file. where you can define your intents, utterances, and responses separately.
+The [Sarufi Python SDK](https://github.com/Neurotech-HQ/sarufi-python-sdk) allows you to create a chatbot from a file where you can define your intents, utterances and responses separately.
 
-You can either use YAML or JSON format to define your chatbot. You can find the sample JSON file [here](https://github.com/Neurotech-HQ/sarufi-python-sdk/tree/main/examples/insuarance).
+You can either use the YAML or JSON format to define your chatbot. You can find the sample JSON file [here](https://github.com/Neurotech-HQ/sarufi-python-sdk/tree/main/examples/insuarance).
 
 :::note
-Perhaps you can choose which format to use, YAML or JSON, based on your preference. We will be using YAML format in this tutorial as it is more human-readable.
+You should choose between YAML or JSON based on your business needs and preferences. We will be using YAML in this tutorial because it is more readable.
 :::
 
 ## Create Chatbot from file
 
-[Sarufi-Python-SDK](https://github.com/Neurotech-HQ/sarufi-python-sdk) allows you to create a chatbot from a file, where you can define your intents, utterances, and responses separately.
+The [Sarufi Python SDK](https://github.com/Neurotech-HQ/sarufi-python-sdk) allows you to create a chatbot from a file where you can define your intents, utterances, and responses separately.
 
-You can either use YAML or JSON format to define your chatbot. You can find the sample YAML file [here](https://github.com/Neurotech-HQ/sarufi-python-sdk/tree/main/examples/insurance/get-started-intents.yaml) and the sample JSON file [here](https://github.com/Neurotech-HQ/sarufi-python-sdk/tree/main/examples/insurance/get-started-intents.json).
+You can either use the YAML or JSON format to define your chatbot. You can find the sample YAML file [here](https://github.com/Neurotech-HQ/sarufi-python-sdk/tree/main/examples/insurance/get-started-intents.yaml) and the sample JSON file [here](https://github.com/Neurotech-HQ/sarufi-python-sdk/tree/main/examples/insurance/get-started-intents.json).
 
 To create a chatbot from the YAML file, use the following code snippet:
 
@@ -213,7 +213,7 @@ You can use the same code to create or update a chatbot from JSON files. The onl
 
 ## What you have learned
 
-In this tutorial, you have learned how to create a chatbot from YAML files using [Sarufi-Python-SDK](https://github.com/Neurotech-HQ/sarufi-python-sdk). 
+In this tutorial, you have learned how to create a chatbot from YAML files using the [Sarufi Python SDK](https://github.com/Neurotech-HQ/sarufi-python-sdk).
 
 </TabItem>
 <TabItem value="go" label="Golang">
