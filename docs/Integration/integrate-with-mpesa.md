@@ -16,7 +16,7 @@ It also provides financial services to millions of people who have mobile phones
 
 ![mpesa](/img/Mpesa.png)
 
-To know more go to  M-PESA developer portal [here](https://openapiportal.m-pesa.com).
+To know more go to  M-PESA developer portal [here](https://www.m-pesa.africa/partners-developers).
 
 ## Before we get started
 
