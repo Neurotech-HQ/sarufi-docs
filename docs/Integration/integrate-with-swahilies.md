@@ -85,4 +85,4 @@ After configuring the Swahilies integration settings, test the payment functiona
 
 ## YouTube Reference
 
-Our YouTube channel has a video tutorial on how to integrate Swahilies into your application. Watch the video [Sarufi x Swahilies Integration](https://www.youtube.com/watch?v=bhHAbIbak-8)
+Our YouTube channel has a video tutorial on how to integrate Swahilies into your application. Watch the video [Sarufi x Swahilies Integration](https://www.youtube.com/watch?v=8Gicwt9aktc)

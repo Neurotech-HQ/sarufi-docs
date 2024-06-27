@@ -22,34 +22,40 @@ The SMS integration interface consists of the following components:
 
 Follow these steps to integrate SMS functionality into your chatbot:
 
-**1: Access  SMS Integration Interface**
+The first thing is Login to you account, navigate to your chatbot in Workspace.
 
-Log in to your chatbot platform and navigate to the SMS integration section.
+1. Access  SMS Integration Interface
 
-**2: Configure Triggered Intents**
+    In your chatbot, navigate to integrations section then to the SMS integration section.
 
-Select the intents that will trigger the SMS functionality. These are the actions  from the user that will prompt the chatbot to send an SMS message.
+1. Configure Triggered Intents
 
-![sms-intent](/img/sms-intents.png)
+    Select the intents that will trigger the SMS functionality. These are the actions  from the user that will prompt the chatbot to send an SMS message.
 
-**3: Enter Message Content**
+    ![sms-intent](/img/sms-intents.png)
 
-Enter the content of the SMS message. Customize this message based on the information you want to convey to the user.
+1. Enter Message Content
 
-**4: Enter Recipient's Mobile Number**
+    Enter the content of the SMS message. Customize this message based on the information you want to convey to the user.
 
-Enter the mobile number of the recipient to whom the SMS message will be sent. Ensure that the mobile number is entered correctly to avoid delivery issues. Here you can input mobile number or choose from the state
+1. Enter Recipient's Mobile Number
 
-![sms-mobile](/img/sms-mobile.png)
+    Enter the mobile number of the recipient to whom the SMS message will be sent. Ensure that the mobile number is entered correctly to avoid delivery issues. Here you can input mobile number or choose from the state
 
-**5: Activate SMS Integration**
+    ![sms-mobile](/img/sms-mobile.png)
 
-Toggle the switch to activate the SMS integration. When activated, the chatbot will be able to send SMS messages based on the specified intents and message content.
+1. Activate SMS Integration
 
-**6: Save Settings**
+    Toggle the switch to activate the SMS integration. When activated, the chatbot will be able to send SMS messages based on the specified intents and message content.
 
-Click the "Save" button to save your SMS integration settings. Ensure that all configurations are correctly saved before proceeding.
+1. Save Settings
+
+    Click the "Save" button to save your SMS integration settings. Ensure that all configurations are correctly saved before proceeding.
 
 ## Testing
 
 After configuring the SMS integration settings, test the functionality to ensure that SMS messages are sent correctly in response to the specified intents.
+
+## YouTube Reference
+
+Our YouTube channel has a video tutorial on how to integrate Swahilies into your application. Watch the video [Sarufi x Swahilies Integration](https://www.youtube.com/watch?v=0Uuc4Qjw9eI)
