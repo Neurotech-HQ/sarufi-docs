@@ -81,7 +81,7 @@ The first thing is Login to you account, navigate to your chatbot in Workspace.
 
         Select the state for the mobile number associated with the payment. You will have option to select the state at which you chatbot acquires mobile number from the user.
 
-        You can learn more on how values get propargated in the memory of chatbot at [variable placement](/docs/add-more-features/Variable-placement)
+        You can learn more on how values provided by user get propargated in the chatbot's memory at [variable placement](/docs/add-more-features/Variable-placement)
 
         ![Sarufi Setup: State Phone number](/img/azampay-interface3.png)
 
@@ -103,6 +103,6 @@ The first thing is Login to you account, navigate to your chatbot in Workspace.
 
 After configuring the AzamPay integration settings, test the payment functionality to ensure that users can make payments using AzamPay within your application.
 
-## YouTube Video
+## YouTube Reference
 
 Our YouTube channel has a video tutorial on how to integrate AzamPay into your application. Watch the video [Sarufi x AzamPay Integration](https://www.youtube.com/watch?v=bPMRriMyz7A).
