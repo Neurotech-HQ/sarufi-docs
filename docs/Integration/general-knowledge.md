@@ -8,7 +8,7 @@ Lets first get into general explanation/detailed guide about what you are going 
 
 The integration features are now supported for either `intent-based` or `hybrid`(Combination of intent-based and LLM-based) chatbots.
 
-## Interface
+## Integration Interface
 
 The very first thing you land on when you navigate to you sarufi account is workspace that houses your chatbots. To access the integration section, you will have to navigatie to your chabot >> Integration >> Select integration of your choice.
 
