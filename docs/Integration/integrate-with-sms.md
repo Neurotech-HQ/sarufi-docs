@@ -1,14 +1,13 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # SMS integration
 
 SMS integration allows your chatbot to send SMS to users based on specific triggers. With this functionality, you can enhance the communication capabilities of your chatbot and provide users with important information or notifications via SMS.
 
 ## Interface Overview
+
 The SMS integration interface consists of the following components:
 
 | Component          | Description                                                     |
@@ -27,8 +26,6 @@ Follow these steps to integrate SMS functionality into your chatbot:
 
 Log in to your chatbot platform and navigate to the SMS integration section.
 
-![integration-interface](/img/integration_interface_image.png)
-
 **2: Configure Triggered Intents**
 
 Select the intents that will trigger the SMS functionality. These are the actions  from the user that will prompt the chatbot to send an SMS message.
@@ -45,7 +42,6 @@ Enter the mobile number of the recipient to whom the SMS message will be sent. E
 
 ![sms-mobile](/img/sms-mobile.png)
 
-
 **5: Activate SMS Integration**
 
 Toggle the switch to activate the SMS integration. When activated, the chatbot will be able to send SMS messages based on the specified intents and message content.
@@ -53,7 +49,6 @@ Toggle the switch to activate the SMS integration. When activated, the chatbot w
 **6: Save Settings**
 
 Click the "Save" button to save your SMS integration settings. Ensure that all configurations are correctly saved before proceeding.
-
 
 ## Testing
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # AzamPay integration
@@ -56,8 +56,6 @@ The first thing is Login to you account, navigate to your chatbot in Workspace.
 1. Access AzamPay Integration Interface
 
    In your chatbot, navigate to integrations section then to the AzamPay integration section.
-
-    ![Integration interface](/img/integration_interface_image.png)
 
 1. Fill AzamPay details.
 

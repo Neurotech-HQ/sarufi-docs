@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Email integration
@@ -27,8 +27,6 @@ The first thing is Login to you account, navigate to your chatbot in Workspace.
 1. Access Email Integration Interface
 
     In your chatbot, navigate to integrations section then to the Email integration section.
-
-    ![Integration interface](/img/integration_interface_image.png)
 
 1. Configure Triggered Intents
 
