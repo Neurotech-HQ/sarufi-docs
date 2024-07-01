@@ -42,6 +42,7 @@ Building a chatbot from scratch can be a daunting task. That's why we have creat
 
     1. Go to the [Templates](https://sarufi.io/templates) page which looks like this:
 
+
         ![Sarufi template marketplace](/img/sarufi-chatbot-template.png)
 
     1. Select a template that you want to use. Click **View Details** button to view the details of the template.
@@ -52,16 +53,17 @@ Building a chatbot from scratch can be a daunting task. That's why we have creat
 
     It is very simple! You can create a chatbot for your business in a few minutes.
 
+
 - How to create a template?
 
     To create a template, you need to follow these steps:
 
     1. Log in into your Sarufi account.
-    1. Create a chatbot.
+    2. Create a chatbot.
         The chatbot created should not have any ambiguity in the flow. It should be a complete chatbot.
-    1. Test your chatbot and make sure that it is working as expected.
-    1. Go to the **Template** page.
-    1. Click on the **Publish** button in the top right.
+    3. Test your chatbot and make sure that it is working as expected.
+    4. Go to the **Template** page.
+    5. Click on the **Publish** button in the top right.
 
     In order to publish your template, you need to fill out basic details about your template. Provide clear and concise information about your template's fuctionalities/features.
 
@@ -76,8 +78,8 @@ Building a chatbot from scratch can be a daunting task. That's why we have creat
 
     We have a wide range of templates covering many business sectors including restaurants, hotels, eCommerce, customer support, lead generation and surveys. We will be adding more templates in the future.
 
-Visit [Sarufi templates](https://www.sarufi.io/templates) to see what templates other developers have created.
 
+Visit [Sarufi templates](https://www.sarufi.io/templates) to see what templates other developers have created.
 
 ### Website Deployment
 
@@ -91,15 +93,16 @@ You will have a code snippet that you paste in your HTML page or your React/Next
 
 You can see one of the bots with web integration at [UDICTI](https://udicti.udsm.ac.tz/).
 
-### Webhook Integration
+### Integration
 
 With support of webhooks, your bot will have the ability to communicate with third-party APIs (payment gateways, CRMs, etc.) at any point of a conversation.
 
-All you have to do is specify which states should trigger the webhook.
+![Sarufi Integration Interface](/img/integration_interface_image.png)
 
 ![Sarufi webhook setup](/img/sarufi-webhook-setup.png)
 
 You can read more on webhooks [here](/docs/integration/webhook-integration).
+
 
 ### Conversation History
 
@@ -183,6 +186,7 @@ There are some things worthy of attention here.
     Setting the threshold in general means that if the model's confidence in the user intent is below the threshold, the bot will fallback to the fallback message or document.
 
     The fallback can be a simple message (as "Please rephrase your message" or "Please let me know what you mean by saying this") or the bot can be configured to fallback to a document. This is covered in the document [Creating a bot using knowledge base](/docs/sarufi-dashboard/create-bot-from-knowledge-base).
+
 
 ## Sarufi video series
 
