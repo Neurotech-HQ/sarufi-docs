@@ -41,16 +41,16 @@ Building a chatbot from scratch can be a daunting task. That's why we have creat
     To use a template, you need to follow these steps:
 
     1. Go to the [Templates](https://sarufi.ai/templates) page.
-        
+
         ![Sarufi template marketplace](/img/sarufi-chatbot-template.png)
-    
+
     1. Select a template that you want to use. Click **View Details** button to view the details of the template.
     1. Try out the demo of the template by clicking **Live chat**. You can also view the screenshots and gif of the template.
     1. Click on the **Use Template** button if you want to use the template.
     1. You will be required to log in into your Sarufi account. If you don't have an account, you can create one for [free](https://sarufi.io).
     1. You can edit the chatbot as per your needs.
 
-    Its that simple! You can create a chatbot for your business in a few minutes. 
+    Its that simple! You can create a chatbot for your business in a few minutes.
 
 - How to create a template?
 
@@ -58,25 +58,24 @@ Building a chatbot from scratch can be a daunting task. That's why we have creat
 
     1. Log in into your Sarufi account.
     1. Create a chatbot.
-        The chatbot created should not have any ambiguity in the flow. It should be a complete chatbot. 
+        The chatbot created should not have any ambiguity in the flow. It should be a complete chatbot.
     1. Test out your chatbot. Make sure that it is working as expected.
     1. Go to the **Settings** page.
     1. Click on the **Export Bot to Template** button.
-        
-    You will be required to fill in all important details about your template. Provide clear and concise information about your template's fuctionalities/features. 
-    
+
+    You will be required to fill in all important details about your template. Provide clear and concise information about your template's fuctionalities/features.
+
     On top of that, you will be required to provide a at least 4 screenshots of your chatbot and a gif of conversations . Make sure that you provide screenshots of all important parts of your chatbot.
 
     ![Publish chatbot as template](/img/sarufi-template-details.png)
-    
+
     Once you have filled in all the details, click on the **Publish** button. Your template will be published on the Sarufi marketplace.
 
 - Available Templates
 
-    Currently, we have templates coveing areas around restaurants, hotels, ecommerce, customer support, lead generation and survey. We will be adding more templates in the future. 
+    Currently, we have templates coveing areas around restaurants, hotels, ecommerce, customer support, lead generation and survey. We will be adding more templates in the future.
 
 You just need to develop your chatbot and provide some information about it. Then you can share it to the community. Visit [sarufi templates](https://www.sarufi.io/templates) section to see what other developers have created.
-
 
 ### Web Plugin
 
@@ -90,15 +89,13 @@ You will have a code snippet that you paste in HTML page or React/NextJS App. so
 
 You can see one of the bot integrated into web at [UDICTI](https://udicti.udsm.ac.tz/)
 
-### Webhook Integration
+### Integration
 
-With support of webhook, your bot will have ability to communicate with third-party APIs (payment gateway, CRM, etc) at any point of a conversation.
+Connect your chatbot to wid range of available integrations ranging from Payment Gateways to SMS.
 
-All you have to do is specify which states should trigger the webhook.
+![Sarufi Integration Interface](/img/integration_interface_image.png)
 
-![Sarufi webhook setup](/img/sarufi-webhook-setup.png)
-
-You can read more on webhooks at [sarufi webhook integration](/docs/integration/webhook-integration)
+You can read more on webhooks at [sarufi webhook integration](/docs/integration/general-knowledge.md)
 
 ### Conversation History
 
@@ -185,7 +182,6 @@ Here are some things to take note:
     Setting our threshold in general means that if the model confidence on user intent is below the threshold, the bot will fallback to the fallback message or document.
 
     The fallback can be a simple message (as "Please rephrase your message" or "Please let me know what you mean by saying this") or the bot can be configured to fallback to a document. This is covered in [Creating a bot using Knowledge base](/docs/sarufi-dashboard/create-bot-from-knowledge-base)
-
 
 *This setting is found in your bot's settings (General Settings)*
 
