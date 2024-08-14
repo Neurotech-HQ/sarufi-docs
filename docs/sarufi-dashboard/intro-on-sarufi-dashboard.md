@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Sarufi Dashboard
+# Dashboard
 
 Sarufi allows you to develop chatbots in a faster and convenient way. [sarufi.io](https://sarufi.io) has an interactive interface to get you started with your chatbot idea.
 
@@ -100,8 +100,6 @@ With support of webhooks, your bot will have the ability to communicate with thi
 ![Sarufi Integration Interface](/img/integration_interface_image.png)
 
 ![Sarufi webhook setup](/img/sarufi-webhook-setup.png)
-
-You can read more on webhooks [here](/docs/integration/webhook-integration).
 
 
 ### Conversation History
