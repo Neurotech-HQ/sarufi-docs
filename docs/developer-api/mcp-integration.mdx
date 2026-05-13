@@ -1,0 +1,385 @@
+---
+title: MCP Server Integration
+description: Register remote MCP servers as LLM agent tools via the Model Context Protocol.
+sidebar_position: 11
+---
+
+# MCP Server Integration
+
+MCP (Model Context Protocol) lets you connect any compliant external server to a chatbot's LLM agent. Once registered, the agent can call the server's tools - order lookups, CRM records, ticketing systems, internal APIs - during a conversation, without writing custom executor code.
+
+Each chatbot can have multiple MCP servers. During an agent turn the platform calls the server's `tools/list` endpoint to discover available tools, then dispatches `tools/call` when the model decides to invoke one. Results flow back to the model as tool outputs before the final reply is composed.
+
+**Transport:** Streamable HTTP only (current MCP standard). No SSE, no stdio.
+
+**Auth:** `NONE`, `BEARER`, `HEADERS`. OAuth / Dynamic Client Registration is planned for a future release.
+
+---
+
+## Knowledge Base or MCP?
+
+Both extend what your LLM agent knows or can do - but they serve different needs:
+
+| | Knowledge Base | MCP Server |
+|---|---|---|
+| **Best for** | Answering questions from your own content | Taking actions and fetching live data |
+| **How it works** | RAG - retrieves relevant text chunks and passes them to the model | Tool-calling - the model invokes functions on your external server |
+| **Examples** | FAQs, product docs, policies, support articles | Order lookups, CRM queries, booking systems, internal APIs |
+| **Data freshness** | Updated when you sync the KB | Always live - data comes from your server at call time |
+| **Setup** | Upload documents or crawl URLs from the dashboard | Register a server URL and credentials here |
+
+You can attach both to the same chatbot - the model decides which tool to call based on the user's intent.
+
+---
+
+## Plan Limits
+
+MCP access is gated by the `mcp_servers_per_chatbot_limit` plan feature:
+
+| Value | Meaning |
+|---|---|
+| `0` | MCP disabled - create/test endpoints return 402 |
+| `N` (positive) | At most N MCP servers per chatbot |
+| `-1` | Unlimited |
+
+---
+
+## API Reference
+
+All MCP endpoints are scoped to a chatbot:
+
+```
+/api/dev/v1/chatbots/{chatbot_id}/integrations/mcp
+```
+
+Authentication: `Authorization: Bearer <api-key>` on every request.
+
+---
+
+### Register a Server
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/integrations/mcp
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+**Request Body**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | string | yes | Label for this server. Used as the tool-name prefix (e.g. `github__search`). Pattern: `^[a-zA-Z][a-zA-Z0-9_\-]*$`. No `__`. Max 100 chars. Must be unique per chatbot. |
+| `server_url` | string | yes | HTTPS endpoint of the MCP server. |
+| `auth_type` | string | no | One of `NONE` (default), `BEARER`, `HEADERS`. |
+| `auth_config` | object | no | Auth payload - required when `auth_type` is not `NONE`. See Auth types below. |
+| `description` | string | no | Optional note. Not sent to the model. Max 500 chars. |
+| `timeout` | number | no | Per-request timeout in seconds (1–120, default 30). |
+| `tool_allowlist` | array | no | Restrict which tool names from the server are exposed to the agent. `null` = all tools (up to 20). Max 50 names. |
+| `enabled` | boolean | no | Set to `false` to disable without deleting (default `true`). |
+
+#### Auth types
+
+**`NONE`** - no authentication header added.
+
+```json
+{ "auth_type": "NONE" }
+```
+
+**`BEARER`** - adds `Authorization: Bearer <token>`.
+
+```json
+{
+  "auth_type": "BEARER",
+  "auth_config": { "bearer": "<your-token>" }
+}
+```
+
+**`HEADERS`** - adds arbitrary headers (useful for API-key schemes like `X-Api-Key`).
+
+```json
+{
+  "auth_type": "HEADERS",
+  "auth_config": {
+    "X-Api-Key": "<your-key>",
+    "X-Tenant-Id": "acme"
+  }
+}
+```
+
+Auth secrets are stored encrypted at rest. Responses mask secret values with `***`.
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "github",
+    "description": "GitHub issue and PR tools",
+    "server_url": "https://api.githubcopilot.com/mcp/",
+    "auth_type": "BEARER",
+    "auth_config": { "bearer": "ghp_xxxx" },
+    "timeout": 20,
+    "tool_allowlist": ["create_issue", "search_issues", "list_pull_requests"]
+  }'
+```
+
+**Response - 201 Created**
+
+```json
+{
+  "integration_id": "01JXYZ...",
+  "chatbot_id": "01JMXYZ...",
+  "name": "github",
+  "description": "GitHub issue and PR tools",
+  "server_url": "https://api.githubcopilot.com/mcp/",
+  "auth_type": "BEARER",
+  "auth_config": { "bearer": "***" },
+  "timeout": 20.0,
+  "tool_allowlist": ["create_issue", "search_issues", "list_pull_requests"],
+  "enabled": true,
+  "created_at": "2026-05-06T09:00:00Z",
+  "updated_at": "2026-05-06T09:00:00Z"
+}
+```
+
+---
+
+### List Servers
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/integrations/mcp
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "count": 2,
+  "items": [
+    {
+      "integration_id": "01JXYZ...",
+      "name": "github",
+      "server_url": "https://api.githubcopilot.com/mcp/",
+      "auth_type": "BEARER",
+      "auth_config": { "bearer": "***" },
+      "enabled": true
+    }
+  ]
+}
+```
+
+---
+
+### Get a Server
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/integrations/mcp/{integration_id}
+Authorization: Bearer <api-key>
+```
+
+---
+
+### Update a Server
+
+All fields are optional. Omitted fields are left unchanged.
+
+```http
+PATCH /api/dev/v1/chatbots/{chatbot_id}/integrations/mcp/{integration_id}
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+```bash
+curl -X PATCH https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp/<integration-id> \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{ "enabled": false }'
+```
+
+:::warning[Renaming a server]
+Renaming a server (changing `name`) does not automatically update any flow JSON that references the old name via `collection`. Update flow JSON manually after renaming.
+:::
+
+---
+
+### Delete a Server
+
+```http
+DELETE /api/dev/v1/chatbots/{chatbot_id}/integrations/mcp/{integration_id}
+Authorization: Bearer <api-key>
+```
+
+**Response - 204 No Content**
+
+:::note[Delete blocked by flows]
+A **409 Conflict** is returned if the integration is still referenced by one or more flows. The response lists the blocking flow names. Remove the MCP tool from those flows before deleting the server.
+
+```json
+{
+  "detail": "This MCP server is still used by the following flows: \"Order Assistant\", \"Support Flow\". Remove the MCP tool from those flows before deleting the server."
+}
+```
+:::
+
+---
+
+### Test a Saved Server
+
+Opens a live session, calls `tools/list`, and returns the full tool inventory. Use this to verify credentials and connectivity after saving.
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/integrations/mcp/{integration_id}/test
+Authorization: Bearer <api-key>
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "server_name": "GitHub MCP Server",
+  "server_version": "1.0.0",
+  "tool_count": 3,
+  "tools": [
+    {
+      "name": "create_issue",
+      "description": "Create a GitHub issue in a repository",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "repo": { "type": "string" },
+          "title": { "type": "string" },
+          "body": { "type": "string" }
+        },
+        "required": ["repo", "title"]
+      }
+    }
+  ]
+}
+```
+
+| Status | Meaning |
+|---|---|
+| 400 | URL validation failed or server returned an unexpected response |
+| 401 | Authentication failed (wrong or missing token) |
+| 403 | Server denied access |
+| 502 | Server is unreachable or timed out |
+
+Rate limited to 15 probe calls per user per minute.
+
+---
+
+### Probe Without Saving
+
+Test connectivity before creating an integration.
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/integrations/mcp/test
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp/test \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "server_url": "https://mcp.example.com/mcp",
+    "auth_type": "BEARER",
+    "auth_config": { "bearer": "tok_xxx" }
+  }'
+```
+
+Same response shape as the saved-server test endpoint.
+
+---
+
+## Using MCP Tools in a Flow
+
+### Referencing in LLM_AGENT
+
+Add the MCP integration to an `LLM_AGENT` action's `tools` array. Use `name: "mcp"` with `collection` set to the integration's `name` field:
+
+```json
+{
+  "type": "LLM_AGENT",
+  "name": "Order Assistant",
+  "system_prompt": "You are a helpful order assistant. Use tools to look up order status and update records.",
+  "tools": [
+    {
+      "name": "mcp",
+      "collection": "github",
+      "enabled": true
+    }
+  ]
+}
+```
+
+`collection` must exactly match the integration's `name`. At runtime the platform looks up the integration for this chatbot by that name, fetches the tool list (from cache or live), and exposes each tool to the model.
+
+Multiple MCP servers can be included in one agent:
+
+```json
+"tools": [
+  { "name": "mcp", "collection": "github" },
+  { "name": "mcp", "collection": "jira" }
+]
+```
+
+:::info[Built-in tools]
+Built-in tools (`calculator`, `web_search`, `search`, `document_search`, `current_datetime`) are auto-injected and do not need to be listed. Only list tools that carry config such as MCP or knowledge-base collection pins.
+:::
+
+---
+
+### Tool Name Namespacing
+
+At runtime, each MCP tool is exposed to the model as `{integration_name}__{tool_name}` (double underscore separator). For example, with `collection: "github"` and a server tool named `search_issues`, the model sees `github__search_issues`.
+
+This prevents collisions when two MCP servers expose a tool with the same bare name. It is also why integration `name` values cannot contain `__`.
+
+---
+
+### Tool Allowlist
+
+The `tool_allowlist` on the integration controls which tools from the MCP server are ever loaded. A `null` allowlist exposes everything the server advertises (up to 20 tools per server). A non-null list exposes only the named tools.
+
+```json
+{
+  "name": "github",
+  "tool_allowlist": ["create_issue", "search_issues"]
+}
+```
+
+---
+
+## Caching
+
+Tool lists are cached per `(chatbot_id, integration_id)` for 5 minutes. On a cache miss the platform opens a live session to `tools/list`. Updating or deleting an integration immediately invalidates its cache entry.
+
+---
+
+## Security
+
+- Server URL must be HTTPS.
+- Outbound connections go through an SSRF-safe transport that validates DNS before connecting. Private and loopback IP ranges are blocked.
+- Auth secrets are encrypted at rest and masked in all API responses.
+- Redirect responses from the MCP server are not followed.
+
+---
+
+## Error Reference
+
+| Error | Status | Cause |
+|---|---|---|
+| Plan limit reached | 402 | `mcp_servers_per_chatbot_limit` reached or is 0 for this plan |
+| Name already in use | 409 | Another MCP integration on this chatbot has the same `name` |
+| Integration referenced by flows | 409 | Delete blocked - remove the tool from flows first |
+| URL not allowed | 400 | Server URL failed SSRF or HTTPS validation |
+| Auth failed | 401/403 | Wrong credentials on connection test |
+| Server unreachable | 502 | Timeout or DNS failure on connection test |

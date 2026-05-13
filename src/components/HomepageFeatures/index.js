@@ -5,31 +5,30 @@ import Link from "@docusaurus/Link";
 
 const FeatureList = [
   {
-    title: "Supported languages",
+    title: "Build chatbots visually",
     Svg: require("@site/static/img/built.svg").default,
     button: {
-      text: "Learn more",
-      link: "/docs/getting-started/create-a-simple-chatbot",
+      text: "User Guide",
+      link: "/docs/category/user-guide",
     },
     description: (
       <>
-        Sarufi supports Python, Node.js, and Go, providing flexibility and ease
-        for developers in crafting powerful chatbot solutions.
+        Design conversation flows, connect knowledge bases, and deploy to
+        WhatsApp and your website - no code required.
       </>
     ),
   },
   {
-    title: "Supported platforms",
+    title: "Powerful REST API",
     Svg: require("@site/static/img/simple-chatbot.svg").default,
     button: {
-      text: "See Integrations",
-      link: "/docs/category/integrations",
+      text: "Developer API",
+      link: "/docs/category/developer-api",
     },
     description: (
       <>
-        Sarufi bots are compatible with platforms like Telegram, WhatsApp, and
-        Messenger, ensuring wide-reaching engagement possibilities for your
-        chatbots.
+        Manage chatbots, flows, integrations, and analytics programmatically
+        with the Sarufi REST API.
       </>
     ),
   },

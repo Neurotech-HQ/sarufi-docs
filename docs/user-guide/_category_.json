@@ -1,0 +1,10 @@
+{
+  "label": "User Guide",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "Step-by-step guides for building and managing chatbots through the dashboard."
+  }
+}

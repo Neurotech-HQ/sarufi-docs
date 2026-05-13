@@ -1,8 +1,10 @@
 {
   "label": "Getting Started",
-  "position": 2,
+  "position": 1,
+  "collapsible": true,
+  "collapsed": false,
   "link": {
     "type": "generated-index",
-    "description": "Unlock the Power of Sarufi: Learn Key Concepts in Just 5 Minutes!"
+    "description": "Everything you need to go from zero to a live chatbot."
   }
 }

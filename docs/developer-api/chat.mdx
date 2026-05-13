@@ -1,0 +1,269 @@
+---
+title: Chat
+description: Create chat sessions and send messages to interact with published chatbot flows via API.
+sidebar_position: 6
+---
+
+# Chat
+
+The Chat API lets you programmatically converse with a published chatbot flow. This is useful for:
+
+- Building custom chat UIs outside the web widget
+- Automated testing of conversation flows
+- Integrating chatbot capabilities into your own applications
+
+The flow is simple:
+
+1. **Create a session** - you get back a `session_id` and the bot's initial greeting
+2. **Send messages** - pass the `session_id` with each message, receive the bot's response synchronously
+3. Sessions expire automatically after 30 minutes of inactivity
+
+:::info[Requires a published flow]
+The chatbot must have a published conversation flow. Use the [Flows API](./flows) to publish one.
+:::
+
+---
+
+## Create Chat Session
+
+Creates a new conversation session and returns the bot's initial greeting messages.
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/chat/sessions
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 201 Created**
+
+```json
+{
+  "session_id": "01JPQ...",
+  "channel": "api",
+  "created_at": "2026-04-02T12:00:00Z",
+  "messages": [
+    {
+      "type": "text",
+      "text": "Hello! How can I help you today?"
+    },
+    {
+      "type": "buttons",
+      "text": "Choose an option:",
+      "buttons": [
+        { "id": "faq", "title": "FAQ" },
+        { "id": "support", "title": "Talk to support" }
+      ]
+    }
+  ]
+}
+```
+
+The `messages` field contains the bot's greeting - the same messages a user would see when opening the chat widget for the first time.
+
+**Errors:**
+
+| Status | Detail |
+|--------|--------|
+| `400` | No published flow found for this chatbot |
+| `404` | Chatbot not found |
+
+---
+
+## Send Message
+
+Sends a user message and returns the bot's response synchronously.
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/chat/sessions/{session_id}/messages
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+**Request Body**
+
+| Field | Type | Default | Description |
+|---|---|---|---|
+| `message` | string | - | User message text. Max 4096 characters. Required. |
+| `message_type` | string | `"text"` | `"text"` or `"button"`. |
+| `button_id` | string \| null | - | The button or list item ID when the user clicks a button. When set, `message_type` is treated as `"button"` automatically. |
+
+### Sending a text message
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/<session-id>/messages \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "I need help with my order"}'
+```
+
+### Sending a button click
+
+When the bot sends buttons or a list, use the button's `id` field:
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/<session-id>/messages \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "FAQ", "button_id": "faq"}'
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "session_id": "01JPQ...",
+  "messages": [
+    {
+      "type": "text",
+      "text": "Sure! Here are our most common questions:"
+    },
+    {
+      "type": "list",
+      "text": "Select a topic",
+      "button_text": "View topics",
+      "sections": [
+        {
+          "title": "General",
+          "rows": [
+            { "id": "hours", "title": "Business hours" },
+            { "id": "pricing", "title": "Pricing" }
+          ]
+        }
+      ]
+    }
+  ],
+  "messages_count": 2,
+  "current_state": "faq_menu",
+  "timestamp": "2026-04-02T12:00:05Z"
+}
+```
+
+**Errors:**
+
+| Status | Detail |
+|--------|--------|
+| `404` | Chat session not found |
+| `410` | Chat session has been closed |
+| `500` | Message processing failed |
+
+---
+
+## Session Lifecycle
+
+- **Creation**: Each `POST /sessions` creates a new isolated conversation with its own state.
+- **Expiry**: Sessions expire after **30 minutes** of inactivity. After expiry, start a new session.
+- **Channel isolation**: Chat API sessions use the `api` channel. They are completely isolated from the same chatbot's `whatsapp`, `web`, or `sms` conversations.
+- **Conversation history**: All sessions and messages are persisted and can be retrieved via the [Conversations API](./conversations) using `channel=api`.
+
+---
+
+## Message Format
+
+Bot responses use the **GenericMessage** format - the same structure used across all channels. Each message has a `type` field that determines which other fields are present.
+
+### Message Types
+
+| Type | Description | Key Fields |
+|------|-------------|------------|
+| `text` | Plain text message | `text` |
+| `buttons` | Text with interactive buttons | `text`, `buttons[]` (each has `id`, `title`) |
+| `list` | Sectioned list with selectable rows | `text`, `button_text`, `sections[]` |
+| `image` | Image with optional caption | `media_url`, `media_caption` |
+| `document` | Document file | `media_url`, `media_filename`, `media_caption` |
+| `video` | Video file | `media_url`, `media_caption` |
+| `audio` | Audio file | `media_url` |
+
+### Example: Text message
+
+```json
+{ "type": "text", "text": "Hello! How can I help?" }
+```
+
+### Example: Buttons
+
+```json
+{
+  "type": "buttons",
+  "text": "What would you like to do?",
+  "buttons": [
+    { "id": "order_status", "title": "Check order" },
+    { "id": "new_order", "title": "Place order" }
+  ]
+}
+```
+
+### Example: List
+
+```json
+{
+  "type": "list",
+  "text": "Select a product category",
+  "button_text": "View categories",
+  "sections": [
+    {
+      "title": "Electronics",
+      "rows": [
+        { "id": "phones", "title": "Phones", "description": "Smartphones and accessories" },
+        { "id": "laptops", "title": "Laptops" }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## Full Example
+
+A complete conversation flow using `curl`:
+
+```bash
+# 1. Create a session
+SESSION=$(curl -s -X POST \
+  https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions \
+  -H "Authorization: Bearer <your-api-key>" | jq -r '.session_id')
+
+echo "Session: $SESSION"
+
+# 2. Send a message
+curl -s -X POST \
+  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/$SESSION/messages" \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "What are your business hours?"}' | jq
+
+# 3. Send a follow-up
+curl -s -X POST \
+  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/$SESSION/messages" \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Thanks!"}' | jq
+```
+
+### Python example
+
+```python
+import requests
+
+BASE = "https://beta-api.sarufi.io/api/dev/v1"
+HEADERS = {"Authorization": "Bearer <your-api-key>"}
+CHATBOT_ID = "<chatbot-id>"
+
+# Create session
+resp = requests.post(f"{BASE}/chatbots/{CHATBOT_ID}/chat/sessions", headers=HEADERS)
+session_data = resp.json()
+session_id = session_data["session_id"]
+print("Greeting:", session_data["messages"])
+
+# Send message
+resp = requests.post(
+    f"{BASE}/chatbots/{CHATBOT_ID}/chat/sessions/{session_id}/messages",
+    headers=HEADERS,
+    json={"message": "Hello"},
+)
+print("Bot:", resp.json()["messages"])
+```

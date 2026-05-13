@@ -1,0 +1,129 @@
+---
+title: "📚 Knowledge Bases"
+description: "Create knowledge bases from your documents and URLs so your chatbot can answer questions automatically."
+sidebar_position: 7
+---
+
+# Knowledge Bases
+
+A **Knowledge Base (KB)** is a collection of content - documents, web pages, text snippets - that your chatbot can search to answer user questions. Instead of scripting every possible question and answer, you upload your content and the platform finds the relevant answer automatically.
+
+Knowledge Bases are managed at the **workspace** level and then connected to specific chatbots.
+
+---
+
+## When to Use a Knowledge Base
+
+Use a Knowledge Base when:
+- You have existing documentation, FAQs, or help articles you want your bot to draw from
+- Users ask unpredictable questions that are hard to script in a flow
+- You want your bot to give accurate, source-based answers rather than scripted responses
+
+---
+
+## Creating a Knowledge Base
+
+1. In the workspace sidebar, click **Knowledge Bases**.
+2. Click **Create Knowledge Base**.
+3. Enter:
+   - **Name** - A descriptive name (e.g., "Product Docs", "Support FAQs")
+   - **Description** - What this KB covers (optional)
+4. Click **Create**.
+
+The KB is created with a **BUILDING** status while the system sets it up. It moves to **READY** once it's ready to accept sources.
+
+:::note
+Your plan limits the number of knowledge bases you can create per workspace. See [Billing & Plans](./billing-and-plans).
+:::
+
+---
+
+## KB Status
+
+| Status | Meaning |
+|---|---|
+| **BUILDING** | The KB is being indexed or rebuilt - not yet available for answering questions |
+| **READY** | The KB is indexed and available for chatbot queries |
+| **FAILED** | Something went wrong during building - check your sources or try re-adding them |
+
+---
+
+## Adding Sources
+
+A **source** is a piece of content you add to the KB for the bot to learn from. You can add multiple sources of different types to the same KB.
+
+### Supported Source Types
+
+| Type | What it is |
+|---|---|
+| **Text** | Paste in any text content directly (FAQs, policies, product descriptions) |
+| **URL** | Provide a web page URL - the platform crawls and indexes the page |
+| **PDF** | Upload a PDF document |
+| **CSV** | Upload a CSV file (useful for structured Q&A pairs or product tables) |
+
+### How to Add a Source
+
+1. Open the Knowledge Base from the **Knowledge Bases** page.
+2. Click **Add Source**.
+3. Choose the source type:
+   - **Text**: Enter a title and paste in your content, then click **Save**.
+   - **URL**: Enter the full URL (e.g., `https://yoursite.com/faq`) and click **Save**.
+   - **PDF** or **CSV**: Click **Upload** and select the file from your computer.
+4. The source appears in the sources list with a **pending** status while it is being indexed.
+
+Once indexed, the source status changes to **READY** and its content is available for the bot to query.
+
+### Managing Sources
+
+From the sources list inside the KB:
+- **Edit** a text source to update its content
+- **Delete** a source to remove it from the KB (the KB is rebuilt without that source)
+
+:::note
+After adding or removing a source, the KB status may briefly return to **BUILDING** while it re-indexes.
+:::
+
+---
+
+## Attaching a Knowledge Base to a Chatbot
+
+A Knowledge Base must be explicitly connected to a chatbot before the bot can use it to answer questions.
+
+1. Go to the chatbot you want to connect the KB to.
+2. In the chatbot sidebar, click **Integrations**.
+3. Open the **Knowledge Bases** tab.
+4. Find your KB in the list and click **Connect** (or **Attach**).
+
+The chatbot can now query that KB when responding to users.
+
+:::tip
+You can attach more than one KB to a single chatbot - the bot searches across all attached KBs.
+:::
+
+### Detaching a Knowledge Base
+
+If you no longer want a chatbot to use a KB:
+1. Go to **Integrations** → **Knowledge Bases** tab.
+2. Click **Disconnect** (or **Detach**) next to the KB.
+
+The KB still exists in the workspace; it is just no longer connected to that chatbot.
+
+---
+
+## Deleting a Knowledge Base
+
+:::warning
+Deleting a KB is permanent. All its sources are removed and any chatbots connected to it will lose access to that content.
+:::
+
+1. Go to the **Knowledge Bases** page in the workspace.
+2. Click the **delete** icon (or open the KB's menu) and select **Delete**.
+3. Confirm the deletion.
+
+---
+
+## Related Guides
+
+- [Chatbots](./chatbots) - Managing chatbots
+- [Integrations](./integrations) - Attach a KB to a chatbot via the Integrations page
+- [Conversation Flows](./conversation-flows) - Use a "Query knowledge base" action inside a flow

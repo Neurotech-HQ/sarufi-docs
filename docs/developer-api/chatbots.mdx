@@ -1,0 +1,225 @@
+---
+title: Chatbots
+description: Create, list, retrieve, update, and delete chatbots in your workspace.
+sidebar_position: 4
+---
+
+# Chatbots
+
+## List Chatbots
+
+Returns a paginated list of all chatbots in the workspace.
+
+```http
+GET /api/dev/v1/chatbots
+Authorization: Bearer <api-key>
+```
+
+**Query Parameters**
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `limit` | integer | 29 | Number of results per page. Min `1`, max `37`. |
+| `cursor` | string | - | Opaque pagination cursor from a previous response's `next_cursor` field. |
+
+```bash
+curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots?limit=20" \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "items": [
+    {
+      "id": "01JMXYZ...",
+      "name": "Support Bot",
+      "description": "Handles customer support queries",
+      "is_active": true,
+      "created_at": "2026-01-10T12:00:00Z"
+    }
+  ],
+  "next_cursor": "eyJpZCI6IjAxSk1YWVoifQ==",
+  "total": 5
+}
+```
+
+---
+
+## Create Chatbot
+
+Creates a new chatbot in the workspace.
+
+```http
+POST /api/dev/v1/chatbots
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+**Request Body**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | string | yes | Chatbot display name. Must be unique within the workspace. |
+| `description` | string | no | Optional description of the chatbot's purpose. |
+| `category` | string | no | Optional category label (e.g. `support`, `sales`, `onboarding`). |
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Support Bot",
+    "description": "Handles tier-1 customer support",
+    "category": "support"
+  }'
+```
+
+```python
+import requests
+
+response = requests.post(
+    "https://beta-api.sarufi.io/api/dev/v1/chatbots",
+    headers={"Authorization": "Bearer <your-api-key>"},
+    json={
+        "name": "Support Bot",
+        "description": "Handles tier-1 customer support",
+        "category": "support",
+    },
+)
+print(response.json())
+```
+
+**Response - 201 Created**
+
+```json
+{
+  "id": "01JMXYZ123ABC",
+  "workspace_id": "01JMWXY456DEF",
+  "name": "Support Bot",
+  "description": "Handles tier-1 customer support",
+  "category": "support",
+  "webhook_secret": "whsec_abc123...",
+  "is_active": true,
+  "created_at": "2026-02-01T10:30:00Z",
+  "updated_at": null
+}
+```
+
+---
+
+## Get Chatbot
+
+Retrieves a single chatbot by ID.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id> \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK** - returns a `ChatbotResponse` object (same shape as Create response above).
+
+---
+
+## Get Chatbot With Stats
+
+Returns the chatbot along with usage statistics.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/stats
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/stats \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "id": "01JMXYZ123ABC",
+  "name": "Support Bot",
+  "is_active": true,
+  "stats": {
+    "total_conversations": 1240,
+    "total_messages": 8765,
+    "active_users_7d": 342
+  },
+  "created_at": "2026-02-01T10:30:00Z"
+}
+```
+
+---
+
+## Update Chatbot
+
+Updates a chatbot's name, description, or category. Only include fields you want to change.
+
+```http
+PATCH /api/dev/v1/chatbots/{chatbot_id}
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+**Request Body (all fields optional)**
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | string | New chatbot name. |
+| `description` | string | New description. |
+| `category` | string | New category label. |
+
+```bash
+curl -X PATCH https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id> \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Renamed Support Bot"}'
+```
+
+**Response - 200 OK** - returns the updated `ChatbotResponse`.
+
+---
+
+## Delete Chatbot
+
+Permanently deletes a chatbot and all its associated flows, conversations, and integrations.
+
+```http
+DELETE /api/dev/v1/chatbots/{chatbot_id}
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X DELETE https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id> \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 204 No Content**
+
+:::warning[Irreversible action]
+Deleting a chatbot permanently removes all flows, conversations, integrations, and analytics data attached to it. This action cannot be undone.
+:::
+
+---
+
+## Chatbot Object
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | Unique chatbot ID (ULID). |
+| `workspace_id` | string | ID of the owning workspace. |
+| `name` | string | Chatbot display name. |
+| `description` | string | Optional description. |
+| `category` | string | Optional category tag. |
+| `webhook_secret` | string | Secret used to verify incoming webhook signatures. |
+| `is_active` | boolean | Whether the chatbot is currently active. |
+| `created_at` | string | Creation timestamp (ISO 8601). |
+| `updated_at` | string | Last update timestamp, or `null` if never updated. |

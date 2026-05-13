@@ -1,0 +1,166 @@
+---
+title: Conversations
+description: List and inspect conversations and messages for a chatbot.
+sidebar_position: 7
+---
+
+# Conversations
+
+## List Conversations
+
+Returns a paginated list of all conversations for a given chatbot.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/conversations
+Authorization: Bearer <api-key>
+```
+
+**Filter Parameters**
+
+| Parameter | Type | Description |
+|---|---|---|
+| `status` | string | Filter by conversation status. One of: `ACTIVE`, `CLOSED`, `ARCHIVED`, `HANDOFF_PENDING`, `AGENT_ACTIVE`. |
+| `channel` | string | Filter by channel (e.g. `whatsapp`, `web`, `sms`, `api`). |
+| `start_time` | string | Filter conversations created at or after this time (ISO 8601, e.g. `2026-01-01T00:00:00Z`). |
+| `end_time` | string | Filter conversations created at or before this time (ISO 8601). |
+
+**Pagination Parameters**
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `limit` | integer | 50 | Page size. Min `1`, max `67`. |
+| `cursor` | string | - | Pagination cursor from a previous response. |
+
+```bash
+curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations?status=ACTIVE&channel=whatsapp&limit=25" \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "count": 1,
+  "conversations": [
+    {
+      "id": "01JPQ...",
+      "chatbot_id": "01JMXYZ...",
+      "user_phone": "+255712345678",
+      "contact_name": "John",
+      "channel": "whatsapp",
+      "status": "ACTIVE",
+      "last_message_id": "01JRS...",
+      "last_message_at": "2026-02-18T14:35:00Z",
+      "last_message_preview": "Thanks for your help!",
+      "unread_count": 2,
+      "created_at": "2026-02-18T14:22:00Z",
+      "updated_at": "2026-02-18T14:35:00Z"
+    }
+  ],
+  "next_cursor": "eyJpZCI6IjAxSlBRIn0="
+}
+```
+
+---
+
+## Get Conversation
+
+Retrieves a single conversation by ID.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/conversations/{conversation_id}
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations/<conversation-id> \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK** - returns a single `ConversationRecord` (same shape as the list items above).
+
+---
+
+## Get Conversation Messages
+
+Returns messages for a conversation, ordered oldest first.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/conversations/{conversation_id}/messages
+Authorization: Bearer <api-key>
+```
+
+**Pagination Parameters**
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `limit` | integer | 50 | Page size. Min `1`, max `67`. |
+| `cursor` | string | - | Pagination cursor from a previous response. |
+
+```bash
+curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations/<conversation-id>/messages?limit=25" \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "count": 2,
+  "messages": [
+    {
+      "id": "01JRS...",
+      "conversation_id": "01JPQ...",
+      "message": { "text": "Hello, I need help with my order" },
+      "response": { "text": "Hi! I'd be happy to help. What's your order number?" },
+      "message_type": "text",
+      "responder": "BOT",
+      "received_at": "2026-02-18T14:22:05Z",
+      "responded_at": "2026-02-18T14:22:06Z",
+      "status": "delivered",
+      "created_at": "2026-02-18T14:22:05Z"
+    }
+  ],
+  "next_cursor": null
+}
+```
+
+---
+
+## Conversation Object
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | Conversation ULID. |
+| `chatbot_id` | string | Parent chatbot ID. |
+| `user_phone` | string | User phone number (e.g. `+255712345678` for WhatsApp). |
+| `contact_name` | string \| null | Contact display name, if available. |
+| `channel` | string | Integration channel: `whatsapp`, `web`, `sms`, `api`. |
+| `status` | string | Conversation status: `ACTIVE`, `CLOSED`, `ARCHIVED`, `HANDOFF_PENDING`, `AGENT_ACTIVE`. |
+| `last_message_id` | string \| null | ID of the last message in the conversation. |
+| `last_message_at` | string | Timestamp of the most recent message. |
+| `last_message_preview` | string \| null | Preview text of the last message. |
+| `unread_count` | integer | Number of unread messages. |
+| `created_at` | string | When the conversation was created. |
+| `updated_at` | string \| null | When the conversation was last updated. |
+
+---
+
+## Message Object
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | Message ULID. |
+| `conversation_id` | string | Parent conversation ID. |
+| `message` | object \| null | User input payload. |
+| `response` | object \| null | System response payload. |
+| `message_type` | string | Message type (e.g. `text`, `image`, `document`). |
+| `responder` | string | Who responded: `BOT` or `HUMAN`. |
+| `received_at` | string | When the user message was received. |
+| `responded_at` | string \| null | When the response was sent. |
+| `status` | string | Message delivery status. |
+| `created_at` | string | When the record was created. |
+
+:::info[Want to chat with your bot via API?]
+Use the [Chat API](./chat) to create sessions and send messages programmatically. Conversations created via the Chat API appear here with `channel=api`.
+:::
