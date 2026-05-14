@@ -44,11 +44,18 @@ Inside a workspace, you create **Chatbots**. Each chatbot is a self-contained co
 ```
 Your Account
 └── Workspace
+    ├── Settings
+    │    ├── Billing
+    │    ├── Team Members
+    │    └── API Key
+    ├── Analytics
     ├── Chatbot A
-    │   ├── Conversation Flows
-    │   ├── Meta Flows
-    │   ├── Knowledge Bases
-    │   └── Integrations (WhatsApp, Web Widget, ...)
+    │     ├── Flow
+    │     │     ├──Conversation Flows
+    │     │     └── Meta Flows
+    │     ├── Integrations (Whatsapp, Web Widget, MCP)
+    │     ├── Conversations (chats)
+    │     └── Analytics
     └── Chatbot B
         └── ...
 ```
