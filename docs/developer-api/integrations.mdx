@@ -1,0 +1,432 @@
+---
+title: "🔗 Integrations"
+description: Connect chatbots to WhatsApp, REST API, web widget channels, and external MCP tool servers.
+sidebar_position: 9
+---
+
+# Integrations
+
+Integrations connect a chatbot to an external messaging channel or tool server. Supported types:
+
+| Channel | Type value | Description |
+|---------|-----------|-------------|
+| WhatsApp | `whatsapp` | WhatsApp Business API via Meta |
+| REST API | `rest-api` | Generic REST webhook for custom integrations |
+| Web Widget | `web` | Embeddable chat widget for websites |
+| MCP Server | `mcp` | Remote tool servers for LLM agents (Model Context Protocol) |
+
+---
+
+## List Integrations
+
+Returns all integrations attached to a chatbot.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/integrations
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "items": [
+    {
+      "id": "01JST...",
+      "chatbot_id": "01JMXYZ...",
+      "type": "whatsapp",
+      "is_active": true,
+      "created_at": "2026-01-25T11:00:00Z"
+    }
+  ],
+  "total": 1
+}
+```
+
+---
+
+## Get Integration
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/integrations/{integration_id}
+Authorization: Bearer <api-key>
+```
+
+---
+
+## Delete Integration
+
+Permanently removes an integration. Users on this channel will no longer be able to reach the chatbot.
+
+```http
+DELETE /api/dev/v1/chatbots/{chatbot_id}/integrations/{integration_id}
+Authorization: Bearer <api-key>
+```
+
+**Response - 204 No Content**
+
+---
+
+## WhatsApp Integration
+
+### Create WhatsApp Integration
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/integrations/whatsapp
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+**Request Body**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `phone_number_id` | string | yes | Meta WhatsApp Business phone number ID. |
+| `access_token` | string | yes | Permanent access token from Meta for Business. |
+| `verify_token` | string | yes | Token you set when configuring the Meta webhook. |
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/whatsapp \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "phone_number_id": "1234567890",
+    "access_token": "EAABwzLixnjYBO...",
+    "verify_token": "my-webhook-verify-token"
+  }'
+```
+
+### Get / Update WhatsApp Integration
+
+```http
+GET   /api/dev/v1/chatbots/{chatbot_id}/integrations/whatsapp
+PATCH /api/dev/v1/chatbots/{chatbot_id}/integrations/whatsapp
+Authorization: Bearer <api-key>
+```
+
+---
+
+## REST API Integration
+
+Use this integration to connect the chatbot to any custom channel via a webhook.
+
+### Create REST API Integration
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/integrations/rest-api
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+**Request Body**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `webhook_url` | string | yes | The URL Sarufi will POST outbound messages to. |
+| `name` | string | no | Friendly name for this REST integration. |
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/rest-api \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "webhook_url": "https://yourserver.com/chatbot-webhook",
+    "name": "My REST Integration"
+  }'
+```
+
+### Get / Update REST API Integration
+
+```http
+GET   /api/dev/v1/chatbots/{chatbot_id}/integrations/rest-api
+PATCH /api/dev/v1/chatbots/{chatbot_id}/integrations/rest-api
+Authorization: Bearer <api-key>
+```
+
+---
+
+## Web Widget Integration
+
+Embed a real-time chat widget on any website. The widget loads asynchronously, connects over Socket.IO, and supports full conversation history, buttons, lists, and media messages.
+
+### Create Web Integration
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/integrations/web
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+**Request Body**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | string | yes | A friendly name for this web integration. |
+| `allowed_domains` | array | no | List of domains allowed to load the widget (e.g. `["yoursite.com"]`). Leave empty to allow all domains. |
+| `greeting_message` | string | no | The first message shown when a visitor opens the widget. |
+| `widget_config` | object | no | Appearance and behaviour overrides (see below). |
+
+**widget_config fields**
+
+| Field | Type | Default | Description |
+|---|---|---|---|
+| `bot_display_name` | string | `"Assistant"` | Name shown in the widget header. |
+| `primary_color` | string | `"#0066ff"` | Hex color for the bubble, header, and user messages. |
+| `secondary_color` | string | `"#f0f4ff"` | Hex color for bot message bubbles. |
+| `background_color` | string | - | Hex color for the chat message area background. |
+| `bubble_text` | string | `"Need Help?"` | Text shown on the floating bubble button. |
+| `bot_avatar_icon` | string | - | Icon key: `""`, `"robot"`, `"headset"`, `"sparkle"`, `"heart"`, `"store"`, `"graduation"`, `"chat"`. |
+| `font_size` | number | `13.5` | Base font size in pixels (12–24). |
+| `position` | string | `"bottom-right"` | Widget placement: `"bottom-right"` or `"bottom-left"`. |
+| `width` | number | `380` | Chat window width in pixels (280–600). |
+| `height` | number | `600` | Chat window height in pixels (400–800). |
+| `allowed_paths` | array | null | URL path patterns where the widget should appear. See [Path-Based Visibility](#path-based-visibility). |
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/web \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Main Site Widget",
+    "allowed_domains": ["yoursite.com"],
+    "greeting_message": "Hi! How can I help you today?",
+    "widget_config": {
+      "bot_display_name": "Aria",
+      "primary_color": "#0066ff",
+      "bubble_text": "Need Help?",
+      "position": "bottom-right",
+      "allowed_paths": ["/contact", "/support/*"]
+    }
+  }'
+```
+
+**Response - 201 Created**
+
+```json
+{
+  "id": "01JUV...",
+  "type": "web",
+  "name": "Main Site Widget",
+  "config": {
+    "widget_key": "wk_AbCdEf...",
+    "allowed_domains": ["yoursite.com"],
+    "widget_config": {
+      "bot_display_name": "Aria",
+      "primary_color": "#0066ff",
+      "position": "bottom-right",
+      "allowed_paths": ["/contact", "/support/*"]
+    }
+  },
+  "is_active": true
+}
+```
+
+### Get / Update Web Integration
+
+```http
+GET   /api/dev/v1/chatbots/{chatbot_id}/integrations/web
+PATCH /api/dev/v1/chatbots/{chatbot_id}/integrations/web
+Authorization: Bearer <api-key>
+```
+
+---
+
+## Embedding the Widget
+
+Once your web integration is created you get a `widget_key` (format: `wk_...`). Use it to embed the widget with a single `<script>` tag.
+
+### Script Attributes Reference
+
+| Attribute | Required | Description |
+|---|---|---|
+| `src` | yes | Widget script URL - `https://beta.sarufi.io/widget.js` |
+| `data-widget-key` | yes | Your `wk_...` key from the integration |
+| `data-server-url` | no | Override the backend origin (useful for self-hosted deployments) |
+| `async` | recommended | Loads the script without blocking page rendering |
+
+### Plain HTML
+
+```html
+<body>
+  <!-- your page content -->
+  <script
+    src="https://beta.sarufi.io/widget.js"
+    data-widget-key="wk_YOUR_WIDGET_KEY"
+    async
+  ></script>
+</body>
+```
+
+:::tip[Placement matters]
+Placing the script before `</body>` means it never blocks your page from rendering. The `async` attribute ensures parallel loading.
+:::
+
+### Next.js (App Router)
+
+```tsx
+// app/layout.tsx
+import Script from "next/script";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Script
+          src="https://beta.sarufi.io/widget.js"
+          data-widget-key="wk_YOUR_WIDGET_KEY"
+          strategy="lazyOnload"
+        />
+      </body>
+    </html>
+  );
+}
+```
+
+:::info[document.currentScript in Next.js]
+Next.js injects `<Script>` tags asynchronously, so `document.currentScript` will be `null` at the time the widget executes. The Sarufi widget handles this automatically via a `querySelector` fallback.
+:::
+
+### React (Vite / Create React App)
+
+```tsx
+// src/components/SarufiWidget.tsx
+import { useEffect } from "react";
+
+export function SarufiWidget() {
+  useEffect(() => {
+    if (document.querySelector('script[data-widget-key]')) return;
+
+    const script = document.createElement("script");
+    script.src = "https://beta.sarufi.io/widget.js";
+    script.setAttribute("data-widget-key", "wk_YOUR_WIDGET_KEY");
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
+  return null;
+}
+```
+
+### Vue 3 (Vite)
+
+```ts
+// src/composables/useSarufiWidget.ts
+import { onMounted } from "vue";
+
+export function useSarufiWidget(widgetKey: string) {
+  onMounted(() => {
+    if (document.querySelector('script[data-widget-key]')) return;
+
+    const script = document.createElement("script");
+    script.src = "https://beta.sarufi.io/widget.js";
+    script.setAttribute("data-widget-key", widgetKey);
+    script.async = true;
+    document.body.appendChild(script);
+  });
+}
+```
+
+### Angular
+
+```ts
+// src/app/app.component.ts
+import { Component, OnInit, Inject } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+
+@Component({ selector: "app-root", templateUrl: "./app.component.html" })
+export class AppComponent implements OnInit {
+  constructor(@Inject(DOCUMENT) private document: Document) {}
+
+  ngOnInit(): void {
+    if (this.document.querySelector('script[data-widget-key]')) return;
+
+    const script = this.document.createElement("script");
+    script.src = "https://beta.sarufi.io/widget.js";
+    script.setAttribute("data-widget-key", "wk_YOUR_WIDGET_KEY");
+    script.async = true;
+    this.document.body.appendChild(script);
+  }
+}
+```
+
+:::warning[Angular SSR (Universal)]
+If you use Angular Universal, wrap the script injection in an `isPlatformBrowser` check to avoid running it during server-side rendering.
+:::
+
+### WordPress
+
+```php
+<?php
+function sarufi_widget_script() {
+    echo '<script src="https://beta.sarufi.io/widget.js"
+               data-widget-key="wk_YOUR_WIDGET_KEY"
+               async></script>';
+}
+add_action( 'wp_footer', 'sarufi_widget_script' );
+```
+
+### Shopify
+
+Open `layout/theme.liquid` in **Online Store → Themes → Edit code** and paste just before `</body>`:
+
+```liquid
+<script
+  src="https://beta.sarufi.io/widget.js"
+  data-widget-key="wk_YOUR_WIDGET_KEY"
+  async
+></script>
+```
+
+---
+
+## Path-Based Visibility
+
+By default the widget appears on every page. Use `allowed_paths` inside `widget_config` to restrict it to specific pages.
+
+### How matching works
+
+| Pattern | Matches |
+|---|---|
+| `"/contact"` | Exactly `/contact` |
+| `"/shop/*"` | `/shop`, `/shop/`, `/shop/shoes`, `/shop/shoes/nike` |
+| `"/docs/*"` | `/docs`, `/docs/getting-started`, `/docs/api/auth` |
+
+When a visitor navigates to a page **not** in `allowed_paths`:
+- The widget is hidden (`display: none`)
+- The Socket.IO connection is **disconnected** - no idle connections on restricted pages
+
+When they navigate back to an allowed page:
+- The widget reappears
+- The socket reconnects automatically, resuming the conversation
+
+### SPA route changes
+
+The widget listens for both `popstate` (browser back/forward) and intercepts `history.pushState` / `history.replaceState` to handle client-side navigation in React, Vue, Angular, and Next.js apps - no extra configuration needed.
+
+### Example - show only on support pages
+
+```json
+{
+  "widget_config": {
+    "allowed_paths": ["/support", "/support/*", "/contact", "/help/*"]
+  }
+}
+```
+
+---
+
+## MCP Server Integration
+
+MCP (Model Context Protocol) integrations give LLM agents access to tools hosted on external servers.
+
+Unlike channel integrations, MCP integrations are **many-per-chatbot**: each chatbot can have multiple MCP servers registered simultaneously.
+
+For the full API reference - including CRUD endpoints, auth types, connection testing, tool allowlists, and how to wire MCP tools into `LLM_AGENT` flow actions - see the dedicated guide:
+
+**[MCP Server Integration →](./mcp-integration)**

@@ -1,0 +1,129 @@
+---
+title: Quick Start
+description: Go from zero to a live chatbot in a few steps.
+sidebar_position: 2
+---
+
+# Quick Start
+
+This guide walks every type of user through the first steps on Sarufi - from signing up to having a working chatbot ready to deploy.
+
+---
+
+## Step 1 - Sign Up
+
+1. Go to [sarufi.io](https://sarufi.io) and click **Sign In**
+2. Authenticate with your preferred OAuth provider
+3. After sign-in you land on the **Workspaces** page.
+
+---
+
+## Step 2 - Create a Workspace
+
+A workspace is your team's home - it holds all your chatbots, knowledge bases, and settings.
+
+1. Click **Create Workspace**.
+2. Give it a name (e.g., "Acme Customer Support") and an optional description.
+3. Click **Create**.
+
+You are taken into your new workspace's Overview page.
+
+:::tip
+Each plan has a limit on the number of workspaces you can create. The Developer (free) plan includes 1 workspace - enough to get started. See [Billing & Plans](../user-guide/billing-and-plans) for details.
+:::
+
+---
+
+## Step 3 - Create Your First Chatbot
+
+1. In the workspace sidebar, click **Chatbots**.
+2. Click **Create Chatbot**.
+3. Enter a name and optional description for your chatbot.
+4. Click **Create**.
+
+Your chatbot is created and you land on its overview page.
+
+---
+
+## Step 4 - Give Your Bot Something to Do
+
+You have two main options - pick whichever fits your use case:
+
+### Option A: Build a Conversation Flow
+
+Use the **visual flow editor** to script a conversation - collecting information, answering specific questions, routing users to the right outcome.
+
+1. In the chatbot sidebar, click **Flows** → **Conversation Flows**.
+2. Click **Create Flow**, give it a name, and click **Create**.
+3. The flow editor opens. Add states, write messages, and draw transitions.
+4. Click **Save** then **Validate** then **Publish**.
+
+New to flows? Read [How Chatbots Work](../user-guide/concepts) for the key concepts, then [Conversation Flows](../user-guide/conversation-flows) for the editor walkthrough.
+
+### Option B: Add a Knowledge Base
+
+If your bot should answer questions from your documents or website, create a **Knowledge Base** instead of (or in addition to) a flow.
+
+1. In the workspace sidebar, click **Knowledge Bases**.
+2. Click **Create Knowledge Base**.
+3. Add sources: upload a PDF, paste a URL, or enter text directly.
+4. The platform processes and indexes your content automatically.
+5. In your chatbot's **Integrations** → **Knowledge Bases** tab, click **Connect** to attach it.
+
+See [Knowledge Bases](../user-guide/knowledge-bases) for the full guide.
+
+---
+
+## Step 5 - Connect a Channel
+
+Your chatbot isn't visible to users until you connect it to a channel.
+
+### WhatsApp
+
+1. Open your chatbot → **Integrations** → **WhatsApp Meta** tab.
+2. Enter your Meta Phone Number ID, WABA ID, and access token.
+3. Click **Save**.
+
+See [Integrations](../user-guide/integrations) for the full WhatsApp setup guide.
+
+### Web Widget
+
+1. Open your chatbot → **Integrations** → **Web Widget** tab.
+2. Customise the widget title, greeting, and colours.
+3. Copy the generated HTML snippet.
+4. Paste it before the closing `</body>` tag on your website.
+
+---
+
+## Step 6 - Test It
+
+Before going live, use the **Chat Preview** tab in the flow editor to simulate a conversation. Type messages and see how the bot responds. Fix any transitions or messages that don't work as expected.
+
+---
+
+## Where to Go Next
+
+You've covered the essentials. Now pick the path that fits your role:
+
+### I'm building and managing bots through the dashboard
+
+The **User Guide** covers every part of the platform in depth:
+
+- [Workspaces](../user-guide/workspaces)
+- [Chatbots](../user-guide/chatbots)
+- [Conversation Flows](../user-guide/conversation-flows)
+- [Meta Flows](../user-guide/meta-flows) - WhatsApp-native interactive UI
+- [Knowledge Bases](../user-guide/knowledge-bases)
+- [Integrations](../user-guide/integrations)
+- [Team & Settings](../user-guide/team-and-settings)
+- [Billing & Plans](../user-guide/billing-and-plans)
+
+### I'm integrating via the REST API
+
+The **Developer API** documents every endpoint:
+
+- [Authentication](../developer-api/authentication) - set up your API key
+- [Chatbots API](../developer-api/chatbots) - create and manage chatbots programmatically
+- [Chat API](../developer-api/chat) - send messages to a chatbot from your application
+- [Flows API](../developer-api/flows) - create and publish flows via API
+- [Knowledge Bases API](../developer-api/knowledge-bases) - manage KB sources programmatically

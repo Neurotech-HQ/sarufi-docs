@@ -1,6 +1,6 @@
 # Sarufi Documentation Website
 
-The Sarufi documentation website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+The Sarufi documentation website is built using [Docusaurus 3](https://docusaurus.io/), a modern static website generator.
 Contributions are welcome.
 
 ## Getting Started

@@ -1,0 +1,223 @@
+---
+title: "🔀 Flows"
+description: Create and manage conversation flows and meta flows for a chatbot.
+sidebar_position: 5
+---
+
+# Flows
+
+## List Flows
+
+Returns all flows belonging to a chatbot.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/flows
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "items": [
+    {
+      "id": "01JNA...",
+      "chatbot_id": "01JMXYZ...",
+      "name": "Main Conversation Flow",
+      "type": "conversation",
+      "status": "published",
+      "created_at": "2026-01-20T08:00:00Z"
+    }
+  ],
+  "total": 2
+}
+```
+
+---
+
+## Create Flow
+
+Creates a new flow for the specified chatbot.
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/flows
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+**Request Body**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | string | yes | Display name for the flow. |
+| `type` | string | yes | Flow type: `conversation` (state-machine) or `meta` (WhatsApp UI Flows). |
+| `flow` | object | no | Initial flow definition JSON. If omitted, a blank flow is created. |
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Onboarding Flow",
+    "type": "conversation"
+  }'
+```
+
+**Response - 201 Created**
+
+```json
+{
+  "id": "01JNA456...",
+  "chatbot_id": "01JMXYZ123...",
+  "name": "Onboarding Flow",
+  "type": "conversation",
+  "status": "draft",
+  "flow": {},
+  "created_at": "2026-02-05T14:00:00Z",
+  "updated_at": null
+}
+```
+
+---
+
+## Get Flow
+
+Retrieves a specific flow by ID including its full flow definition.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id> \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+---
+
+## Update Flow
+
+Updates a flow's name or its flow definition JSON.
+
+```http
+PATCH /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+**Request Body (all fields optional)**
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | string | New display name. |
+| `flow` | object | Updated flow definition JSON. Replaces the existing definition entirely. |
+
+```bash
+curl -X PATCH https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id> \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Updated Onboarding Flow",
+    "flow": { "states": [] }
+  }'
+```
+
+---
+
+## Validate Flow
+
+Runs backend validation on the flow definition and returns any errors or warnings. Does not change the flow's status.
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}/validate
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>/validate \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "valid": true,
+  "errors": [],
+  "warnings": [
+    {
+      "path": "states.greeting.transitions",
+      "message": "No fallback transition defined - users may get stuck."
+    }
+  ]
+}
+```
+
+:::note[Validate before publishing]
+Always validate a flow before publishing. The publish endpoint will reject flows with errors.
+:::
+
+---
+
+## Publish Flow
+
+Publishes a validated flow, making it live for end users.
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}/publish
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>/publish \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "id": "01JNA456...",
+  "status": "published",
+  "published_at": "2026-02-10T09:15:00Z"
+}
+```
+
+---
+
+## Delete Flow
+
+Permanently deletes a flow. Published flows can still be deleted - active conversations using that flow will not receive new messages.
+
+```http
+DELETE /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X DELETE https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id> \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 204 No Content**
+
+---
+
+## Flow Object
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | Flow ULID. |
+| `chatbot_id` | string | Parent chatbot ID. |
+| `name` | string | Flow display name. |
+| `type` | string | `conversation` or `meta`. |
+| `status` | string | `draft` or `published`. |
+| `flow` | object | The flow definition JSON (states, transitions, screens, etc.). |
+| `created_at` | string | Creation timestamp. |
+| `updated_at` | string | Last update timestamp. |

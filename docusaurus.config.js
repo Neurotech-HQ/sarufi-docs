@@ -1,8 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const { themes: prismThemes } = require('prism-react-renderer');
+const lightCodeTheme = prismThemes.github;
+const darkCodeTheme = prismThemes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -13,6 +14,9 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
+  markdown: {
+    format: 'detect',
+  },
 
 
   // GitHub pages deployment config.
@@ -41,13 +45,7 @@ const config = {
             'https://github.com/Neurotech-HQ/sarufi-docs/edit/main/',
           
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/Neurotech-HQ/sarufi-docs/edit/main/',
-        },
+        blog: false,
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -84,19 +82,15 @@ const config = {
             label: 'Documentation'
           },
           {
-            href: 'https://developers.sarufi.io/docs',
+            type: 'doc',
+            docId: 'developer-api/getting-started',
             position: 'left',
-            label: 'API '
+            label: 'Developer API'
           },
           // {
           //   position: 'left',
           //   label: 'Changelog'
           // },
-          {
-            href: 'https://playground.sarufi.io/',
-            position: 'left',
-            label: 'Playground'
-          },
           {
             href: 'https://sarufi.io/',
             position: 'left',
@@ -104,7 +98,7 @@ const config = {
           },
           // { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/Neurotech-HQ/sarufi-python-sdk',
+            href: 'https://github.com/Neurotech-HQ/sarufi-docs',
             label: 'GitHub',
             position: 'right',
           },
@@ -117,16 +111,16 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Overview',
                 to: '/docs/intro',
               },
               {
-                label: 'Getting started',
-                to: '/docs/category/getting-started',
+                label: 'User Guide',
+                to: '/docs/category/user-guide',
               },
               {
-                label: 'Integrations',
-                to: '/docs/category/integrations',
+                label: 'Developer API',
+                to: '/docs/category/developer-api',
               }
             ],
           },
@@ -148,10 +142,6 @@ const config = {
             title: 'More',
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
                 label: 'GitHub',
                 href: 'https://github.com/Neurotech-HQ/sarufi-docs',
               },
@@ -162,7 +152,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Sarufi, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Sarufi By Neurotech Africa. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,

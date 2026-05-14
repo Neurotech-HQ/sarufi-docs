@@ -1,0 +1,219 @@
+---
+title: "📱 Meta Flows"
+description: "Build WhatsApp-native UI Flows with interactive screens, forms, and components."
+sidebar_position: 6
+---
+
+# Meta Flows
+
+A **Meta Flow** is a WhatsApp-native interactive experience built using **WhatsApp Business Flows**. Instead of a text conversation, users see rich screens with forms, buttons, carousels, date pickers, and more - all rendered natively inside WhatsApp.
+
+Meta Flows are ideal for collecting structured information (e.g., booking a service, completing a registration form, or running a survey) without leaving WhatsApp.
+
+---
+
+## When to Use a Meta Flow
+
+Use a Meta Flow when you need:
+- **Structured data collection** - forms, checkboxes, date pickers, file uploads
+- **Rich interactive screens** - carousels, selectable lists, embedded links
+- **A polished in-app experience** - no back-and-forth text messages; users tap through screens
+
+For standard conversational scripting, use [Conversation Flows](./conversation-flows) instead.
+
+---
+
+## Creating a Meta Flow
+
+1. Inside your chatbot, click **Flows** in the sidebar, then **Meta Flows**.
+2. Click **Create Meta Flow** (or **New Meta Flow**).
+3. Enter a **name** and optional **description**.
+4. Click **Create**.
+
+The flow opens in the **Meta Flow Editor**.
+
+:::note
+Your plan limits how many flows a chatbot can have. See [Billing & Plans](./billing-and-plans).
+:::
+
+---
+
+## The Meta Flow Editor Layout
+
+| Area | Purpose |
+|---|---|
+| **Canvas** (centre) | Visual graph of screens and their connections |
+| **Property Panel** (right) | Edit the selected screen or component |
+| **JSON IDE** (tab) | Edit the raw WhatsApp Flow JSON |
+| **Chat Preview** (tab) | Simulate the flow interaction |
+
+The toolbar provides **Undo**, **Redo**, **Save**, **Validate**, and **Publish** buttons.
+
+---
+
+## Working with Screens
+
+A **screen** is a single page that the user sees in WhatsApp. A Meta Flow is made up of one or more screens that the user navigates through.
+
+### Adding a Screen
+
+1. On the canvas, click **+ Add Screen**.
+2. A new screen node appears.
+3. Click the screen to select it and configure it in the Property Panel.
+
+### Screen Settings
+
+In the Property Panel for a selected screen:
+
+- **Screen ID** - A unique identifier in `UPPERCASE_SNAKE_CASE` format (e.g., `BOOKING_FORM`). Used in routing.
+- **Title** - Optional title shown at the top of the screen in WhatsApp.
+- **Components** - The UI elements displayed on the screen.
+
+### The Initial Screen
+
+One screen must be marked as the **first screen** - this is what users see when the flow starts. By default the first screen you create becomes the initial screen. You can change this in the routing settings.
+
+---
+
+## Adding Components to a Screen
+
+Components are the building blocks of a screen. Select a screen, then use the Property Panel to add components.
+
+### Text Components
+
+| Component | Description |
+|---|---|
+| **Heading** | Large bold title |
+| **Subheading** | Medium-weight section title |
+| **Body** | Regular paragraph text |
+| **Caption** | Small descriptive text |
+| **Rich Text** | Formatted text with basic markdown |
+
+### Input Components
+
+| Component | Description |
+|---|---|
+| **Text Input** | Single-line text field |
+| **Text Area** | Multi-line text field |
+| **Date Picker** | Calendar date selector |
+| **Calendar Picker** | Full calendar view |
+| **Time Picker** | Time selector |
+| **Photo Picker** | Upload a photo from the device |
+| **Document Picker** | Upload a document from the device |
+| **Radio Buttons** | Select one option from a list |
+| **Checkboxes** | Select multiple options from a list |
+
+### Interactive Components
+
+| Component | Description |
+|---|---|
+| **Button Group** | A row of buttons for navigation or actions |
+| **Footer** | A persistent action button at the bottom of the screen |
+| **Selectable List** | A scrollable list of items the user can tap |
+| **Embedded Link** | A tappable hyperlink |
+| **Carousel** | A horizontally scrollable set of cards |
+
+### Layout Components
+
+| Component | Description |
+|---|---|
+| **Divider** | A horizontal line to separate sections |
+| **Spacer** | Vertical white space |
+
+### Adding a Component
+
+1. Select a screen on the canvas.
+2. In the Property Panel, click **+ Add Component**.
+3. Choose the component type from the list.
+4. Configure the component's properties (label, placeholder, options, etc.).
+
+---
+
+## Routing Between Screens
+
+**Routing** defines how users move from one screen to another. Each interactive component (button, footer, selectable list) has a **click action** that can:
+
+| Action | What it does |
+|---|---|
+| **Navigate** | Move the user to another screen in the flow |
+| **Complete** | End the flow and return control to the chatbot |
+| **Data Exchange** | Submit data to your backend and receive a response (e.g., validate a form) |
+| **Open URL** | Open a URL in the user's browser |
+| **Update Data** | Update a variable within the session without navigating |
+
+### Setting Up Navigation
+
+1. Select a button or footer component.
+2. In the Property Panel, set the **Click Action** to **Navigate**.
+3. Choose the **Target Screen** from the dropdown.
+
+An arrow is drawn on the canvas between the two screens.
+
+---
+
+## Undo and Redo
+
+The Meta Flow Editor supports **undo and redo** with up to 50 steps of history.
+
+- **Undo**: Press `Ctrl + Z` (Windows/Linux) or `Cmd + Z` (Mac)
+- **Redo**: Press `Ctrl + Y` (Windows/Linux) or `Cmd + Y` (Mac)
+- Or use the **Undo** / **Redo** buttons in the toolbar
+
+:::tip
+Undo history is session-based - it resets when you reload the page. Save your work frequently.
+:::
+
+---
+
+## JSON IDE
+
+The **JSON IDE** tab shows the complete WhatsApp Flow JSON. Advanced users can edit it directly.
+
+- **Live validation** - Errors are highlighted as you type
+- **Error markers** - Hover to see details on any error
+- **Format**: Must conform to the WhatsApp Business Flows JSON specification
+
+Changes in the JSON editor sync to the canvas.
+
+---
+
+## Chat Preview
+
+The **Chat Preview** tab lets you interact with your Meta Flow as if you were a WhatsApp user.
+
+1. Click the **Chat Preview** tab.
+2. Tap through screens, fill in inputs, and click buttons.
+3. Verify that navigation works correctly and screens display as expected.
+
+---
+
+## Save, Validate, and Publish
+
+Meta Flows follow the same three-step workflow as Conversation Flows:
+
+### Step 1: Save
+Click **Save** to save your draft. This does not affect the live version.
+
+### Step 2: Validate
+Click **Validate** to check your flow against the WhatsApp Flow specification. Errors appear in the JSON IDE and in the toolbar. Fix all errors before continuing.
+
+### Step 3: Publish
+Click **Publish** to make the Meta Flow live. Confirm in the publish dialog. The live version is what WhatsApp users see.
+
+---
+
+## Flow Status Badges
+
+| Badge | Meaning |
+|---|---|
+| **Draft** | Saved but not published |
+| **Published** | Live and active |
+| **Invalid** | Failed validation; cannot be published |
+
+---
+
+## Related Guides
+
+- [Conversation Flows](./conversation-flows) - Text-based state-machine conversations
+- [Integrations](./integrations) - Connect to WhatsApp to deploy Meta Flows
+- [Chatbots](./chatbots) - Managing chatbots and their flows

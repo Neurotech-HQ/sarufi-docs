@@ -1,0 +1,136 @@
+---
+title: "📊 Analytics"
+description: Retrieve conversation and message metrics for a chatbot.
+sidebar_position: 10
+---
+
+# Analytics
+
+The Analytics endpoints return aggregated metrics for a given chatbot. All endpoints support optional `start_date` and `end_date` query parameters to filter by time range (ISO 8601 dates).
+
+:::info[Timezone]
+All timestamps in analytics responses are UTC. Pass date parameters as `YYYY-MM-DD` UTC dates.
+:::
+
+---
+
+## Get Overview
+
+Returns high-level aggregated statistics for a chatbot.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/analytics/overview
+Authorization: Bearer <api-key>
+```
+
+**Query Parameters**
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `start_date` | string | 30 days ago | Start of the date range (inclusive). Format: `YYYY-MM-DD`. |
+| `end_date` | string | today | End of the date range (inclusive). Format: `YYYY-MM-DD`. |
+
+```bash
+curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/overview?start_date=2026-02-01&end_date=2026-02-26" \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+```python
+import requests
+
+params = {"start_date": "2026-02-01", "end_date": "2026-02-26"}
+
+response = requests.get(
+    "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/overview",
+    headers={"Authorization": "Bearer <your-api-key>"},
+    params=params,
+)
+print(response.json())
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "chatbot_id": "01JMXYZ...",
+  "period": {
+    "start_date": "2026-02-01",
+    "end_date": "2026-02-26"
+  },
+  "total_conversations": 1482,
+  "total_messages": 10234,
+  "unique_users": 876,
+  "avg_messages_per_conversation": 6.9,
+  "completion_rate": 0.74
+}
+```
+
+**Response Fields**
+
+| Field | Type | Description |
+|---|---|---|
+| `total_conversations` | integer | Number of conversations started in the period. |
+| `total_messages` | integer | Total messages sent and received. |
+| `unique_users` | integer | Number of distinct users who interacted. |
+| `avg_messages_per_conversation` | number | Average message depth per conversation. |
+| `completion_rate` | number | Fraction of conversations that reached a terminal state (0–1). |
+
+---
+
+## Conversations Series
+
+Returns a daily time series of conversation counts. Useful for charting trends.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/analytics/conversations
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/conversations?start_date=2026-02-01&end_date=2026-02-26" \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "series": [
+    { "date": "2026-02-01", "count": 45 },
+    { "date": "2026-02-02", "count": 62 },
+    { "date": "2026-02-03", "count": 38 }
+  ]
+}
+```
+
+---
+
+## Messages Series
+
+Returns a daily time series of message counts (inbound + outbound combined).
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/analytics/messages
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/messages?start_date=2026-02-01&end_date=2026-02-26" \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "series": [
+    { "date": "2026-02-01", "count": 310 },
+    { "date": "2026-02-02", "count": 428 },
+    { "date": "2026-02-03", "count": 265 }
+  ]
+}
+```
+
+:::tip[Build dashboards]
+Combine the overview endpoint for KPI cards with the series endpoints for trend charts. Both use the same date range parameters for consistent data.
+:::

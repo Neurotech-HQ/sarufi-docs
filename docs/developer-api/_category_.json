@@ -1,0 +1,10 @@
+{
+  "label": "Developer API",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "REST API reference for programmatic access to the Sarufi platform."
+  }
+}

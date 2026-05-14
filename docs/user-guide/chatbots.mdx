@@ -1,0 +1,121 @@
+---
+title: "🤖 Chatbots"
+description: "Create and manage chatbots inside your workspace."
+sidebar_position: 3
+---
+
+# Chatbots
+
+A **chatbot** is the core unit you build on the platform. Each chatbot has its own conversation flows, integrations, and settings. You can have multiple chatbots in a single workspace - for example, one for customer support and another for sales.
+
+---
+
+## Creating a Chatbot
+
+1. Inside your workspace, click **Chatbots** in the sidebar (or go to the **Overview** page and click **Create Chatbot**).
+2. Click **Create Chatbot** (or **New Chatbot**).
+3. Fill in the form:
+   - **Name** - The chatbot's name (e.g., "Support Bot")
+   - **Description** - A short description of what the chatbot does
+   - **Category** - Choose the category that best fits the bot's purpose
+4. Click **Create**.
+
+You are taken to the chatbot's page where you can start building flows and setting up integrations.
+
+:::note
+Your plan may limit how many chatbots you can create per workspace. If the button shows an upgrade prompt, see [Billing & Plans](./billing-and-plans).
+:::
+
+---
+
+## Chatbot Categories
+
+When creating a chatbot, pick the category that matches its use case. Categories help organise your chatbots with an icon and colour label.
+
+| Category | Use Case |
+|---|---|
+| Customer Support | Handle support tickets, FAQs, complaints |
+| Sales | Qualify leads, showcase products, upsell |
+| FAQ | Answer frequently asked questions |
+| Booking | Appointment scheduling and reservations |
+| Marketing | Campaigns, promotions, lead capture |
+| Onboarding | Welcome and guide new users |
+| HR | Employee queries, leave requests, policy info |
+| Education | Learning guides, quiz bots, course info |
+| Healthcare | Symptom checkers, appointment booking |
+| E-Commerce | Order tracking, product search, returns |
+| Finance | Account queries, loan info, payment reminders |
+| Travel | Itineraries, bookings, destination info |
+| Food Delivery | Order management, menu, delivery status |
+| Survey | Collect feedback and responses |
+| Other | Anything that doesn't fit the above |
+
+---
+
+## The Chatbot Page
+
+Once inside a chatbot, the sidebar updates to show chatbot-specific navigation:
+
+- **Flows** (expandable) → Conversation Flows and Meta Flows
+- **Integrations** - Connect to WhatsApp, your website, SMS channels, etc.
+- **Conversations** - Browse real user conversations
+- **Settings** - Edit chatbot details, webhooks, and status
+
+---
+
+## Chatbot Settings
+
+Go to **Settings** (in the chatbot sidebar section) to configure:
+
+| Setting | Description |
+|---|---|
+| **Name** | Update the chatbot's display name |
+| **Description** | Update the description |
+| **Category** | Change the chatbot category |
+| **Webhook URL** | URL that receives events from the chatbot |
+| **Webhook Secret** | Secret token for verifying webhook requests |
+| **Active** | Toggle the chatbot on or off. Inactive chatbots do not respond to messages |
+
+After making changes, click **Save** to apply them.
+
+---
+
+## Activating and Deactivating a Chatbot
+
+Use the **Active** toggle in Chatbot Settings to control whether the chatbot responds to messages.
+
+- **Active (on)** - The chatbot is live and responds to incoming messages
+- **Inactive (off)** - The chatbot is paused; messages are not processed
+
+This is useful for temporarily suspending a bot during maintenance or testing.
+
+---
+
+## Deleting a Chatbot
+
+:::warning
+Deleting a chatbot is permanent. All flows, conversations, and integration settings for the chatbot will be deleted.
+:::
+
+1. Go to the chatbot's **Settings** page.
+2. Scroll to the **Danger Zone** section.
+3. Click **Delete Chatbot**.
+4. Confirm the deletion when prompted.
+
+---
+
+## Viewing Conversations
+
+The **Conversations** section (in the chatbot sidebar) shows all messages sent by real users to this chatbot. Use it to:
+- Monitor what users are asking
+- Spot gaps in your bot's responses
+- Review conversation history
+
+---
+
+## Related Guides
+
+- [Conversation Flows](./conversation-flows) - Build scripted state-machine conversations
+- [Meta Flows](./meta-flows) - Build WhatsApp UI Flows with interactive screens
+- [Integrations](./integrations) - Connect your chatbot to WhatsApp and other channels
+- [Knowledge Bases](./knowledge-bases) - Give your chatbot a Q&A brain

@@ -38,10 +38,6 @@
   --primaryBlack: #FFFFFF;
 }
 
-.homepage {
-  background-color: var(--primaryColor);
-}
-
 .text-white {
   color: var(--primaryWhite);
 }
