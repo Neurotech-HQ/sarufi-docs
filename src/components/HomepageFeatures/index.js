@@ -5,25 +5,11 @@ import Link from "@docusaurus/Link";
 
 const FeatureList = [
   {
-    title: "Build chatbots visually",
+    title: "REST API",
     Svg: require("@site/static/img/built.svg").default,
     button: {
-      text: "User Guide",
-      link: "/docs/category/user-guide",
-    },
-    description: (
-      <>
-        Design conversation flows, connect knowledge bases, and deploy to
-        WhatsApp and your website - no code required.
-      </>
-    ),
-  },
-  {
-    title: "Powerful REST API",
-    Svg: require("@site/static/img/simple-chatbot.svg").default,
-    button: {
-      text: "Developer API",
-      link: "/docs/category/developer-api",
+      text: "Getting Started",
+      link: "/docs/developer-api/getting-started",
     },
     description: (
       <>
@@ -33,7 +19,21 @@ const FeatureList = [
     ),
   },
   {
-    title: "Need help",
+    title: "Conversation Flows",
+    Svg: require("@site/static/img/simple-chatbot.svg").default,
+    button: {
+      text: "Flows API",
+      link: "/docs/developer-api/flows",
+    },
+    description: (
+      <>
+        Build state-machine conversation flows, validate, and publish them via
+        API. Understand how the engine routes messages between states.
+      </>
+    ),
+  },
+  {
+    title: "Need help?",
     Svg: require("@site/static/img/language.svg").default,
     button: {
       text: "Contact Support",
@@ -42,7 +42,7 @@ const FeatureList = [
     description: (
       <>
         Our dedicated support team is ready to assist you with any queries,
-        ensuring a smooth chatbot development experience.
+        ensuring a smooth integration experience.
       </>
     ),
   },

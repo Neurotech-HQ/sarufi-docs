@@ -4,6 +4,9 @@ description: Create and manage conversation flows and meta flows for a chatbot.
 sidebar_position: 5
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Flows
 
 ## List Flows
@@ -15,10 +18,39 @@ GET /api/dev/v1/chatbots/{chatbot_id}/flows
 Authorization: Bearer <api-key>
 ```
 
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
 ```bash
 curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows \
   -H "Authorization: Bearer <your-api-key>"
 ```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+response = requests.get(
+    "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows",
+    headers={"Authorization": "Bearer <your-api-key>"},
+)
+print(response.json())
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```javascript
+const response = await fetch(
+  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows",
+  { headers: { "Authorization": "Bearer <your-api-key>" } },
+);
+const data = await response.json();
+```
+
+  </TabItem>
+</Tabs>
 
 **Response - 200 OK**
 
@@ -58,6 +90,9 @@ Content-Type: application/json
 | `type` | string | yes | Flow type: `conversation` (state-machine) or `meta` (WhatsApp UI Flows). |
 | `flow` | object | no | Initial flow definition JSON. If omitted, a blank flow is created. |
 
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
 ```bash
 curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows \
   -H "Authorization: Bearer <your-api-key>" \
@@ -67,6 +102,40 @@ curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows \
     "type": "conversation"
   }'
 ```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+response = requests.post(
+    "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows",
+    headers={"Authorization": "Bearer <your-api-key>"},
+    json={"name": "Onboarding Flow", "type": "conversation"},
+)
+print(response.json())
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```javascript
+const response = await fetch(
+  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows",
+  {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer <your-api-key>",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: "Onboarding Flow", type: "conversation" }),
+  },
+);
+const data = await response.json();
+```
+
+  </TabItem>
+</Tabs>
 
 **Response - 201 Created**
 
@@ -94,10 +163,39 @@ GET /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}
 Authorization: Bearer <api-key>
 ```
 
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
 ```bash
 curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id> \
   -H "Authorization: Bearer <your-api-key>"
 ```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+response = requests.get(
+    "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>",
+    headers={"Authorization": "Bearer <your-api-key>"},
+)
+print(response.json())
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```javascript
+const response = await fetch(
+  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>",
+  { headers: { "Authorization": "Bearer <your-api-key>" } },
+);
+const data = await response.json();
+```
+
+  </TabItem>
+</Tabs>
 
 ---
 
@@ -118,6 +216,9 @@ Content-Type: application/json
 | `name` | string | New display name. |
 | `flow` | object | Updated flow definition JSON. Replaces the existing definition entirely. |
 
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
 ```bash
 curl -X PATCH https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id> \
   -H "Authorization: Bearer <your-api-key>" \
@@ -127,6 +228,40 @@ curl -X PATCH https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/
     "flow": { "states": [] }
   }'
 ```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+response = requests.patch(
+    "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>",
+    headers={"Authorization": "Bearer <your-api-key>"},
+    json={"name": "Updated Onboarding Flow", "flow": {"states": []}},
+)
+print(response.json())
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```javascript
+const response = await fetch(
+  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>",
+  {
+    method: "PATCH",
+    headers: {
+      "Authorization": "Bearer <your-api-key>",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: "Updated Onboarding Flow", flow: { states: [] } }),
+  },
+);
+const data = await response.json();
+```
+
+  </TabItem>
+</Tabs>
 
 ---
 
@@ -139,10 +274,42 @@ POST /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}/validate
 Authorization: Bearer <api-key>
 ```
 
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
 ```bash
 curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>/validate \
   -H "Authorization: Bearer <your-api-key>"
 ```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+response = requests.post(
+    "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>/validate",
+    headers={"Authorization": "Bearer <your-api-key>"},
+)
+print(response.json())
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```javascript
+const response = await fetch(
+  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>/validate",
+  {
+    method: "POST",
+    headers: { "Authorization": "Bearer <your-api-key>" },
+  },
+);
+const data = await response.json();
+```
+
+  </TabItem>
+</Tabs>
 
 **Response - 200 OK**
 
@@ -174,10 +341,42 @@ POST /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}/publish
 Authorization: Bearer <api-key>
 ```
 
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
 ```bash
 curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>/publish \
   -H "Authorization: Bearer <your-api-key>"
 ```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+response = requests.post(
+    "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>/publish",
+    headers={"Authorization": "Bearer <your-api-key>"},
+)
+print(response.json())
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```javascript
+const response = await fetch(
+  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>/publish",
+  {
+    method: "POST",
+    headers: { "Authorization": "Bearer <your-api-key>" },
+  },
+);
+const data = await response.json();
+```
+
+  </TabItem>
+</Tabs>
 
 **Response - 200 OK**
 
@@ -200,10 +399,42 @@ DELETE /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}
 Authorization: Bearer <api-key>
 ```
 
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
+
 ```bash
 curl -X DELETE https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id> \
   -H "Authorization: Bearer <your-api-key>"
 ```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+requests.delete(
+    "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>",
+    headers={"Authorization": "Bearer <your-api-key>"},
+)
+# 204 No Content
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```javascript
+await fetch(
+  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>",
+  {
+    method: "DELETE",
+    headers: { "Authorization": "Bearer <your-api-key>" },
+  },
+);
+// 204 No Content
+```
+
+  </TabItem>
+</Tabs>
 
 **Response - 204 No Content**
 

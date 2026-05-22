@@ -1,0 +1,325 @@
+---
+title: "🔗 Connecting to Your Backend"
+description: Use the API_CALL action to fetch data, submit forms, and trigger operations in your own systems from inside a conversation flow.
+sidebar_position: 7
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Connecting to Your Backend
+
+`API_CALL` is the bridge between a conversation flow and your own backend. When the engine enters a state that contains an `API_CALL` action, it pauses the conversation, fires an outbound HTTP request, saves the response, then routes to the next state based on whether the request succeeded or failed.
+
+```json
+{
+  "fetch_order": {
+    "message": "Looking that up for you...",
+    "actions": [
+      {
+        "type": "API_CALL",
+        "integration": "my_backend",
+        "path": "/orders/{{variables.order_id}}",
+        "method": "GET",
+        "save_to": "order",
+        "success_transition": "show_status",
+        "failure_transition": "order_error"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## Configuration
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `type` | string | yes | Must be `"API_CALL"`. |
+| `integration` | string | — | Name of a saved integration whose base URL and auth credentials are used. Recommended — keeps secrets out of your flow JSON. Mutually exclusive with `url`. |
+| `path` | string | — | Path appended to the integration's base URL. Supports `{{variables.*}}` substitution. Required when `integration` is set. |
+| `url` | string | — | Full URL (legacy mode — no saved integration). Supports `{{variables.*}}` substitution. |
+| `method` | string | no | HTTP method: `GET`, `POST`, `PUT`, `PATCH`, or `DELETE`. Defaults to `"GET"`. |
+| `headers` | object | no | Additional request headers merged on top of the integration's headers. Values support `{{variables.*}}` substitution. |
+| `body` | object | no | Extra fields merged into the auto-injected request body. Only applies to `POST`, `PUT`, and `PATCH`. Values support `{{variables.*}}` substitution. |
+| `save_to` | string | no | Variable name to store the full response under. For example `"order"` makes the response accessible as `{{variables.order.*}}`. When omitted the response is stored at `{{variables.response}}`. |
+| `fire_and_forget` | boolean | no | When `true`, the request fires but the flow does not wait for a response. No data is saved and the conversation transitions immediately. Defaults to `false`. |
+| `success_transition` | string | no | State to route to when the server returns HTTP 2xx. |
+| `failure_transition` | string | no | State to route to when the server returns HTTP 4xx/5xx or the request times out. |
+
+---
+
+## Variable substitution
+
+Any `path`, `url`, `headers`, or `body` value can embed flow variables using `{{variables.name}}`. The engine resolves them at call time.
+
+```json
+{
+  "type": "API_CALL",
+  "integration": "my_backend",
+  "path": "/users/{{variables.user_id}}/orders/{{variables.order_id}}",
+  "method": "PATCH",
+  "headers": { "X-Tenant": "{{variables.tenant_id}}" },
+  "body": { "status": "{{variables.new_status}}" }
+}
+```
+
+---
+
+## HTTP method examples
+
+### GET — fetch data
+
+Use `GET` to read data the flow needs before it can continue. The response is saved to a variable whose fields are available in every subsequent message and condition.
+
+**Scenario**: User asks for their order status. `order_id` was collected in an earlier state.
+
+```json
+{
+  "type": "API_CALL",
+  "integration": "my_backend",
+  "path": "/orders/{{variables.order_id}}",
+  "method": "GET",
+  "save_to": "order",
+  "success_transition": "show_status",
+  "failure_transition": "order_not_found"
+}
+```
+
+If the server returns `{ "status": "in_transit", "eta": "2026-06-01", "carrier": "DHL" }`:
+
+| Expression | Resolves to |
+|---|---|
+| `{{variables.order.status}}` | `"in_transit"` |
+| `{{variables.order.eta}}` | `"2026-06-01"` |
+| `{{variables.order.carrier}}` | `"DHL"` |
+
+### POST — send data
+
+Use `POST` to create a resource or trigger an action. The auto-injected body already contains the user's last message and all current variables — add `body` fields for anything extra.
+
+**Scenario**: Submit a support ticket after collecting `issue_type` and `description`.
+
+```json
+{
+  "type": "API_CALL",
+  "integration": "my_backend",
+  "path": "/tickets",
+  "method": "POST",
+  "body": {
+    "issue_type": "{{variables.issue_type}}",
+    "description": "{{variables.description}}",
+    "priority": "normal"
+  },
+  "save_to": "ticket",
+  "success_transition": "ticket_created",
+  "failure_transition": "ticket_error"
+}
+```
+
+The confirmation state can then reference `{{variables.ticket.id}}` to show the user their reference number.
+
+### PATCH — update a record
+
+Use `PATCH` for partial updates to an existing resource.
+
+```json
+{
+  "type": "API_CALL",
+  "integration": "my_backend",
+  "path": "/users/{{variables.user_id}}/preferences",
+  "method": "PATCH",
+  "body": { "notifications": "{{variables.notification_choice}}" },
+  "success_transition": "preference_saved",
+  "failure_transition": "preference_error"
+}
+```
+
+### DELETE — remove a resource
+
+`DELETE` sends no body. Any context your server needs should come from the URL path or the auto-injected `X-Sarufi-*` headers.
+
+```json
+{
+  "type": "API_CALL",
+  "integration": "my_backend",
+  "path": "/subscriptions/{{variables.subscription_id}}",
+  "method": "DELETE",
+  "success_transition": "cancellation_confirmed",
+  "failure_transition": "cancellation_error"
+}
+```
+
+### Fire and forget
+
+Set `fire_and_forget: true` when you want to notify your backend without blocking the conversation — analytics events, webhook pings, non-critical logging.
+
+```json
+{
+  "type": "API_CALL",
+  "integration": "analytics",
+  "path": "/events",
+  "method": "POST",
+  "body": { "event": "flow_completed", "flow": "onboarding" },
+  "fire_and_forget": true
+}
+```
+
+:::note[No failure handling with fire_and_forget]
+The response is ignored entirely — including errors. Do not use it for operations where failure would affect the user experience.
+:::
+
+---
+
+## Response access
+
+The full response body is always available at `{{variables.response}}`. Use `save_to` to give it a meaningful name.
+
+```json
+{ "save_to": "profile" }
+```
+
+Access nested fields with dot notation:
+
+| Expression | Resolves to |
+|---|---|
+| `{{variables.profile.name}}` | Top-level `name` field |
+| `{{variables.profile.address.city}}` | Nested `city` inside `address` |
+| `{{variables.profile.orders[0].id}}` | First item of an array |
+
+:::tip[Always name your responses]
+`{{variables.order.status}}` is much clearer than `{{variables.response.status}}` in multi-step flows that make several API calls.
+:::
+
+---
+
+## Success and failure routing
+
+`success_transition` fires on any `2xx` response. `failure_transition` fires on `4xx`, `5xx`, or a network timeout. Both are optional — omitting them falls back to the state's `default` transition.
+
+```
+API_CALL fires
+      │
+      ├── HTTP 2xx ──► success_transition
+      │
+      ├── HTTP 4xx/5xx
+      │   or timeout  ──► failure_transition
+      │
+      └── (neither set) ──► default transition
+```
+
+Design failure states to be actionable: explain what went wrong and offer a path forward (retry, contact support, or exit the flow gracefully).
+
+---
+
+## Auto-injected request headers
+
+Every `API_CALL` automatically includes these identification headers so your server knows who made the call without parsing the body.
+
+| Header | Always present | Value |
+|---|---|---|
+| `X-Sarufi-User-Id` | yes | User identifier (phone number on WhatsApp, device-scoped ID on web) |
+| `X-Sarufi-Chatbot-Id` | yes | Chatbot ULID |
+| `X-Sarufi-Channel` | when known | `whatsapp`, `web`, `ussd`, `sms`, `api` |
+| `X-Sarufi-State` | when in a state | Current state name |
+| `X-Sarufi-Flow-Name` | when available | Flow name |
+| `X-Sarufi-User-Name` | when set | Value of `{{variables.contact_name}}` |
+
+---
+
+## Auto-injected request body
+
+For `POST`, `PUT`, and `PATCH` the engine always sends a base JSON body. Any `body` fields you declare are merged on top and take precedence.
+
+```json
+{
+  "message": {
+    "type": "text",
+    "text": "<the user's latest message>"
+  },
+  "variables": {
+    "<all current conversation variables>"
+  }
+}
+```
+
+`GET` and `DELETE` send no body.
+
+---
+
+## Backend examples
+
+<Tabs>
+  <TabItem value="python" label="Python (FastAPI)" default>
+
+```python
+from fastapi import Request, FastAPI
+
+app = FastAPI()
+
+@app.get("/orders/{order_id}")
+async def get_order(order_id: str, request: Request):
+    user_id    = request.headers.get("X-Sarufi-User-Id")
+    chatbot_id = request.headers.get("X-Sarufi-Chatbot-Id")
+    channel    = request.headers.get("X-Sarufi-Channel")
+
+    order = db.get_order(order_id, user_id=user_id)
+    return {"status": order.status, "eta": order.eta, "carrier": order.carrier}
+
+
+@app.post("/tickets")
+async def create_ticket(request: Request):
+    body    = await request.json()
+    user_id = request.headers.get("X-Sarufi-User-Id")
+
+    ticket = db.create_ticket(
+        user_id=user_id,
+        issue_type=body["variables"].get("issue_type"),
+        description=body["variables"].get("description"),
+    )
+    return {"id": ticket.id, "reference": ticket.reference}
+```
+
+  </TabItem>
+  <TabItem value="node" label="Node.js (Express)">
+
+```javascript
+import express from "express";
+const app = express();
+app.use(express.json());
+
+app.get("/orders/:orderId", async (req, res) => {
+  const userId = req.headers["x-sarufi-user-id"];
+  const order  = await db.getOrder(req.params.orderId, { userId });
+  res.json({ status: order.status, eta: order.eta, carrier: order.carrier });
+});
+
+app.post("/tickets", async (req, res) => {
+  const userId = req.headers["x-sarufi-user-id"];
+  const { variables } = req.body;
+
+  const ticket = await db.createTicket({
+    userId,
+    issueType:   variables.issue_type,
+    description: variables.description,
+  });
+  res.json({ id: ticket.id, reference: ticket.reference });
+});
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## Integration mode vs legacy mode
+
+| | Integration mode | Legacy mode |
+|---|---|---|
+| Config | `integration` + `path` | `url` only |
+| Auth credentials | Stored encrypted in the platform | Hardcoded in the flow JSON |
+| Credential rotation | Update the integration once — all flows update automatically | Requires editing every flow |
+| Recommended | Yes | Only when a saved integration is not possible |
+
+Set up integrations in the Sarufi dashboard under **Settings → Integrations**, or via the [Integrations API](./integrations).
