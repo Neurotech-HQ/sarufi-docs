@@ -4,36 +4,98 @@ description: Build chatbots, manage flows, and connect channels with the Sarufi 
 sidebar_position: 1
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Getting Started
 
-The Sarufi Developer API lets you programmatically manage every aspect of your chatbot workspace - create and configure chatbots, design conversation flows, attach knowledge bases, manage integrations, and pull analytics.
+## How the platform works
 
-The APIs are rate limited with an average of:
-- Reads: `1 Request/second`
-- Write/Update: `1 Request/2 seconds`
+Sarufi is organized around a hierarchy of resources. Understanding how they connect makes every API call obvious.
 
-All endpoints are organized under the path `/api/dev/v1`. The following base URLs are all production endpoints and work identically - use whichever you prefer:
+```
+Workspace
+└── Chatbot
+    ├── Flows          ← conversation logic (state machine)
+    │   └── States → Transitions → Actions (API calls, LLM, etc.)
+    ├── Knowledge Bases ← documents for AI-powered answers
+    └── Integrations   ← channels: WhatsApp, Web widget, SMS, API
+         │
+         ▼
+    Conversations (one per user session, per channel)
+    └── Messages       ← user input + bot response pairs
+```
 
-| Base URL |
-|---|
-| `https://api.sarufi.io/api/dev/v1` |
-| `https://beta-api.sarufi.io/api/dev/v1` |
-| `https://developers.sarufi.io/api/dev/v1` |
+**The request path for an end-user message:**
 
-The API follows REST conventions - resources are accessed via standard HTTP methods, request and response bodies are JSON, and errors return meaningful HTTP status codes.
+```
+User (WhatsApp / Web / SMS / API)
+  │  sends message
+  ▼
+Channel gateway
+  │  routes to chatbot
+  ▼
+Conversation engine
+  ├── loads current conversation state
+  ├── evaluates flow transitions
+  ├── runs state actions (API calls, LLM turns, …)
+  └── renders reply messages
+  │
+  ▼
+Bot reply delivered back to user
+```
+
+### Key concepts
+
+| Concept | What it is |
+|---|---|
+| **Workspace** | Your top-level account. Holds API keys and all chatbots. |
+| **Chatbot** | A single bot instance with its own flows, channels, and settings. |
+| **Flow** | A state machine that drives conversations. Each chatbot has one active (published) flow. |
+| **State** | A point in a conversation — defines what the bot says and what happens next. |
+| **Integration** | A connected channel (WhatsApp number, web widget, SMS line) or external tool. |
+| **Conversation** | A session between one user and the chatbot, scoped to a channel. |
+| **Knowledge Base** | A collection of documents the chatbot can search to answer questions. |
 
 ---
 
-## Quick Start
+## Quick start
 
-Get your workspace info in 30 seconds:
+Get your workspace details in 30 seconds:
+
+<Tabs>
+  <TabItem value="curl" label="cURL" default>
 
 ```bash
 curl -X GET https://api.sarufi.io/api/dev/v1/me \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
-A successful response returns your workspace and API key details:
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+import requests
+
+response = requests.get(
+    "https://api.sarufi.io/api/dev/v1/me",
+    headers={"Authorization": "Bearer <your-api-key>"},
+)
+print(response.json())
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```javascript
+const response = await fetch("https://api.sarufi.io/api/dev/v1/me", {
+  headers: { "Authorization": "Bearer <your-api-key>" },
+});
+const data = await response.json();
+```
+
+  </TabItem>
+</Tabs>
 
 ```json
 {
@@ -48,11 +110,15 @@ A successful response returns your workspace and API key details:
 }
 ```
 
+:::tip[Get your API key]
+Go to your Sarufi workspace → **Settings** → **API Keys** to generate your developer API key.
+:::
+
 ---
 
 ## Base URL
 
-All three URLs are production endpoints and behave identically - use whichever fits your setup:
+All three URLs are production endpoints and behave identically — use whichever fits your setup:
 
 | Base URL |
 |---|
@@ -60,9 +126,22 @@ All three URLs are production endpoints and behave identically - use whichever f
 | `https://beta-api.sarufi.io/api/dev/v1` |
 | `https://developers.sarufi.io/api/dev/v1` |
 
+All endpoints are organized under the path `/api/dev/v1`.
+
 ---
 
-## Request Format
+## Rate limits
+
+| Operation | Limit |
+|---|---|
+| Reads | 1 request / second |
+| Writes / Updates | 1 request / 2 seconds |
+
+If you exceed the limit you receive `429 Too Many Requests`. The `Retry-After` header indicates how many seconds to wait.
+
+---
+
+## Request format
 
 - **Content-Type**: `application/json` for all requests with a body
 - **Accept**: `application/json`
@@ -70,7 +149,7 @@ All three URLs are production endpoints and behave identically - use whichever f
 
 ---
 
-## Response Format
+## Response format
 
 Successful responses return JSON with the resource data. Paginated list endpoints return:
 
@@ -82,37 +161,27 @@ Successful responses return JSON with the resource data. Paginated list endpoint
 }
 ```
 
-Use `cursor` in subsequent requests to page through results.
+Pass `cursor` in subsequent requests to page through results.
 
 ---
 
-## Error Responses
+## Error responses
 
 | Status | Meaning |
 |--------|---------|
-| `400` | Bad request - validation error in request body |
-| `401` | Unauthorized - missing or invalid API key |
-| `403` | Forbidden - action not permitted for this workspace |
-| `404` | Not found - resource does not exist |
-| `409` | Conflict - resource already exists |
-| `422` | Unprocessable entity - schema validation failed |
-| `429` | Too Many Requests - rate limit exceeded |
+| `400` | Bad request — validation error in request body |
+| `401` | Unauthorized — missing or invalid API key |
+| `403` | Forbidden — action not permitted for this workspace |
+| `404` | Not found — resource does not exist |
+| `409` | Conflict — resource already exists |
+| `422` | Unprocessable entity — schema validation failed |
+| `429` | Too Many Requests — rate limit exceeded |
 | `500` | Internal server error |
 
-Error bodies include a `detail` field describing the problem:
+Error bodies include a `detail` field:
 
 ```json
 {
   "detail": "Chatbot with this name already exists in workspace."
 }
 ```
-
----
-
-## Rate Limits
-
-The API applies rate limits per workspace. If you exceed the limit you receive `429 Too Many Requests`. Wait before retrying - the `Retry-After` header indicates how many seconds to wait.
-
-:::tip[Get your API key]
-Go to your Sarufi workspace → **Settings** → **API Keys** to generate your developer API key.
-:::

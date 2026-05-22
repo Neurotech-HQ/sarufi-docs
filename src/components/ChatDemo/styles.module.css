@@ -1,0 +1,277 @@
+/* ── Phone frame ─────────────────────────────────────────────── */
+
+.phone {
+  position: relative;
+  width: 290px;
+  border-radius: 48px;
+  background: #111827;
+  padding: 12px;
+  box-shadow:
+    0 0 0 2px #374151,
+    0 32px 80px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* notch */
+.notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 28px;
+  background: #111827;
+  border-radius: 0 0 20px 20px;
+  z-index: 10;
+}
+
+.screen {
+  border-radius: 38px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #ece5dd;
+  /* height is driven by fixed children — header + chatArea(360px) + inputBar */
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+
+.header {
+  background: #075e54;
+  padding: 28px 16px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.scenarioPill {
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 3px 8px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.botName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+}
+
+.status {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 0.3s;
+  line-height: 1;
+}
+
+.statusTyping {
+  color: #a7f3d0;
+}
+
+/* ── Chat area ──────────────────────────────────────────────── */
+
+.chatArea {
+  height: 360px;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  /* WhatsApp subtle background pattern */
+  background-color: #ece5dd;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4c5b5' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.chatContent {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  scroll-behavior: smooth;
+}
+
+.chatArea::-webkit-scrollbar { display: none; }
+.chatContent::-webkit-scrollbar { display: none; }
+
+/* ── Bubbles ────────────────────────────────────────────────── */
+
+.bubble {
+  max-width: 82%;
+  padding: 6px 10px 4px;
+  border-radius: 14px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  word-break: break-word;
+}
+
+.bubbleBot {
+  align-self: flex-start;
+  background: #ffffff;
+  border-bottom-left-radius: 4px;
+  color: #111;
+}
+
+.bubbleUser {
+  align-self: flex-end;
+  background: #dcf8c6;
+  border-bottom-right-radius: 4px;
+  color: #111;
+}
+
+.bubbleTyping {
+  padding: 2px 6px;
+}
+
+/* ── Reply block ────────────────────────────────────────────── */
+
+.replyBlock {
+  margin-bottom: 6px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
+  border-left: 3px solid #25d366;
+  padding: 5px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.replyName {
+  font-size: 10px;
+  font-weight: 700;
+  color: #25d366;
+  line-height: 1;
+}
+
+.replyText {
+  font-size: 10px;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+/* ── Message text & meta ─────────────────────────────────────── */
+
+.msgText {
+  display: block;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 3px;
+}
+
+.metaRight { justify-content: flex-end; }
+.metaLeft  { justify-content: flex-start; }
+
+.time {
+  font-size: 9px;
+  color: #888;
+}
+
+/* ── Typing dots ────────────────────────────────────────────── */
+
+.typingWrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 4px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #aaa;
+  display: inline-block;
+}
+
+/* ── Input bar ──────────────────────────────────────────────── */
+
+.inputBar {
+  background: #f0f0f0;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  height: 50px;
+  overflow: hidden;
+}
+
+.inputField {
+  flex: 1;
+  background: #fff;
+  border-radius: 24px;
+  padding: 7px 14px;
+  font-size: 12px;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  height: 34px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.inputActive {
+  color: #222;
+}
+
+.cursor {
+  display: inline-block;
+  width: 1.5px;
+  height: 12px;
+  background: #222;
+  vertical-align: middle;
+  margin-left: 1px;
+}
+
+.sendBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(37, 211, 102, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.sendActive {
+  background: #25d366;
+}

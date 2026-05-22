@@ -1,0 +1,142 @@
+---
+title: "⚙️ How Flows Work"
+description: Understand the flow system — states, transitions, variables, and action types — and how the conversation engine uses them to drive a chat.
+sidebar_position: 6
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# How Flows Work
+
+A **flow** is a state machine that drives a conversation. At any point in time a conversation is in exactly one **state**. Each state defines what the chatbot says, what it expects from the user, and where the conversation goes next.
+
+There are two flow types:
+
+| Type | Purpose |
+|---|---|
+| `conversation` | State-machine flows — the standard way to build structured conversations |
+| `meta` | WhatsApp UI Flows — native WhatsApp form screens |
+
+---
+
+## How a message travels through a flow
+
+From the moment a user sends a message to the moment they receive a reply, the engine steps through this sequence:
+
+```
+User sends message
+       │
+       ▼
+Channel gateway (WhatsApp / Web / SMS / API)
+       │
+       ▼
+Conversation engine
+  ┌──────────────────────────────────────┐
+  │ 1. Load conversation & current state │
+  │ 2. Match input against transitions   │
+  │ 3. Move conversation to next state   │
+  │ 4. Run state actions (API calls, …)  │
+  │ 5. Render state message(s)           │
+  └──────────────────────────────────────┘
+       │
+       ▼
+Bot reply delivered to user
+```
+
+---
+
+## States
+
+A state is the basic unit of a flow. Each state has three parts:
+
+- **Message** — what the chatbot sends when the conversation enters this state
+- **Actions** — operations that run when the state is entered (API calls, agent turns, etc.)
+- **Transitions** — named exits that define where the conversation goes next
+
+```
+┌──────────────────────────────────┐
+│  State: "greet_user"             │
+│                                  │
+│  message: "Hi! What's your       │
+│            order number?"        │
+│                                  │
+│  actions: []                     │
+│                                  │
+│  transitions:                    │
+│    default ──► "fetch_order"     │
+└──────────────────────────────────┘
+```
+
+In JSON, a flow is a map of state names to state objects:
+
+```json
+{
+  "greet_user": {
+    "message": "Hi! What's your order number?",
+    "actions": [],
+    "transitions": {
+      "default": "fetch_order"
+    }
+  },
+  "fetch_order": {
+    "message": "Looking that up for you...",
+    "actions": [
+      {
+        "type": "API_CALL",
+        "integration": "my_backend",
+        "path": "/orders/{{variables.order_id}}",
+        "save_to": "order",
+        "success_transition": "show_status",
+        "failure_transition": "order_error"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## Transitions
+
+Transitions are named paths from a state to another state. The engine follows a transition when:
+
+- The user sends a message that matches a transition trigger
+- An action completes and specifies a `success_transition` or `failure_transition`
+- No other transition matches — the `default` transition is followed
+
+---
+
+## Variables
+
+Variables are key-value pairs that persist for the lifetime of a conversation. They accumulate as the user moves through states and are accessible everywhere using double-brace syntax: `{{variables.key}}`.
+
+**Built-in variables** are set automatically:
+
+| Variable | Value |
+|---|---|
+| `{{variables.contact_name}}` | User's display name (when available) |
+| `{{variables.response}}` | Full response body from the most recent API_CALL |
+
+**Flow variables** are set when:
+- A user answers a question in a state that collects input
+- An `API_CALL` completes and its response is saved via `save_to`
+
+Use variables in messages, transition conditions, API paths, headers, and request bodies.
+
+---
+
+## Action types
+
+Actions run when the conversation engine enters a state. Multiple actions can be chained in a single state's `actions` array — they execute in order.
+
+| Type | What it does |
+|---|---|
+| `API_CALL` | Makes an outbound HTTP request to your backend |
+| `SEND_MESSAGE` | Sends an additional message from the bot |
+| `LLM_AGENT` | Hands the turn to an LLM agent with tool access |
+| `CONDITION` | Evaluates an expression and branches the conversation |
+
+:::tip[Connecting to your backend]
+`API_CALL` is the action type that lets flows fetch data, submit forms, and trigger operations in your own systems. See [Connecting to Your Backend](./api-call) for the full reference — field descriptions, HTTP method examples, auto-injected headers, and backend code samples.
+:::

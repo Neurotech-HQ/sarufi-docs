@@ -1,38 +1,129 @@
 import React from "react";
-import clsx from "clsx";
 import Link from "@docusaurus/Link";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
+import ChatDemo from "@site/src/components/ChatDemo";
 import styles from "./index.module.css";
 
-function HomepageHeader() {
-  const { siteConfig } = useDocusaurusContext();
+function Hero() {
   return (
-    <header className={clsx("hero hero--primary", styles.heroBanner)}>
-      <div className="container">
-        <h1 className="hero__title">{siteConfig.title} Documentation</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link className="button button--secondary button--lg" to="/docs/intro">
-            Get Started →
-          </Link>
+    <section className={styles.hero}>
+      <div className={styles.heroInner}>
+        <div className={styles.heroText}>
+          <div className={styles.badge}>
+            <span className={styles.badgeDot} />
+            Developer Documentation
+          </div>
+          <h1 className={styles.heroTitle}>
+            Build chatbots that speak
+            <br />
+            <span className={styles.heroAccent}>your users' language</span>
+          </h1>
+          <p className={styles.heroSub}>
+            REST API reference and guides for integrating conversational AI
+            across WhatsApp, SMS, and web - powered by the Sarufi platform.
+          </p>
+          <div className={styles.heroCta}>
+            <Link
+              className={styles.ctaPrimary}
+              to="/docs/developer-api/getting-started"
+            >
+              Get Started →
+            </Link>
+            <Link
+              className={styles.ctaSecondary}
+              to="/docs/developer-api/authentication"
+            >
+              Authentication
+            </Link>
+          </div>
+          <div className={styles.quickLinks}>
+            <span className={styles.quickLabel}>Jump to:</span>
+            <Link to="/docs/developer-api/flows">Flows</Link>
+            <Link to="/docs/developer-api/chat">Chat API</Link>
+            <Link to="/docs/developer-api/conversations">Conversations</Link>
+            <Link to="/docs/developer-api/knowledge-bases">
+              Knowledge Bases
+            </Link>
+          </div>
+        </div>
+        <div className={styles.heroDemo}>
+          <ChatDemo />
         </div>
       </div>
-    </header>
+    </section>
+  );
+}
+
+const FEATURES = [
+  {
+    icon: "🔀",
+    title: "Conversation Flows",
+    desc: "State-machine flows with transitions, variables, and actions.",
+    link: "/docs/developer-api/flows",
+    cta: "Flow API →",
+  },
+  {
+    icon: "💬",
+    title: "Chat & Conversations",
+    desc: "Create chat sessions, send messages synchronously, and retrieve full conversation histories across all channels.",
+    link: "/docs/developer-api/chat",
+    cta: "Chat API →",
+  },
+  {
+    icon: "🔗",
+    title: "API Integration",
+    desc: "Connect flows to your own APIs.",
+    link: "/docs/developer-api/api-call",
+    cta: "API Integration →",
+  },
+  {
+    icon: "📚",
+    title: "Knowledge Bases",
+    desc: "Upload documents, add URLs, and connect knowledge bases to chatbots for AI-powered question answering.",
+    link: "/docs/developer-api/knowledge-bases",
+    cta: "KB API →",
+  },
+  {
+    icon: "🌐",
+    title: "MCP Servers",
+    desc: "Register remote MCP servers as LLM agent tools via the Model Context Protocol for extended capabilities.",
+    link: "/docs/developer-api/mcp-integration",
+    cta: "MCP guide →",
+  },
+  {
+    icon: "📊",
+    title: "Analytics",
+    desc: "Pull conversation volume, message counts, and engagement metrics programmatically for your dashboards.",
+    link: "/docs/developer-api/analytics",
+    cta: "Analytics API →",
+  },
+];
+
+function Features() {
+  return (
+    <section className={styles.features}>
+      <div className={styles.featuresGrid}>
+        {FEATURES.map((f) => (
+          <Link key={f.title} to={f.link} className={styles.featureCard}>
+            <div className={styles.featureIcon}>{f.icon}</div>
+            <h3 className={styles.featureTitle}>{f.title}</h3>
+            <p className={styles.featureDesc}>{f.desc}</p>
+            <span className={styles.featureCta}>{f.cta}</span>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
 
 export default function Home() {
   return (
     <Layout
-      title="Documentation"
-      description="Sarufi documentation - build AI chatbots for African languages"
+      title="Developer Docs"
+      description="REST API reference for building chatbots with Sarufi"
     >
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
-      </main>
+      <Hero />
+      <Features />
     </Layout>
   );
 }
