@@ -9,10 +9,7 @@ function Hero() {
     <section className={styles.hero}>
       <div className={styles.heroInner}>
         <div className={styles.heroText}>
-          <div className={styles.badge}>
-            <span className={styles.badgeDot} />
-            Developer Documentation
-          </div>
+          <p className={styles.badgeLabel}>Developer Documentation</p>
           <h1 className={styles.heroTitle}>
             Build chatbots that speak
             <br />
@@ -39,11 +36,9 @@ function Hero() {
           <div className={styles.quickLinks}>
             <span className={styles.quickLabel}>Jump to:</span>
             <Link to="/docs/developer-api/flows">Flows</Link>
-            <Link to="/docs/developer-api/chat">Chat API</Link>
-            <Link to="/docs/developer-api/conversations">Conversations</Link>
-            <Link to="/docs/developer-api/knowledge-bases">
-              Knowledge Bases
-            </Link>
+            <span className={styles.quickItem}><span className={styles.quickSep}>/</span><Link to="/docs/developer-api/chat">Chat API</Link></span>
+            <span className={styles.quickItem}><span className={styles.quickSep}>/</span><Link to="/docs/developer-api/conversations">Conversations</Link></span>
+            <span className={styles.quickItem}><span className={styles.quickSep}>/</span><Link to="/docs/developer-api/knowledge-bases">Knowledge Bases</Link></span>
           </div>
         </div>
         <div className={styles.heroDemo}>

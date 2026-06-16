@@ -385,6 +385,79 @@ Open `layout/theme.liquid` in **Online Store → Themes → Edit code** and past
 
 ---
 
+## JavaScript API
+
+The widget exposes `window.SarufiWidget` with methods you can call from your page's JavaScript. Both methods can be called before or after the widget script loads — they take effect immediately or queue until the widget connects.
+
+### Identify the visitor
+
+Attach a visitor identity so the same person resumes their conversation across devices, sessions, and reconnects.
+
+```html
+<script>
+  // Call after your login logic — pass the user's email or phone number
+  SarufiWidget.identify("alice@acme.com");
+</script>
+```
+
+**Rules:**
+- Accepts an **email** or **phone number**
+- Phone numbers are normalized to E.164 server-side (`0712...`, `+255712...`, `255 712 ...` all map to the same visitor)
+- Invalid or synthetic emails are rejected (connection refused) — only pass real addresses
+- Sanitized to `[A-Za-z0-9@._-]`, max 100 characters
+- When the same `user_id` connects again, the backend resumes their latest conversation
+- Omit the call entirely for anonymous visitors — behavior is unchanged
+
+### Send contact details
+
+Pass extra visitor metadata that agents see in the conversation context panel. Useful for surfacing account info, plan tier, or any business-specific context.
+
+```html
+<script>
+  SarufiWidget.setContactDetails({
+    "Name": "Alice Mongi",
+    "Email": "alice@acme.com",
+    "Merchant account name": "Acme Ltd",
+    "Plan": "Pro"
+  });
+</script>
+```
+
+**Rules:**
+- Plain `{ key: value }` object — labels are up to you
+- Keys are normalized to snake_case server-side (`"Merchant account name"` → `merchant_account_name`)
+- Values must be scalars (string, number, boolean) — nested objects are dropped
+- Max **13 fields**, each value max **300 characters**
+- Details are merged on each reconnect: new keys are added, existing keys are updated, old keys are retained
+- Stored once the visitor sends their first message
+
+### Full example
+
+```html
+<script
+  src="https://beta.sarufi.io/widget.js"
+  data-widget-key="wk_YOUR_WIDGET_KEY"
+  async
+></script>
+
+<script>
+  // After your app authenticates the user:
+  SarufiWidget.identify("alice@acme.com");
+
+  SarufiWidget.setContactDetails({
+    "Name": "Alice Mongi",
+    "Merchant account name": "Acme Ltd",
+    "Plan": "Pro"
+  });
+</script>
+```
+
+:::info[Independent features]
+`identify()` and `setContactDetails()` are fully independent. You can use one without the other, or both together. Identity drives session continuity; contact details provide extra context visible to agents.
+:::
+
+---
+
 ## Path-Based Visibility
 
 By default the widget appears on every page. Use `allowed_paths` inside `widget_config` to restrict it to specific pages.
