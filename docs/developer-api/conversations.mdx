@@ -32,7 +32,7 @@ Authorization: Bearer <api-key>
 | `cursor` | string | - | Pagination cursor from a previous response. |
 
 ```bash
-curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations?status=ACTIVE&channel=whatsapp&limit=25" \
+curl -X GET "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations?status=ACTIVE&channel=whatsapp&limit=25" \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -73,7 +73,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations/<conversation-id> \
+curl -X GET https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations/<conversation-id> \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -98,7 +98,7 @@ Authorization: Bearer <api-key>
 | `cursor` | string | - | Pagination cursor from a previous response. |
 
 ```bash
-curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations/<conversation-id>/messages?limit=25" \
+curl -X GET "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations/<conversation-id>/messages?limit=25" \
   -H "Authorization: Bearer <your-api-key>"
 ```
 

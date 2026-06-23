@@ -31,7 +31,7 @@ Authorization: Bearer <api-key>
 | `end_date` | string | today | End of the date range (inclusive). Format: `YYYY-MM-DD`. |
 
 ```bash
-curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/overview?start_date=2026-02-01&end_date=2026-02-26" \
+curl -X GET "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/overview?start_date=2026-02-01&end_date=2026-02-26" \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -41,7 +41,7 @@ import requests
 params = {"start_date": "2026-02-01", "end_date": "2026-02-26"}
 
 response = requests.get(
-    "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/overview",
+    "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/overview",
     headers={"Authorization": "Bearer <your-api-key>"},
     params=params,
 )
@@ -87,7 +87,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/conversations?start_date=2026-02-01&end_date=2026-02-26" \
+curl -X GET "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/conversations?start_date=2026-02-01&end_date=2026-02-26" \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -115,7 +115,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/messages?start_date=2026-02-01&end_date=2026-02-26" \
+curl -X GET "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analytics/messages?start_date=2026-02-01&end_date=2026-02-26" \
   -H "Authorization: Bearer <your-api-key>"
 ```
 

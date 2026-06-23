@@ -34,7 +34,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions \
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -94,7 +94,7 @@ Content-Type: application/json
 ### Sending a text message
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/<session-id>/messages \
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/<session-id>/messages \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{"message": "I need help with my order"}'
@@ -105,7 +105,7 @@ curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/se
 When the bot sends buttons or a list, use the button's `id` field:
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/<session-id>/messages \
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/<session-id>/messages \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{"message": "FAQ", "button_id": "faq"}'
@@ -224,21 +224,21 @@ A complete conversation flow using `curl`:
 ```bash
 # 1. Create a session
 SESSION=$(curl -s -X POST \
-  https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions \
+  https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions \
   -H "Authorization: Bearer <your-api-key>" | jq -r '.session_id')
 
 echo "Session: $SESSION"
 
 # 2. Send a message
 curl -s -X POST \
-  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/$SESSION/messages" \
+  "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/$SESSION/messages" \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{"message": "What are your business hours?"}' | jq
 
 # 3. Send a follow-up
 curl -s -X POST \
-  "https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/$SESSION/messages" \
+  "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/$SESSION/messages" \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{"message": "Thanks!"}' | jq
@@ -249,7 +249,7 @@ curl -s -X POST \
 ```python
 import requests
 
-BASE = "https://beta-api.sarufi.io/api/dev/v1"
+BASE = "https://developers.sarufi.io/api/dev/v1"
 HEADERS = {"Authorization": "Bearer <your-api-key>"}
 CHATBOT_ID = "<chatbot-id>"
 

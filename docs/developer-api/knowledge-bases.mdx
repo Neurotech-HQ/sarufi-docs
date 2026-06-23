@@ -22,7 +22,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl -X GET https://beta-api.sarufi.io/api/dev/v1/knowledge-bases \
+curl -X GET https://developers.sarufi.io/api/dev/v1/knowledge-bases \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -62,7 +62,7 @@ Content-Type: application/json
 | `description` | string | no | Optional description of what this KB contains. |
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/knowledge-bases \
+curl -X POST https://developers.sarufi.io/api/dev/v1/knowledge-bases \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -111,7 +111,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl -X GET https://beta-api.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sources \
+curl -X GET https://developers.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sources \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -135,7 +135,7 @@ Content-Type: application/json
 | `content` | string | yes | The full text content to index. Markdown is supported. |
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sources/text \
+curl -X POST https://developers.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sources/text \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -181,7 +181,7 @@ Content-Type: application/json
 | `title` | string | no | Override title. If omitted, the page's `<title>` tag is used. |
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sources/web \
+curl -X POST https://developers.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sources/web \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -223,7 +223,7 @@ Content-Type: application/json
 ```
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/knowledge-bases \
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/knowledge-bases \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{"kb_id": "01KAB123..."}'
