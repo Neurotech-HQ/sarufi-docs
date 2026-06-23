@@ -23,7 +23,7 @@ Authorization: Bearer <api-key>
 | `cursor` | string | - | Opaque pagination cursor from a previous response's `next_cursor` field. |
 
 ```bash
-curl -X GET "https://beta-api.sarufi.io/api/dev/v1/chatbots?limit=20" \
+curl -X GET "https://developers.sarufi.io/api/dev/v1/chatbots?limit=20" \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -66,7 +66,7 @@ Content-Type: application/json
 | `category` | string | no | Optional category label (e.g. `support`, `sales`, `onboarding`). |
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots \
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -80,7 +80,7 @@ curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots \
 import requests
 
 response = requests.post(
-    "https://beta-api.sarufi.io/api/dev/v1/chatbots",
+    "https://developers.sarufi.io/api/dev/v1/chatbots",
     headers={"Authorization": "Bearer <your-api-key>"},
     json={
         "name": "Support Bot",
@@ -119,7 +119,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id> \
+curl -X GET https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id> \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -137,7 +137,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/stats \
+curl -X GET https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/stats \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -178,7 +178,7 @@ Content-Type: application/json
 | `category` | string | New category label. |
 
 ```bash
-curl -X PATCH https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id> \
+curl -X PATCH https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id> \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{"name": "Renamed Support Bot"}'
@@ -198,7 +198,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl -X DELETE https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id> \
+curl -X DELETE https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id> \
   -H "Authorization: Bearer <your-api-key>"
 ```
 

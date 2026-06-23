@@ -27,7 +27,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl -X GET https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations \
+curl -X GET https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -91,7 +91,7 @@ Content-Type: application/json
 | `verify_token` | string | yes | Token you set when configuring the Meta webhook. |
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/whatsapp \
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/whatsapp \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -131,7 +131,7 @@ Content-Type: application/json
 | `name` | string | no | Friendly name for this REST integration. |
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/rest-api \
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/rest-api \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -188,7 +188,7 @@ Content-Type: application/json
 | `allowed_paths` | array | null | URL path patterns where the widget should appear. See [Path-Based Visibility](#path-based-visibility). |
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/web \
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/web \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{

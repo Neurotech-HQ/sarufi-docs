@@ -109,7 +109,7 @@ Content-Type: application/json
 Auth secrets are stored encrypted at rest. Responses mask secret values with `***`.
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp \
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -152,7 +152,7 @@ Authorization: Bearer <api-key>
 ```
 
 ```bash
-curl https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp \
+curl https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -196,7 +196,7 @@ Content-Type: application/json
 ```
 
 ```bash
-curl -X PATCH https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp/<integration-id> \
+curl -X PATCH https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp/<integration-id> \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{ "enabled": false }'
@@ -285,7 +285,7 @@ Content-Type: application/json
 ```
 
 ```bash
-curl -X POST https://beta-api.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp/test \
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/integrations/mcp/test \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{

@@ -20,7 +20,7 @@ Authorization: Bearer <api-key>
 No request body or query parameters required.
 
 ```bash
-curl -X GET https://beta-api.sarufi.io/api/dev/v1/me \
+curl -X GET https://developers.sarufi.io/api/dev/v1/me \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
@@ -28,14 +28,14 @@ curl -X GET https://beta-api.sarufi.io/api/dev/v1/me \
 import requests
 
 response = requests.get(
-    "https://beta-api.sarufi.io/api/dev/v1/me",
+    "https://developers.sarufi.io/api/dev/v1/me",
     headers={"Authorization": "Bearer <your-api-key>"},
 )
 print(response.json())
 ```
 
 ```javascript
-const response = await fetch("https://beta-api.sarufi.io/api/dev/v1/me", {
+const response = await fetch("https://developers.sarufi.io/api/dev/v1/me", {
   headers: { "Authorization": "Bearer <your-api-key>" },
 });
 const data = await response.json();
