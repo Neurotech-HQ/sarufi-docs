@@ -170,6 +170,7 @@ Besides the API key, each request carries a signature made with the chatbot's `w
 | `to` | string | yes | Who receives it. WhatsApp: the phone number in international format. Messenger: the page-scoped user id. Web: the `conversation_id` of the visitor's chat. |
 | `message` | object | yes | One message, chosen by its `type`. See the shapes below. |
 | `metadata` | object | no | Anything you want stored with the message, for example your own order id. |
+| `sender_name` | string | no | The person replying, when it is a person. Trimmed and cut at 60 characters. Without it the message is signed with your API key's name. |
 
 **Message shapes for sending**
 
@@ -260,7 +261,7 @@ print(response.json())
 
 A message sent through this endpoint is treated like a person stepping in from the inbox, not as something the bot said.
 
-- It is filed as a `HUMAN` message, with your API key's name as `responder_name`.
+- It is filed as a `HUMAN` message, signed with `sender_name` or, without one, your API key's name as `responder_name`. A web visitor sees a text reply under that name, as they would an inbox agent's.
 - If the bot was handling the conversation, your send **takes it over**: the conversation moves to `AGENT_ACTIVE`, `held` is `true`, and the bot stays quiet.
 - You keep the conversation for **15 minutes after your last send or action**. Every send extends it. When you go quiet, the customer's next message is answered by the bot again.
 - A conversation an inbox agent already holds is not taken: your message is still delivered, `held` is `false`, and the agent keeps it.
