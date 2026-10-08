@@ -1,0 +1,501 @@
+---
+title: "Chat"
+description: Create chat sessions and send messages to interact with published chatbot flows via API.
+icon: MessageCircle
+---
+
+The Chat API lets you programmatically converse with a published chatbot flow. This is useful for:
+
+- Building custom chat UIs outside the web widget
+- Automated testing of conversation flows
+- Integrating chatbot capabilities into your own applications
+
+A conversation over the API is a sequence of request and response pairs on one session. The API never pushes messages: every bot message arrives in the response to a request you make.
+
+1. **Create a session** - you get back a `session_id`. The session is created empty; no bot messages are returned yet
+2. **Send messages** - pass the `session_id` with each message and receive the bot's reply synchronously. The reply to your **first** message is the flow's welcome
+3. **Read each reply by its `type`** - see [Message shapes](#message-shapes)
+
+<Callout type="info" title="Requires a published flow">
+The chatbot must have a published conversation flow. Use the [Flows API](./flows) to publish one.
+</Callout>
+
+---
+
+## Authentication
+
+Every request carries an API key. Keys always start with `sk_live_`.
+
+```http
+Authorization: Bearer sk_live_...
+```
+
+| Status | `detail` | When |
+|---|---|---|
+| `401` | `Authorization header missing` | No `Authorization` header |
+| `401` | `Invalid API key format` | The key does not start with `sk_live_` |
+| `401` | `Invalid or expired API key` | Unknown, revoked or expired key |
+| `401` | `Workspace not found or inactive` | The key's workspace is gone or inactive |
+| `404` | `Chatbot not found` | The chatbot does not exist, is inactive, or belongs to another workspace |
+
+All error bodies have the same shape: `{ "detail": "<message>" }`. Request body validation errors (`422`) return `detail` as a list of field errors instead.
+
+## Rate limit
+
+| Scope | Limit | When exceeded |
+|---|---|---|
+| Per API key, shared by creating sessions and sending messages | 600 requests per 60 seconds | `429` with `detail` `Too many requests. Please try again later.` and a `Retry-After` header in seconds |
+
+The chat bucket is separate from the read and write limits that apply to the rest of the API. See [Rate limits](./getting-started#rate-limits).
+
+---
+
+## Create Chat Session
+
+Initializes a new conversation session. It returns only the session identifier. The bot does not reply until you send the first message, exactly like the web and playground channels.
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/chat/sessions
+Authorization: Bearer <api-key>
+```
+
+| Field | Where | Notes |
+|---|---|---|
+| `chatbot_id` | path | The chatbot to talk to. It needs a published flow |
+
+```bash
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 201 Created**
+
+| Field | Type | Notes |
+|---|---|---|
+| `session_id` | string | ULID of the conversation session |
+| `channel` | string | Always `"api"` |
+| `created_at` | string | ISO 8601 timestamp |
+
+```json
+{
+  "session_id": "01K5M2Q8Z7C3V9R1T4Y6W0B2NE",
+  "channel": "api",
+  "created_at": "2026-09-22T10:40:00+00:00"
+}
+```
+
+Each session is a separate end user. The session starts empty: nothing runs until the first message. Send it to [Send Message](#send-message) to start the flow.
+
+**Errors:**
+
+| Status | `detail` | When |
+|---|---|---|
+| `400` | `No published flow found for this chatbot. Publish a flow first.` | The chatbot has no published flow |
+| `404` | `Chatbot not found` | See [Authentication](#authentication) |
+
+---
+
+## Send Message
+
+Sends a user message and returns the bot's reply synchronously.
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/chat/sessions/{session_id}/messages
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+**Request Body**
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `message` | string | yes | 1 to 4096 characters. Line breaks are removed before the bot reads it |
+| `message_type` | string | no | `"text"` (default) or `"button"` |
+| `button_id` | string \| null | no | The `id` of the tapped button or list row. When present, the message is always treated as a tap |
+
+**Response - 200 OK**
+
+| Field | Type | Notes |
+|---|---|---|
+| `session_id` | string | |
+| `messages` | array | Bot messages, in the order to show them. See [Message shapes](#message-shapes) |
+| `messages_count` | integer | Number of entries in `messages` |
+| `current_state` | string \| null | The flow state the conversation is now in |
+| `timestamp` | string | ISO 8601 timestamp |
+
+### Send the first message
+
+Any text starts the conversation. The reply is the flow's welcome, and the text of this first message is not treated as an answer to anything.
+
+```bash
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/<session-id>/messages \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "hi"}'
+```
+
+```json
+{
+  "session_id": "01K5M2Q8Z7C3V9R1T4Y6W0B2NE",
+  "messages": [
+    { "type": "TEXT", "text": "Lorem ipsum dolor sit amet, welcome!\nWhat would you like to do?" },
+    {
+      "type": "BUTTONS",
+      "text": "Choose an option.",
+      "buttons": [
+        { "id": "view_products", "title": "Products" },
+        { "id": "support_menu", "title": "Support" }
+      ]
+    }
+  ],
+  "messages_count": 2,
+  "current_state": "welcome",
+  "timestamp": "2026-09-22T10:40:02+00:00"
+}
+```
+
+### Send text
+
+Use for free text: a question, a name, a phone number, or a typed location.
+
+```json
+{ "message": "Lorem Ipsum" }
+```
+
+### Tap a button
+
+Send the `id` of the button the user tapped from the last `BUTTONS` message. `message` is still required: send the button's `title`. `message_type` can be set to `"button"` or left out, since `button_id` alone makes it a tap.
+
+```bash
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/<session-id>/messages \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Products", "message_type": "button", "button_id": "view_products"}'
+```
+
+```json
+{
+  "session_id": "01K5M2Q8Z7C3V9R1T4Y6W0B2NE",
+  "messages": [
+    {
+      "type": "LIST",
+      "text": "Choose a product.",
+      "button_text": "Products",
+      "sections": [
+        {
+          "title": "Lorem products",
+          "rows": [
+            { "id": "product_alpha", "title": "Product alpha" },
+            { "id": "product_beta", "title": "Product beta" },
+            { "id": "product_gamma", "title": "Product gamma" }
+          ]
+        }
+      ]
+    }
+  ],
+  "messages_count": 1,
+  "current_state": "products_menu",
+  "timestamp": "2026-09-22T10:40:09+00:00"
+}
+```
+
+<Callout type="warn" title="Always send button_id for a tap">
+Typing a button's title as plain text is not guaranteed to select it.
+</Callout>
+
+### Choose a list row
+
+Identical to a button tap, with the row's `id` as `button_id`.
+
+```json
+{
+  "message": "Product alpha",
+  "message_type": "button",
+  "button_id": "product_alpha"
+}
+```
+
+### Answer the other message types
+
+| Bot sent | How to answer over the API |
+|---|---|
+| `LOCATION_REQUEST` | Send the location as text. The API cannot send a shared map location |
+| `CTA_URL` | Nothing to send. The button only opens its link |
+| `FLOW` | Not answerable over the API. The request has no field for a completed WhatsApp Flow form |
+| `IMAGE`, `VIDEO`, `AUDIO`, `DOCUMENT`, `TEXT` | Continue with the next text or tap |
+
+The API also cannot send media from the user: the request has only `message`, `message_type` and `button_id`.
+
+**Errors:**
+
+| Status | `detail` | When |
+|---|---|---|
+| `404` | `Chat session not found` | Unknown `session_id`, a session from another chatbot, or a session not created through the API |
+| `410` | `Chat session has been closed` | See [Session Lifecycle](#session-lifecycle) |
+| `422` | a list of field errors | `message` missing, empty, or over 4096 characters |
+| `500` | `No flow configured` | The chatbot has no flow and none could be created |
+| `500` | `Chatbot not found` | The chatbot was deactivated between the checks. Rare |
+| `500` | plain text `Internal Server Error`, not JSON | An unexpected crash during the turn |
+| `200` with the fallback's messages | | Most failures inside a turn, such as a failed integration call, are handled by the flow's fallback state and come back as a normal reply |
+| `200` with empty `messages` | | **The workspace reached its monthly message limit.** The API returns `messages: []`, `messages_count: 0`, `current_state: null` and an empty `timestamp`, and does not say why. Treat an empty reply as a possible limit and check the plan |
+
+---
+
+## Session Lifecycle
+
+- **Creation**: Each `POST /sessions` initializes a new isolated, empty session with its own state. No messages are returned until you send the first message.
+- **Expiry**: Sessions expire after **30 minutes** of inactivity. After expiry, create a new session; the bot starts again from its initial state on the next message.
+
+| Situation | What happens |
+|---|---|
+| Normal turn | The bot answers and the session moves to the state named in `current_state` |
+| The flow reaches a final state | The conversation starts over: the next message gets the welcome again. The `session_id` stays valid |
+| No message for 30 minutes | The session's place in the flow is forgotten. The next message gets the welcome again, on the same `session_id` |
+| The AI assistant hands the user to a person | The bot's reply arrives as normal, but no one on your team is alerted through the API, and a person cannot reply into an API session because the API never pushes messages |
+| Session closed | `410` with `detail` `Chat session has been closed`. Nothing closes an API session today, so this is reserved |
+
+- **Channel isolation**: Chat API sessions use the `api` channel. They are completely isolated from the same chatbot's `whatsapp`, `web`, or `sms` conversations.
+- **Conversation history**: All sessions and messages are persisted and can be retrieved via the [Conversations API](./conversations) using `channel=api`.
+
+---
+
+## Message shapes
+
+Read each message by its `type`. A field that does not apply is left out, never sent as `null`. Messages are never combined on the API: each one arrives exactly as the flow or the AI assistant produced it.
+
+| `type` | Fields | Produced by |
+|---|---|---|
+| `TEXT` | `text`, `preview_url`, `suggestions` | Flow messages, AI replies, validation errors, fallbacks |
+| `BUTTONS` | `text`, `buttons`, `header`, `footer` | Flow buttons, AI replies |
+| `LIST` | `text`, `button_text`, `sections`, `header`, `footer` | Flow lists, AI replies |
+| `IMAGE`, `VIDEO`, `AUDIO` | `media_url`, `media_caption`, `media_filename` | Flow media, AI replies, the AI assistant's send-image tool |
+| `DOCUMENT` | `media_url`, `media_filename`, `media_caption` | Flow media, or a file link whose type cannot be detected |
+| `CTA_URL` | `text`, `cta_url_display_text`, `cta_url`, `header`, `footer` | Flow link buttons, AI replies |
+| `LOCATION_REQUEST` | `text` | Flow location request |
+| `TEMPLATE` | `template_name`, `template_language`, `template_parameters` | Flow template send |
+| `FLOW` | `text`, `flow_id`, `flow_cta`, `flow_action`, `flow_action_payload`, `flow_token_extra`, `flow_mode`, `header`, `footer` | Flow sending a WhatsApp Flow form |
+
+`REACTION` exists in the engine but never reaches the API. A reaction needs a WhatsApp message to react to, so the API receives a short `TEXT` acknowledgement instead.
+
+### TEXT
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `text` | string | yes | |
+| `preview_url` | boolean | no | Present only when `true` |
+| `suggestions` | string[] | no | Rare on the API. Short follow-up topics, attached to the last text of an AI reply when the model includes them. At most 3 |
+
+```json
+{ "type": "TEXT", "text": "Lorem ipsum dolor sit amet, welcome!" }
+```
+
+### BUTTONS
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `text` | string | yes | Body shown above the buttons |
+| `buttons` | `{ id, title }[]` | yes | Reply with the tapped `id` as `button_id` |
+| `header` | string | no | Text header |
+| `footer` | string | no | |
+
+`BUTTONS` never carries `media_url` on the API.
+
+```json
+{
+  "type": "BUTTONS",
+  "text": "Choose a payment option.",
+  "buttons": [
+    { "id": "pay_deposit", "title": "Deposit" },
+    { "id": "pay_full", "title": "Pay full" },
+    { "id": "back_products", "title": "Back" }
+  ]
+}
+```
+
+### LIST
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `text` | string | yes | |
+| `button_text` | string | yes | Label of the button that opens the list |
+| `sections` | `{ title?, rows: { id, title, description? }[] }[]` | yes | Reply with the chosen row's `id` as `button_id` |
+| `header` | string | no | |
+| `footer` | string | no | |
+
+```json
+{
+  "type": "LIST",
+  "text": "Choose a product.",
+  "button_text": "Products",
+  "sections": [
+    {
+      "title": "Lorem products",
+      "rows": [
+        { "id": "product_alpha", "title": "Product alpha" },
+        { "id": "product_beta", "title": "Product beta", "description": "Lorem ipsum dolor sit amet" }
+      ]
+    }
+  ]
+}
+```
+
+### IMAGE, VIDEO, AUDIO, DOCUMENT
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `media_url` | string | yes | Public link to the file |
+| `media_caption` | string | no | Left out when there is no caption |
+| `media_filename` | string | no | Set for documents, and for other media only when the flow sets a file name |
+
+```json
+{
+  "type": "IMAGE",
+  "media_url": "https://example.com/media/lorem.png",
+  "media_caption": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+}
+```
+
+Caption rules:
+
+- A caption written in the flow arrives in full. A flow whose caption is over 1,024 characters fails validation and cannot be published.
+- Captions in AI replies and structured responses are cut at 1,024 characters.
+- A variable in the caption with no value becomes empty text: `Hi {{variables.name}}!` arrives as `Hi !`.
+- The media type comes from the link, not from the flow's `media_type`: first the file extension (`.jpg`, `.jpeg`, `.png`, `.gif`, `.webp` are images), then the file server's content type. If neither works, the message arrives as `DOCUMENT` and the caption is also used as the file name.
+- In AI replies, a link that is not an image arrives as a `CTA_URL` whose `text` is the caption, and a caption with no link arrives as a `TEXT`.
+
+### CTA_URL
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `text` | string | yes | Body |
+| `cta_url_display_text` | string | yes | Button label |
+| `cta_url` | string | yes | Link the button opens |
+| `header` | string | no | |
+| `footer` | string | no | |
+
+```json
+{
+  "type": "CTA_URL",
+  "text": "Track your order online.",
+  "cta_url_display_text": "Open tracking",
+  "cta_url": "https://example.com/track"
+}
+```
+
+### LOCATION_REQUEST
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `text` | string | yes | Prompt asking the user to share a location |
+
+```json
+{
+  "type": "LOCATION_REQUEST",
+  "text": "Please share your location or type where you are."
+}
+```
+
+### TEMPLATE
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `template_name` | string | yes | WhatsApp template name |
+| `template_language` | string | yes | Language code, for example `en` |
+| `template_parameters` | object | no | Values per template component |
+
+```json
+{ "type": "TEMPLATE", "template_name": "order_update", "template_language": "en" }
+```
+
+### FLOW
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `text` | string | yes | Body shown with the form button |
+| `flow_id` | string | yes | WhatsApp Flow id |
+| `flow_cta` | string | yes | Button label that opens the form |
+| `flow_action` | string | no | For example `navigate` |
+| `flow_action_payload` | object | no | For example the first screen |
+| `flow_token_extra` | object | no | Extra keys the flow author added to the form token |
+| `flow_mode` | string | no | `published` or `draft` |
+| `header` | string | no | |
+| `footer` | string | no | |
+
+```json
+{
+  "type": "FLOW",
+  "text": "Book your appointment.",
+  "flow_id": "1234567890",
+  "flow_cta": "Book now",
+  "flow_action": "navigate",
+  "flow_action_payload": { "screen": "BOOKING" }
+}
+```
+
+### History of combined messages
+
+Until 2026-09-21, the API combined an image and the buttons after it into one `BUTTONS` message carrying `media_url`, with the caption placed above the buttons text. Until 2026-09-22, AI replies also folded text into the message after it. Neither happens on the API any more.
+
+History rows recorded before those dates are returned as follows:
+
+| Recorded | How it comes back |
+|---|---|
+| Before 2026-09-21: image combined with buttons | Split into an `IMAGE` with `media_url` only, then the `BUTTONS`. The buttons `text` still begins with the old caption, then a blank line |
+| Before 2026-09-22: an AI reply | As recorded. Messages combined at the time stay combined |
+
+---
+
+## Full Example
+
+A complete conversation using `curl`:
+
+```bash
+# 1. Create a session
+SESSION=$(curl -s -X POST \
+  https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions \
+  -H "Authorization: Bearer <your-api-key>" | jq -r '.session_id')
+
+echo "Session: $SESSION"
+
+# 2. Send the first message - the reply is the flow's welcome
+curl -s -X POST \
+  "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/$SESSION/messages" \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "hi"}' | jq
+
+# 3. Tap a button from the welcome
+curl -s -X POST \
+  "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/sessions/$SESSION/messages" \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Products", "message_type": "button", "button_id": "view_products"}' | jq
+```
+
+### Python example
+
+```python
+import requests
+
+BASE = "https://developers.sarufi.io/api/dev/v1"
+HEADERS = {"Authorization": "Bearer <your-api-key>"}
+CHATBOT_ID = "<chatbot-id>"
+
+# Create session (returns session_id only)
+resp = requests.post(f"{BASE}/chatbots/{CHATBOT_ID}/chat/sessions", headers=HEADERS)
+session_id = resp.json()["session_id"]
+
+# Send the user's first message - the reply is the flow's welcome
+resp = requests.post(
+    f"{BASE}/chatbots/{CHATBOT_ID}/chat/sessions/{session_id}/messages",
+    headers=HEADERS,
+    json={"message": "hi"},
+)
+for msg in resp.json()["messages"]:
+    if msg["type"] == "TEXT":
+        print("Bot:", msg["text"])
+    elif msg["type"] == "BUTTONS":
+        print("Bot:", msg["text"], [b["id"] for b in msg["buttons"]])
+    else:
+        print("Bot:", msg["type"], msg)
+```

@@ -1,46 +1,46 @@
 # Sarufi Documentation Website
 
-The Sarufi documentation website is built using [Docusaurus 3](https://docusaurus.io/), a modern static website generator.
+The Sarufi documentation website is built on Next.js and exported as a static site.
 Contributions are welcome.
 
 ## Getting Started
 
-For small changes, fork the repository, edit it on GitHub and make a pull request.  
+For small changes, fork the repository, edit it on GitHub and make a pull request.
 
 For more extensive changes:
 
 - fork the repository
 - clone your fork onto your local machine
 - make your changes
-- preview your changes using [yarn](https://www.npmjs.com/package/yarn)
+- preview your changes with `npm run dev`
 - once satisfied with your changes, push to your fork and make a pull request
 
 ### Installation
 
-``` bash
-
+```bash
 git clone https://github.com/YOUR_USERNAME/sarufi-docs
 cd sarufi-docs
-yarn
-
+npm install
 ```
 
 ### Local Development
 
-``` bash
-
-yarn start
-
+```bash
+npm run dev
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+Starts a local development server at http://localhost:3000. Most changes are reflected live without restarting the server.
+
+### Writing docs
+
+Pages live in `content/docs/developer-api/` as MDX. Each page's frontmatter sets its `title`, `description` and sidebar `icon` (a [lucide](https://lucide.dev/icons) icon name). The sidebar order and section headings are in `content/docs/developer-api/meta.json`.
+
+Use `<Callout type="info|idea|warn|error" title="...">` for notes and `<Tabs items={[...]}>` with `<Tab value="...">` for per-language examples.
 
 ### Build
 
-``` bash
-
-yarn build
-
+```bash
+npm run build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+Generates the static site into the `out` directory, which can be served by any static hosting service.

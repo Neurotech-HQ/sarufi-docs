@@ -1,0 +1,343 @@
+---
+title: "Conversations"
+description: List and inspect conversations, send messages to customers, and take a conversation over from the bot.
+icon: MessagesSquare
+---
+
+## List Conversations
+
+Returns a paginated list of all conversations for a given chatbot.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/conversations
+Authorization: Bearer <api-key>
+```
+
+**Filter Parameters**
+
+| Parameter | Type | Description |
+|---|---|---|
+| `status` | string | Filter by conversation status. One of: `ACTIVE`, `CLOSED`, `ARCHIVED`, `HANDOFF_PENDING`, `AGENT_ACTIVE`. |
+| `channel` | string | Filter by channel (e.g. `whatsapp`, `web`, `sms`, `api`). |
+| `start_time` | string | Filter conversations created at or after this time (ISO 8601, e.g. `2026-01-01T00:00:00Z`). |
+| `end_time` | string | Filter conversations created at or before this time (ISO 8601). |
+
+**Pagination Parameters**
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `limit` | integer | 50 | Page size. Min `1`, max `67`. |
+| `cursor` | string | - | Pagination cursor from a previous response. |
+
+```bash
+curl -X GET "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations?status=ACTIVE&channel=whatsapp&limit=25" \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+```json
+{
+  "count": 1,
+  "conversations": [
+    {
+      "id": "01JPQ...",
+      "chatbot_id": "01JMXYZ...",
+      "user_phone": "+255712345678",
+      "contact_name": "Lorem Ipsum",
+      "channel": "whatsapp",
+      "status": "ACTIVE",
+      "last_message_id": "01JRS...",
+      "last_message_at": "2026-02-18T14:35:00Z",
+      "last_message_preview": "Thanks for your help!",
+      "unread_count": 2,
+      "created_at": "2026-02-18T14:22:00Z",
+      "updated_at": "2026-02-18T14:35:00Z"
+    }
+  ],
+  "next_cursor": "eyJpZCI6IjAxSlBRIn0="
+}
+```
+
+---
+
+## Get Conversation
+
+Retrieves a single conversation by ID.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/conversations/{conversation_id}
+Authorization: Bearer <api-key>
+```
+
+```bash
+curl -X GET https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations/<conversation-id> \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK** - returns a single `ConversationRecord` (same shape as the list items above).
+
+---
+
+## Get Conversation Messages
+
+Returns messages for a conversation, ordered oldest first.
+
+```http
+GET /api/dev/v1/chatbots/{chatbot_id}/conversations/{conversation_id}/messages
+Authorization: Bearer <api-key>
+```
+
+**Pagination Parameters**
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `limit` | integer | 50 | Page size. Min `1`, max `67`. |
+| `cursor` | string | - | Pagination cursor from a previous response. |
+
+```bash
+curl -X GET "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations/<conversation-id>/messages?limit=25" \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+**Response - 200 OK**
+
+The wrapper carries `count`, `total`, `page`, `limit`, `pages`, `next_cursor` and `messages`. Each entry in `messages` is one stored turn. The `response.messages` array holds the same shapes as the [Chat API send-message response](./chat#message-shapes).
+
+```json
+{
+  "count": 1,
+  "total": 1,
+  "page": 1,
+  "limit": 25,
+  "pages": 1,
+  "next_cursor": null,
+  "messages": [
+    {
+      "id": "01K5M2Q8Z7C3V9R1T4Y6W0B2NF",
+      "conversation_id": "01K5M2Q8Z7C3V9R1T4Y6W0B2NE",
+      "message": { "text": "hi" },
+      "response": {
+        "messages": [
+          { "type": "TEXT", "text": "Lorem ipsum dolor sit amet, welcome!" },
+          {
+            "type": "BUTTONS",
+            "text": "Choose an option.",
+            "buttons": [
+              { "id": "view_products", "title": "Products" },
+              { "id": "support_menu", "title": "Support" }
+            ]
+          }
+        ]
+      },
+      "message_type": "text",
+      "responder": "BOT",
+      "responder_name": null,
+      "received_at": "2026-09-22T10:40:01+00:00",
+      "responded_at": "2026-09-22T10:40:02+00:00",
+      "status": "delivered",
+      "created_at": "2026-09-22T10:40:01+00:00",
+      "media": null
+    }
+  ]
+}
+```
+
+---
+
+## Send a Message to a Customer
+
+Sends a message into an existing or new conversation on WhatsApp, Messenger or the web chat, outside of a chat session. Use it to answer from your own system, to follow up after an order, or to re-open a conversation with a WhatsApp template.
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/messages
+Authorization: Bearer <api-key>
+X-Sarufi-Signature: t=<unix-seconds>,v1=<hmac-sha256>
+Content-Type: application/json
+```
+
+<Callout type="warn" title="Every send is signed">
+Besides the API key, each request carries a signature made with the chatbot's `webhook_secret` (see [Chatbots](./chatbots)). Sign the exact bytes you send: `v1` is the hex HMAC-SHA256 of `"<t>.<raw body>"`, where `t` is the current Unix time in seconds. A signature older than five minutes is refused.
+</Callout>
+
+**Request Body**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `channel` | string | yes | `WHATSAPP`, `MESSENGER` or `WEB`. |
+| `to` | string | yes | Who receives it. WhatsApp: the phone number in international format. Messenger: the page-scoped user id. Web: the `conversation_id` of the visitor's chat. |
+| `message` | object | yes | One message, chosen by its `type`. See the shapes below. |
+| `metadata` | object | no | Anything you want stored with the message, for example your own order id. |
+| `sender_name` | string | no | The person replying, when it is a person. Trimmed and cut at 60 characters. Without it the message is signed with your API key's name. |
+
+**Message shapes for sending**
+
+| `type` | Fields |
+|---|---|
+| `text` | `body` |
+| `buttons` | `body`, `buttons` (up to 3, each a string or `{ id, title }`), optional `header`, `footer` |
+| `list` | `body`, `button_text`, `items` (each `{ id, title, description?, section? }`), optional `header`, `footer` |
+| `image`, `video`, `audio`, `document` | `url`, optional `caption`, `filename` for a document |
+| `cta_url` | `body`, `display_text`, `url` |
+| `template` | `name`, `language` (default `en`), optional `parameters`. WhatsApp only |
+
+On WhatsApp a plain message is delivered only within 24 hours of the customer's last message. Outside that window send a `template`; a plain send is refused with `window_closed`.
+
+```bash
+BODY='{"channel":"WHATSAPP","to":"+255712345678","message":{"type":"text","body":"Your order has shipped."}}'
+T=$(date +%s)
+SIG=$(printf '%s.%s' "$T" "$BODY" | openssl dgst -sha256 -hmac "<webhook-secret>" | awk '{print $NF}')
+
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/messages \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "X-Sarufi-Signature: t=$T,v1=$SIG" \
+  -H "Content-Type: application/json" \
+  --data "$BODY"
+```
+
+```python
+import hashlib, hmac, json, time, requests
+
+payload = {
+    "channel": "WHATSAPP",
+    "to": "+255712345678",
+    "message": {"type": "text", "body": "Your order has shipped."},
+}
+body = json.dumps(payload, separators=(",", ":"))
+t = int(time.time())
+sig = hmac.new(b"<webhook-secret>", f"{t}.{body}".encode(), hashlib.sha256).hexdigest()
+
+response = requests.post(
+    "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/messages",
+    data=body,
+    headers={
+        "Authorization": "Bearer <your-api-key>",
+        "X-Sarufi-Signature": f"t={t},v1={sig}",
+        "Content-Type": "application/json",
+    },
+)
+print(response.json())
+```
+
+**Response - 201 Created**
+
+```json
+{
+  "message_id": "wamid.HBgLM...",
+  "status": "sent",
+  "channel": "WHATSAPP",
+  "conversation_id": "01JPQ...",
+  "responder": "HUMAN",
+  "held": true
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `message_id` | string \| null | The id the channel gave the message. `null` for web. |
+| `status` | string | `sent`, or `queued` when a web visitor is away: the message waits up to seven days and is shown when they return. |
+| `channel` | string | The channel it went out on. |
+| `conversation_id` | string | The conversation it was filed in. Poll its [messages](#get-conversation-messages) to read the customer's replies. |
+| `recipient_online` | boolean | Web only. Whether the visitor was there to read it. |
+| `responder` | string | How the message was filed: `HUMAN`, under your API key's name. |
+| `held` | boolean | `true` when this send put you in charge of the conversation. See [Who is answering](#who-is-answering). |
+
+**Errors**
+
+| Status | When |
+|---|---|
+| `401` | The signature header is missing or does not match the body. |
+| `400` | The channel is not connected to this chatbot. |
+| `422` | The message is malformed, or `window_closed` on WhatsApp. |
+| `404` | Web: no conversation with that id belongs to this chatbot. |
+| `410` | Web: the visitor has been away for more than seven days. |
+| `502` | The channel refused to deliver it. |
+
+---
+
+## Who Is Answering
+
+A message sent through this endpoint is treated like a person stepping in from the inbox, not as something the bot said.
+
+- It is filed as a `HUMAN` message, signed with `sender_name` or, without one, your API key's name as `responder_name`. A web visitor sees a text reply under that name, as they would an inbox agent's.
+- If the bot was handling the conversation, your send **takes it over**: the conversation moves to `AGENT_ACTIVE`, `held` is `true`, and the bot stays quiet.
+- You keep the conversation for **15 minutes after your last send or action**. Every send extends it. When you go quiet, the customer's next message is answered by the bot again.
+- A conversation an inbox agent already holds is not taken: your message is still delivered, `held` is `false`, and the agent keeps it.
+- Read what the customer writes back by polling [Get Conversation Messages](#get-conversation-messages).
+
+To hold a conversation before you have anything to say, or to hand it back the moment you are done, use the action below.
+
+---
+
+## Hold or Release a Conversation
+
+```http
+POST /api/dev/v1/chatbots/{chatbot_id}/conversations/{conversation_id}/action
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `action` | string | yes | `takeover` to hold the conversation so the bot stays quiet, or `release` to hand it back to the bot at once. |
+
+```bash
+curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conversations/<conversation-id>/action \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"action":"release"}'
+```
+
+**Response - 200 OK**
+
+```json
+{ "status": "released" }
+```
+
+`takeover` answers `{ "status": "held" }`. A `takeover` on a conversation an inbox agent holds, or one that is closed, is refused with `409`. A conversation id that is not this chatbot's answers `404`.
+
+---
+
+## Conversation Object
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | Conversation ULID. |
+| `chatbot_id` | string | Parent chatbot ID. |
+| `user_phone` | string | User phone number (e.g. `+255712345678` for WhatsApp). |
+| `contact_name` | string \| null | Contact display name, if available. |
+| `channel` | string | Integration channel: `whatsapp`, `web`, `sms`, `api`. |
+| `status` | string | Conversation status: `ACTIVE`, `CLOSED`, `ARCHIVED`, `HANDOFF_PENDING`, `AGENT_ACTIVE`. |
+| `last_message_id` | string \| null | ID of the last message in the conversation. |
+| `last_message_at` | string | Timestamp of the most recent message. |
+| `last_message_preview` | string \| null | Preview text of the last message. |
+| `unread_count` | integer | Number of unread messages. |
+| `created_at` | string | When the conversation was created. |
+| `updated_at` | string \| null | When the conversation was last updated. |
+
+---
+
+## Message Object
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | ULID of the turn. |
+| `conversation_id` | string | Parent conversation ID. |
+| `message` | object \| null | What the user sent. |
+| `response` | object \| null | What the bot replied. Its `messages` array holds the same shapes as the [Chat API send-message response](./chat#message-shapes). |
+| `message_type` | string | Type of the user's message. |
+| `responder` | string | Who responded: `BOT` or `HUMAN`. |
+| `responder_name` | string \| null | For a `HUMAN` reply, who it was: the inbox agent's name, or the API key's name for a message sent through this API. |
+| `received_at` | string | ISO 8601. When the user message was received. |
+| `responded_at` | string \| null | ISO 8601. When the response was sent. |
+| `status` | string | Message status. Includes the WhatsApp delivery tick once one arrives. |
+| `created_at` | string | ISO 8601. When the record was created. |
+| `media` | object \| null | Media the **user** sent: `type`, `url`, `mime_type`, `caption`, `filename`, `transcript`. Never describes bot messages. |
+
+<Callout type="info" title="Older history rows">
+Rows recorded before 2026-09-22 may contain combined bot messages. See [History of combined messages](./chat#history-of-combined-messages) for how they are returned.
+</Callout>
+
+<Callout type="info" title="Want to chat with your bot via API?">
+Use the [Chat API](./chat) to create sessions and send messages programmatically. Conversations created via the Chat API appear here with `channel=api`.
+</Callout>
