@@ -1,10 +1,8 @@
 ---
-title: "🤖 Chatbots"
+title: "Chatbots"
 description: Create, list, retrieve, update, and delete chatbots in your workspace.
-sidebar_position: 4
+icon: Bot
 ---
-
-# Chatbots
 
 ## List Chatbots
 
@@ -204,9 +202,9 @@ curl -X DELETE https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id> \
 
 **Response - 204 No Content**
 
-:::warning[Irreversible action]
+<Callout type="warn" title="Irreversible action">
 Deleting a chatbot permanently removes all flows, conversations, integrations, and analytics data attached to it. This action cannot be undone.
-:::
+</Callout>
 
 ---
 

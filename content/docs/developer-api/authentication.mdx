@@ -1,10 +1,8 @@
 ---
-title: "🔐 Authentication"
+title: "Authentication"
 description: Authenticate API requests using your workspace Bearer token.
-sidebar_position: 2
+icon: KeyRound
 ---
-
-# Authentication
 
 Every API request must include your workspace API key as a **Bearer token** in the `Authorization` header. Keys always start with `sk_live_`. There is one API key per workspace - all requests made with it operate within that workspace's scope.
 
@@ -21,9 +19,9 @@ Authorization: Bearer <your-api-key>
 3. Click **Generate API Key**
 4. Copy the key - it will only be shown once
 
-:::warning[Keep your key secret]
+<Callout type="warn" title="Keep your key secret">
 Treat your API key like a password. Never expose it in client-side code, public repositories, or logs. Regenerate it immediately if it is compromised.
-:::
+</Callout>
 
 ---
 

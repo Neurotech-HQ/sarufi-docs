@@ -1,13 +1,8 @@
 ---
-title: "🔗 Connecting to Your Backend"
+title: "Connecting to Your Backend"
 description: Use the API_CALL action to fetch data, submit forms, and trigger operations in your own systems from inside a conversation flow.
-sidebar_position: 7
+icon: ArrowRightLeft
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-# Connecting to Your Backend
 
 `API_CALL` is the bridge between a conversation flow and your own backend. When the engine enters a state that contains an `API_CALL` action, it pauses the conversation, fires an outbound HTTP request, saves the response, then routes to the next state based on whether the request succeeded or failed.
 
@@ -166,9 +161,9 @@ Set `fire_and_forget: true` when you want to notify your backend without blockin
 }
 ```
 
-:::note[No failure handling with fire_and_forget]
+<Callout type="info" title="No failure handling with fire_and_forget">
 The response is ignored entirely — including errors. Do not use it for operations where failure would affect the user experience.
-:::
+</Callout>
 
 ---
 
@@ -188,9 +183,9 @@ Access nested fields with dot notation:
 | `{{variables.profile.address.city}}` | Nested `city` inside `address` |
 | `{{variables.profile.orders[0].id}}` | First item of an array |
 
-:::tip[Always name your responses]
+<Callout type="idea" title="Always name your responses">
 `{{variables.order.status}}` is much clearer than `{{variables.response.status}}` in multi-step flows that make several API calls.
-:::
+</Callout>
 
 ---
 
@@ -250,8 +245,8 @@ For `POST`, `PUT`, and `PATCH` the engine always sends a base JSON body. Any `bo
 
 ## Backend examples
 
-<Tabs>
-  <TabItem value="python" label="Python (FastAPI)" default>
+<Tabs items={['Python (FastAPI)', 'Node.js (Express)']}>
+  <Tab value="Python (FastAPI)">
 
 ```python
 from fastapi import Request, FastAPI
@@ -281,8 +276,8 @@ async def create_ticket(request: Request):
     return {"id": ticket.id, "reference": ticket.reference}
 ```
 
-  </TabItem>
-  <TabItem value="node" label="Node.js (Express)">
+  </Tab>
+  <Tab value="Node.js (Express)">
 
 ```javascript
 import express from "express";
@@ -308,7 +303,7 @@ app.post("/tickets", async (req, res) => {
 });
 ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 ---

@@ -1,10 +1,8 @@
 ---
-title: "💬 Conversations"
+title: "Conversations"
 description: List and inspect conversations, send messages to customers, and take a conversation over from the bot.
-sidebar_position: 9
+icon: MessagesSquare
 ---
-
-# Conversations
 
 ## List Conversations
 
@@ -158,9 +156,9 @@ X-Sarufi-Signature: t=<unix-seconds>,v1=<hmac-sha256>
 Content-Type: application/json
 ```
 
-:::warning[Every send is signed]
+<Callout type="warn" title="Every send is signed">
 Besides the API key, each request carries a signature made with the chatbot's `webhook_secret` (see [Chatbots](./chatbots)). Sign the exact bytes you send: `v1` is the hex HMAC-SHA256 of `"<t>.<raw body>"`, where `t` is the current Unix time in seconds. A signature older than five minutes is refused.
-:::
+</Callout>
 
 **Request Body**
 
@@ -336,10 +334,10 @@ curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conve
 | `created_at` | string | ISO 8601. When the record was created. |
 | `media` | object \| null | Media the **user** sent: `type`, `url`, `mime_type`, `caption`, `filename`, `transcript`. Never describes bot messages. |
 
-:::note[Older history rows]
+<Callout type="info" title="Older history rows">
 Rows recorded before 2026-09-22 may contain combined bot messages. See [History of combined messages](./chat#history-of-combined-messages) for how they are returned.
-:::
+</Callout>
 
-:::info[Want to chat with your bot via API?]
+<Callout type="info" title="Want to chat with your bot via API?">
 Use the [Chat API](./chat) to create sessions and send messages programmatically. Conversations created via the Chat API appear here with `channel=api`.
-:::
+</Callout>

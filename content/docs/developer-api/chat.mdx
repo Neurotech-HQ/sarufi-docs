@@ -1,10 +1,8 @@
 ---
-title: "💬 Chat"
+title: "Chat"
 description: Create chat sessions and send messages to interact with published chatbot flows via API.
-sidebar_position: 8
+icon: MessageCircle
 ---
-
-# Chat
 
 The Chat API lets you programmatically converse with a published chatbot flow. This is useful for:
 
@@ -18,9 +16,9 @@ A conversation over the API is a sequence of request and response pairs on one s
 2. **Send messages** - pass the `session_id` with each message and receive the bot's reply synchronously. The reply to your **first** message is the flow's welcome
 3. **Read each reply by its `type`** - see [Message shapes](#message-shapes)
 
-:::info[Requires a published flow]
+<Callout type="info" title="Requires a published flow">
 The chatbot must have a published conversation flow. Use the [Flows API](./flows) to publish one.
-:::
+</Callout>
 
 ---
 
@@ -201,9 +199,9 @@ curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/chat/
 }
 ```
 
-:::warning[Always send `button_id` for a tap]
+<Callout type="warn" title="Always send button_id for a tap">
 Typing a button's title as plain text is not guaranteed to select it.
-:::
+</Callout>
 
 ### Choose a list row
 

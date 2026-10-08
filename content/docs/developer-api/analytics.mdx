@@ -1,16 +1,14 @@
 ---
-title: "📊 Analytics"
+title: "Analytics"
 description: Retrieve conversation and message metrics for a chatbot.
-sidebar_position: 12
+icon: ChartColumn
 ---
-
-# Analytics
 
 The Analytics endpoints return aggregated metrics for a given chatbot. All endpoints support optional `start_date` and `end_date` query parameters to filter by time range (ISO 8601 dates).
 
-:::info[Timezone]
+<Callout type="info" title="Timezone">
 All timestamps in analytics responses are UTC. Pass date parameters as `YYYY-MM-DD` UTC dates.
-:::
+</Callout>
 
 ---
 
@@ -131,6 +129,6 @@ curl -X GET "https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/analy
 }
 ```
 
-:::tip[Build dashboards]
+<Callout type="idea" title="Build dashboards">
 Combine the overview endpoint for KPI cards with the series endpoints for trend charts. Both use the same date range parameters for consistent data.
-:::
+</Callout>
