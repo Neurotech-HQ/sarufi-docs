@@ -1,10 +1,8 @@
 ---
-title: "🌐 MCP Server Integration"
+title: "MCP Server Integration"
 description: Register remote MCP servers as LLM agent tools via the Model Context Protocol.
-sidebar_position: 13
+icon: Server
 ---
-
-# MCP Server Integration
 
 MCP (Model Context Protocol) lets you connect any compliant external server to a chatbot's LLM agent. Once registered, the agent can call the server's tools - order lookups, CRM records, ticketing systems, internal APIs - during a conversation, without writing custom executor code.
 
@@ -204,9 +202,9 @@ curl -X PATCH https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/inte
   -d '{ "enabled": false }'
 ```
 
-:::warning[Renaming a server]
+<Callout type="warn" title="Renaming a server">
 Renaming a server (changing `name`) does not automatically update any flow JSON that references the old name via `collection`. Update flow JSON manually after renaming.
-:::
+</Callout>
 
 ---
 
@@ -219,7 +217,7 @@ Authorization: Bearer <api-key>
 
 **Response - 204 No Content**
 
-:::note[Delete blocked by flows]
+<Callout type="info" title="Delete blocked by flows">
 A **409 Conflict** is returned if the integration is still referenced by one or more flows. The response lists the blocking flow names. Remove the MCP tool from those flows before deleting the server.
 
 ```json
@@ -227,7 +225,7 @@ A **409 Conflict** is returned if the integration is still referenced by one or 
   "detail": "This MCP server is still used by the following flows: \"Order Assistant\", \"Support Flow\". Remove the MCP tool from those flows before deleting the server."
 }
 ```
-:::
+</Callout>
 
 ---
 
@@ -333,9 +331,9 @@ Multiple MCP servers can be included in one agent:
 ]
 ```
 
-:::info[Built-in tools]
+<Callout type="info" title="Built-in tools">
 Built-in tools (`calculator`, `web_search`, `search`, `document_search`, `current_datetime`) are auto-injected and do not need to be listed. Only list tools that carry config such as MCP or knowledge-base collection pins.
-:::
+</Callout>
 
 ---
 

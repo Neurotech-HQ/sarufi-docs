@@ -1,0 +1,22 @@
+{
+  "title": "Developer API",
+  "root": true,
+  "pages": [
+    "getting-started",
+    "authentication",
+    "workspace",
+    "chatbots",
+    "---Flows---",
+    "flows",
+    "how-flows-work",
+    "api-call",
+    "---Messaging---",
+    "chat",
+    "conversations",
+    "---Resources---",
+    "knowledge-bases",
+    "integrations",
+    "analytics",
+    "mcp-integration"
+  ]
+}

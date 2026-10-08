@@ -1,10 +1,8 @@
 ---
-title: "🔗 Integrations"
+title: "Integrations"
 description: Connect chatbots to WhatsApp, REST API, web widget channels, and external MCP tool servers.
-sidebar_position: 11
+icon: Plug
 ---
-
-# Integrations
 
 Integrations connect a chatbot to an external messaging channel or tool server. Supported types:
 
@@ -262,9 +260,9 @@ Once your web integration is created you get a `widget_key` (format: `wk_...`). 
 </body>
 ```
 
-:::tip[Placement matters]
+<Callout type="idea" title="Placement matters">
 Placing the script before `</body>` means it never blocks your page from rendering. The `async` attribute ensures parallel loading.
-:::
+</Callout>
 
 ### Next.js (App Router)
 
@@ -288,9 +286,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-:::info[document.currentScript in Next.js]
+<Callout type="info" title="document.currentScript in Next.js">
 Next.js injects `<Script>` tags asynchronously, so `document.currentScript` will be `null` at the time the widget executes. The Sarufi widget handles this automatically via a `querySelector` fallback.
-:::
+</Callout>
 
 ### React (Vite / Create React App)
 
@@ -355,9 +353,9 @@ export class AppComponent implements OnInit {
 }
 ```
 
-:::warning[Angular SSR (Universal)]
+<Callout type="warn" title="Angular SSR (Universal)">
 If you use Angular Universal, wrap the script injection in an `isPlatformBrowser` check to avoid running it during server-side rendering.
-:::
+</Callout>
 
 ### WordPress
 
@@ -452,9 +450,9 @@ Pass extra visitor metadata that agents see in the conversation context panel. U
 </script>
 ```
 
-:::info[Independent features]
+<Callout type="info" title="Independent features">
 `identify()` and `setContactDetails()` are fully independent. You can use one without the other, or both together. Identity drives session continuity; contact details provide extra context visible to agents.
-:::
+</Callout>
 
 ---
 

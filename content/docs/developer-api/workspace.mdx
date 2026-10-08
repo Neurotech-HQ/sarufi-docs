@@ -1,10 +1,8 @@
 ---
-title: "🖥 Workspace"
+title: "Workspace"
 description: Verify your API key and retrieve workspace information.
-sidebar_position: 3
+icon: Building
 ---
-
-# Workspace
 
 ## Get Workspace Info
 
@@ -80,6 +78,6 @@ const data = await response.json();
 | `created_at` | string | When this key was generated. |
 | `last_used_at` | string | When this key was last used to make a request. |
 
-:::note[One key per workspace]
+<Callout type="info" title="One key per workspace">
 Each workspace has a single active API key. Regenerating it in the dashboard invalidates the previous key immediately.
-:::
+</Callout>

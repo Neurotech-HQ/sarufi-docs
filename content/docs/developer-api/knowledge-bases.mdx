@@ -1,10 +1,8 @@
 ---
-title: "📚 Knowledge Bases"
+title: "Knowledge Bases"
 description: Create and manage knowledge bases, add sources, and connect them to chatbots.
-sidebar_position: 10
+icon: BookOpen
 ---
-
-# Knowledge Bases
 
 A **Knowledge Base (KB)** is a collection of text sources that Sarufi uses to answer questions via retrieval-augmented generation (RAG). Sources can be plain text snippets or URLs that Sarufi will crawl.
 
@@ -157,9 +155,9 @@ curl -X POST https://developers.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sou
 }
 ```
 
-:::note[Processing time]
+<Callout type="info" title="Processing time">
 After adding a source its `status` is `processing`. Indexing usually completes within a few seconds. Poll the list sources endpoint or check `status` until it reads `ready`.
-:::
+</Callout>
 
 ---
 
