@@ -1,6 +1,6 @@
 # Sarufi Documentation Website
 
-The Sarufi documentation website is built with [Fumadocs](https://fumadocs.dev) on Next.js, and exported as a static site.
+The Sarufi documentation website is built on Next.js and exported as a static site.
 Contributions are welcome.
 
 ## Getting Started
