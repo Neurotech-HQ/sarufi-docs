@@ -1,13 +1,8 @@
 ---
-title: "⚙️ How Flows Work"
+title: "How Flows Work"
 description: Understand the flow system — states, transitions, variables, and action types — and how the conversation engine uses them to drive a chat.
-sidebar_position: 6
+icon: Cog
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-# How Flows Work
 
 A **flow** is a state machine that drives a conversation. At any point in time a conversation is in exactly one **state**. Each state defines what the chatbot says, what it expects from the user, and where the conversation goes next.
 
@@ -137,6 +132,6 @@ Actions run when the conversation engine enters a state. Multiple actions can be
 | `LLM_AGENT` | Hands the turn to an LLM agent with tool access |
 | `CONDITION` | Evaluates an expression and branches the conversation |
 
-:::tip[Connecting to your backend]
+<Callout type="idea" title="Connecting to your backend">
 `API_CALL` is the action type that lets flows fetch data, submit forms, and trigger operations in your own systems. See [Connecting to Your Backend](./api-call) for the full reference — field descriptions, HTTP method examples, auto-injected headers, and backend code samples.
-:::
+</Callout>

@@ -1,13 +1,8 @@
 ---
-title: "🔀 Flows"
+title: "Flows"
 description: Create and manage conversation flows and meta flows for a chatbot.
-sidebar_position: 5
+icon: Workflow
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-# Flows
 
 ## List Flows
 
@@ -18,16 +13,16 @@ GET /api/dev/v1/chatbots/{chatbot_id}/flows
 Authorization: Bearer <api-key>
 ```
 
-<Tabs>
-  <TabItem value="curl" label="cURL" default>
+<Tabs items={['cURL', 'Python', 'JavaScript']}>
+  <Tab value="cURL">
 
 ```bash
 curl -X GET https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
+  </Tab>
+  <Tab value="Python">
 
 ```python
 import requests
@@ -38,8 +33,8 @@ response = requests.get(
 print(response.json())
 ```
 
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
+  </Tab>
+  <Tab value="JavaScript">
 
 ```javascript
 const response = await fetch(
@@ -49,7 +44,7 @@ const response = await fetch(
 const data = await response.json();
 ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 **Response - 200 OK**
@@ -90,8 +85,8 @@ Content-Type: application/json
 | `type` | string | yes | Flow type: `conversation` (state-machine) or `meta` (WhatsApp UI Flows). |
 | `flow` | object | no | Initial flow definition JSON. If omitted, a blank flow is created. |
 
-<Tabs>
-  <TabItem value="curl" label="cURL" default>
+<Tabs items={['cURL', 'Python', 'JavaScript']}>
+  <Tab value="cURL">
 
 ```bash
 curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows \
@@ -103,8 +98,8 @@ curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows
   }'
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
+  </Tab>
+  <Tab value="Python">
 
 ```python
 import requests
@@ -116,8 +111,8 @@ response = requests.post(
 print(response.json())
 ```
 
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
+  </Tab>
+  <Tab value="JavaScript">
 
 ```javascript
 const response = await fetch(
@@ -134,7 +129,7 @@ const response = await fetch(
 const data = await response.json();
 ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 **Response - 201 Created**
@@ -163,16 +158,16 @@ GET /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}
 Authorization: Bearer <api-key>
 ```
 
-<Tabs>
-  <TabItem value="curl" label="cURL" default>
+<Tabs items={['cURL', 'Python', 'JavaScript']}>
+  <Tab value="cURL">
 
 ```bash
 curl -X GET https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id> \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
+  </Tab>
+  <Tab value="Python">
 
 ```python
 import requests
@@ -183,8 +178,8 @@ response = requests.get(
 print(response.json())
 ```
 
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
+  </Tab>
+  <Tab value="JavaScript">
 
 ```javascript
 const response = await fetch(
@@ -194,7 +189,7 @@ const response = await fetch(
 const data = await response.json();
 ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 ---
@@ -216,8 +211,8 @@ Content-Type: application/json
 | `name` | string | New display name. |
 | `flow` | object | Updated flow definition JSON. Replaces the existing definition entirely. |
 
-<Tabs>
-  <TabItem value="curl" label="cURL" default>
+<Tabs items={['cURL', 'Python', 'JavaScript']}>
+  <Tab value="cURL">
 
 ```bash
 curl -X PATCH https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id> \
@@ -229,8 +224,8 @@ curl -X PATCH https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flow
   }'
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
+  </Tab>
+  <Tab value="Python">
 
 ```python
 import requests
@@ -242,8 +237,8 @@ response = requests.patch(
 print(response.json())
 ```
 
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
+  </Tab>
+  <Tab value="JavaScript">
 
 ```javascript
 const response = await fetch(
@@ -260,7 +255,7 @@ const response = await fetch(
 const data = await response.json();
 ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 ---
@@ -274,16 +269,16 @@ POST /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}/validate
 Authorization: Bearer <api-key>
 ```
 
-<Tabs>
-  <TabItem value="curl" label="cURL" default>
+<Tabs items={['cURL', 'Python', 'JavaScript']}>
+  <Tab value="cURL">
 
 ```bash
 curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>/validate \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
+  </Tab>
+  <Tab value="Python">
 
 ```python
 import requests
@@ -294,8 +289,8 @@ response = requests.post(
 print(response.json())
 ```
 
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
+  </Tab>
+  <Tab value="JavaScript">
 
 ```javascript
 const response = await fetch(
@@ -308,7 +303,7 @@ const response = await fetch(
 const data = await response.json();
 ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 **Response - 200 OK**
@@ -326,9 +321,9 @@ const data = await response.json();
 }
 ```
 
-:::note[Validate before publishing]
+<Callout type="info" title="Validate before publishing">
 Always validate a flow before publishing. The publish endpoint will reject flows with errors.
-:::
+</Callout>
 
 ---
 
@@ -341,16 +336,16 @@ POST /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}/publish
 Authorization: Bearer <api-key>
 ```
 
-<Tabs>
-  <TabItem value="curl" label="cURL" default>
+<Tabs items={['cURL', 'Python', 'JavaScript']}>
+  <Tab value="cURL">
 
 ```bash
 curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id>/publish \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
+  </Tab>
+  <Tab value="Python">
 
 ```python
 import requests
@@ -361,8 +356,8 @@ response = requests.post(
 print(response.json())
 ```
 
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
+  </Tab>
+  <Tab value="JavaScript">
 
 ```javascript
 const response = await fetch(
@@ -375,7 +370,7 @@ const response = await fetch(
 const data = await response.json();
 ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 **Response - 200 OK**
@@ -399,16 +394,16 @@ DELETE /api/dev/v1/chatbots/{chatbot_id}/flows/{flow_id}
 Authorization: Bearer <api-key>
 ```
 
-<Tabs>
-  <TabItem value="curl" label="cURL" default>
+<Tabs items={['cURL', 'Python', 'JavaScript']}>
+  <Tab value="cURL">
 
 ```bash
 curl -X DELETE https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/flows/<flow-id> \
   -H "Authorization: Bearer <your-api-key>"
 ```
 
-  </TabItem>
-  <TabItem value="python" label="Python">
+  </Tab>
+  <Tab value="Python">
 
 ```python
 import requests
@@ -419,8 +414,8 @@ requests.delete(
 # 204 No Content
 ```
 
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
+  </Tab>
+  <Tab value="JavaScript">
 
 ```javascript
 await fetch(
@@ -433,7 +428,7 @@ await fetch(
 // 204 No Content
 ```
 
-  </TabItem>
+  </Tab>
 </Tabs>
 
 **Response - 204 No Content**
