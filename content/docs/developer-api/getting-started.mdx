@@ -47,7 +47,7 @@ Bot reply delivered back to user
 | **Workspace** | Your top-level account. Holds API keys and all chatbots. |
 | **Chatbot** | A single bot instance with its own flows, channels, and settings. |
 | **Flow** | A state machine that drives conversations. Each chatbot has one active (published) flow. |
-| **State** | A point in a conversation — defines what the bot says and what happens next. |
+| **State** | A point in a conversation - defines what the bot says and what happens next. |
 | **Integration** | A connected channel (WhatsApp number, web widget, SMS line) or external tool. |
 | **Conversation** | A session between one user and the chatbot, scoped to a channel. |
 | **Knowledge Base** | A collection of documents the chatbot can search to answer questions. |
@@ -167,13 +167,13 @@ Pass `cursor` in subsequent requests to page through results.
 
 | Status | Meaning |
 |--------|---------|
-| `400` | Bad request — validation error in request body |
-| `401` | Unauthorized — missing or invalid API key |
-| `403` | Forbidden — action not permitted for this workspace |
-| `404` | Not found — resource does not exist |
-| `409` | Conflict — resource already exists |
-| `422` | Unprocessable entity — schema validation failed |
-| `429` | Too Many Requests — rate limit exceeded |
+| `400` | Bad request - validation error in request body |
+| `401` | Unauthorized - missing or invalid API key |
+| `403` | Forbidden - action not permitted for this workspace |
+| `404` | Not found - resource does not exist |
+| `409` | Conflict - resource already exists |
+| `422` | Unprocessable entity - schema validation failed |
+| `429` | Too Many Requests - rate limit exceeded |
 | `500` | Internal server error |
 
 Error bodies include a `detail` field:

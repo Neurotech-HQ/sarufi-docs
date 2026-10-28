@@ -32,9 +32,9 @@ icon: ArrowRightLeft
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `type` | string | yes | Must be `"API_CALL"`. |
-| `integration` | string | — | Name of a saved integration whose base URL and auth credentials are used. Recommended — keeps secrets out of your flow JSON. Mutually exclusive with `url`. |
-| `path` | string | — | Path appended to the integration's base URL. Supports `{{variables.*}}` substitution. Required when `integration` is set. |
-| `url` | string | — | Full URL (legacy mode — no saved integration). Supports `{{variables.*}}` substitution. |
+| `integration` | string | - | Name of a saved integration whose base URL and auth credentials are used. Recommended - keeps secrets out of your flow JSON. Mutually exclusive with `url`. |
+| `path` | string | - | Path appended to the integration's base URL. Supports `{{variables.*}}` substitution. Required when `integration` is set. |
+| `url` | string | - | Full URL (legacy mode - no saved integration). Supports `{{variables.*}}` substitution. |
 | `method` | string | no | HTTP method: `GET`, `POST`, `PUT`, `PATCH`, or `DELETE`. Defaults to `"GET"`. |
 | `headers` | object | no | Additional request headers merged on top of the integration's headers. Values support `{{variables.*}}` substitution. |
 | `body` | object | no | Extra fields merged into the auto-injected request body. Only applies to `POST`, `PUT`, and `PATCH`. Values support `{{variables.*}}` substitution. |
@@ -64,7 +64,7 @@ Any `path`, `url`, `headers`, or `body` value can embed flow variables using `{{
 
 ## HTTP method examples
 
-### GET — fetch data
+### GET - fetch data
 
 Use `GET` to read data the flow needs before it can continue. The response is saved to a variable whose fields are available in every subsequent message and condition.
 
@@ -90,9 +90,9 @@ If the server returns `{ "status": "in_transit", "eta": "2026-06-01", "carrier":
 | `{{variables.order.eta}}` | `"2026-06-01"` |
 | `{{variables.order.carrier}}` | `"DHL"` |
 
-### POST — send data
+### POST - send data
 
-Use `POST` to create a resource or trigger an action. The auto-injected body already contains the user's last message and all current variables — add `body` fields for anything extra.
+Use `POST` to create a resource or trigger an action. The auto-injected body already contains the user's last message and all current variables - add `body` fields for anything extra.
 
 **Scenario**: Submit a support ticket after collecting `issue_type` and `description`.
 
@@ -115,7 +115,7 @@ Use `POST` to create a resource or trigger an action. The auto-injected body alr
 
 The confirmation state can then reference `{{variables.ticket.id}}` to show the user their reference number.
 
-### PATCH — update a record
+### PATCH - update a record
 
 Use `PATCH` for partial updates to an existing resource.
 
@@ -131,7 +131,7 @@ Use `PATCH` for partial updates to an existing resource.
 }
 ```
 
-### DELETE — remove a resource
+### DELETE - remove a resource
 
 `DELETE` sends no body. Any context your server needs should come from the URL path or the auto-injected `X-Sarufi-*` headers.
 
@@ -148,7 +148,7 @@ Use `PATCH` for partial updates to an existing resource.
 
 ### Fire and forget
 
-Set `fire_and_forget: true` when you want to notify your backend without blocking the conversation — analytics events, webhook pings, non-critical logging.
+Set `fire_and_forget: true` when you want to notify your backend without blocking the conversation - analytics events, webhook pings, non-critical logging.
 
 ```json
 {
@@ -162,7 +162,7 @@ Set `fire_and_forget: true` when you want to notify your backend without blockin
 ```
 
 <Callout type="info" title="No failure handling with fire_and_forget">
-The response is ignored entirely — including errors. Do not use it for operations where failure would affect the user experience.
+The response is ignored entirely - including errors. Do not use it for operations where failure would affect the user experience.
 </Callout>
 
 ---
@@ -191,7 +191,7 @@ Access nested fields with dot notation:
 
 ## Success and failure routing
 
-`success_transition` fires on any `2xx` response. `failure_transition` fires on `4xx`, `5xx`, or a network timeout. Both are optional — omitting them falls back to the state's `default` transition.
+`success_transition` fires on any `2xx` response. `failure_transition` fires on `4xx`, `5xx`, or a network timeout. Both are optional - omitting them falls back to the state's `default` transition.
 
 ```
 API_CALL fires
@@ -314,7 +314,7 @@ app.post("/tickets", async (req, res) => {
 |---|---|---|
 | Config | `integration` + `path` | `url` only |
 | Auth credentials | Stored encrypted in the platform | Hardcoded in the flow JSON |
-| Credential rotation | Update the integration once — all flows update automatically | Requires editing every flow |
+| Credential rotation | Update the integration once - all flows update automatically | Requires editing every flow |
 | Recommended | Yes | Only when a saved integration is not possible |
 
 Set up integrations in the Sarufi dashboard under **Settings → Integrations**, or via the [Integrations API](./integrations).
