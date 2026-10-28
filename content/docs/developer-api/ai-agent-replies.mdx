@@ -1,0 +1,103 @@
+---
+title: "AI Agent Replies"
+description: Let an LLM agent reply with forms, templates, map pins and contact cards, not only text.
+icon: Sparkles
+---
+
+An `LLM_AGENT` action replies in text by default. With `response_format.allowed_types` you choose which richer replies it may send. Each kind you allow gives the agent a tool for it; nothing else in the flow changes.
+
+```json
+{
+  "type": "LLM_AGENT",
+  "system_prompt": "You help customers find a branch and book a visit. Our City Centre branch is at -6.7724, 39.2083, phone +255700000000.",
+  "response_format": {
+    "allowed_types": ["text", "buttons", "flow", "location", "contact"]
+  }
+}
+```
+
+| Kind | What the agent can do | Channels |
+|---|---|---|
+| `flow` | Open one of the chatbot's [WhatsApp Flows](./whatsapp-flows) | WhatsApp, web chat, playground |
+| `template` | Send an approved WhatsApp template, for example outside the 24-hour window | WhatsApp |
+| `location` | Send a map pin | WhatsApp, Messenger, web chat. On SMS and USSD it goes as text with a map link |
+| `contact` | Send a contact card | WhatsApp, Messenger, web chat. On SMS and USSD it goes as text |
+
+At most one form or template is sent per reply, and the agent never sends the same pin or card twice in one reply.
+
+---
+
+## Forms
+
+With `flow` allowed, the agent offers the chatbot's published Flows that can run on the current channel. To choose which ones, and how the agent should think of them, list them in `flows`:
+
+```json
+{
+  "type": "LLM_AGENT",
+  "system_prompt": "You help customers with exchange rates and bookings.",
+  "response_format": { "allowed_types": ["text", "flow"] },
+  "flows": [
+    {
+      "name": "branch_rates",
+      "description": "Today's rates at one branch.",
+      "flow_id": "<flow-id>",
+      "flow_cta": "See rates",
+      "flow_action": "data_exchange"
+    },
+    {
+      "name": "book_visit",
+      "description": "Book a visit to a branch.",
+      "flow_id": "<flow-id>",
+      "flow_cta": "Book",
+      "flow_action": "navigate",
+      "flow_action_payload": { "screen": "BOOKING" }
+    }
+  ]
+}
+```
+
+| Field | Notes |
+|---|---|
+| `name` | What the agent calls the form. |
+| `description` | When it fits. The agent uses it to decide. |
+| `flow_id` | The Flow to open. |
+| `flow_cta`, `body` | Button label and default invitation text. The agent may word the invitation in the customer's language. |
+| `flow_action`, `flow_action_payload`, `flow_token_extra` | As for a [FLOW message](./whatsapp-flows#from-a-conversation-flow). |
+
+### Opening a form on what the customer already said
+
+When the customer has already named something the form asks for ("rates at Mlimani"), the agent passes it as a few short named values. They travel in the form's token, so your [Flow server](./whatsapp-flows#your-flow-server) receives them in `session.flow_token` on the first call and can open on the right screen at once. Up to 5 values, each name up to 40 characters and each value up to 100. They never replace who the form belongs to.
+
+### What happens after
+
+When the customer submits, the agent continues from the answers on its next turn, so it can confirm a booking or answer a follow-up question.
+
+---
+
+## Templates
+
+With `template` allowed, the agent can send the chatbot's approved WhatsApp templates. List them in `templates` to narrow the choice:
+
+```json
+"templates": [
+  { "name": "order_update", "language": "en", "description": "Tell the customer their order status." }
+]
+```
+
+---
+
+## Map pins and contact cards
+
+With `location` or `contact` allowed, the agent can share a place or a way to reach someone. It sends a coordinate, phone number or email **only** when it comes from the agent's instructions or from a tool result, never one it made up. Put the facts in `system_prompt`, or return them from an [API call](./api-call) or [MCP](./mcp-integration) tool.
+
+The customer receives a native pin or card. Over the [Chat API](./chat#message-shapes) they arrive as `LOCATION` and `CONTACTS` messages. To send one yourself, see [Send a Message to a Customer](./conversations#send-a-message-to-a-customer).
+
+---
+
+## Handing over to a person
+
+An agent that lists the `human_handoff` tool can pass the conversation to your team. See [Handoff to a Person](./conversations#handoff-to-a-person).
+
+## Routing on knowledge base results
+
+An agent can leave for another state when a knowledge base search finds little or nothing. See [Routing on confidence](./knowledge-bases#routing-on-confidence).

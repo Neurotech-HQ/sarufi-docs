@@ -1,0 +1,146 @@
+---
+title: "WhatsApp Flows"
+description: Send native forms to customers on WhatsApp, the web chat and the playground, and back them with your own server.
+icon: ClipboardList
+---
+
+A **WhatsApp Flow** is a form of one or more screens that a customer fills in without leaving the chat: booking a slot, choosing a branch, applying for a service. You build it as a flow of type `meta` (see [Flows](./flows)) and publish it; Sarufi uploads it to WhatsApp for you.
+
+The same Flow works on every surface that can draw it:
+
+| Surface | How the form appears |
+|---|---|
+| WhatsApp | Natively, in the WhatsApp app |
+| Web chat widget | As a sheet inside the chat window, in the widget's theme |
+| Dashboard playground | As a sheet, so you can test the whole form before going live |
+| Developer Chat API | Returned as a `FLOW` message you can display, but it cannot be filled in over the API |
+
+On the web the screens are the same as on WhatsApp: footers per branch, fields that show or hide, menus, links, photo and document pickers, and **Back** that keeps what was typed.
+
+---
+
+## Two kinds of Flow
+
+| Kind | What it needs |
+|---|---|
+| **Static** | Screens chained with `navigate` and ending in `complete`. No server: the form runs entirely on the customer's device and the answers come back to the bot when it is submitted. |
+| **Dynamic** | Any screen action of type `data_exchange`. Sarufi calls **your** server for the next screen, for example to list available slots or check an account number. |
+
+Start static. Add a server only for screens whose content depends on live data.
+
+---
+
+## Sending a Flow
+
+### From a conversation flow
+
+Send a `FLOW` message from a state, naming the published Flow:
+
+```json
+{
+  "type": "FLOW",
+  "text": "Book your appointment.",
+  "flow_id": "<flow-id>",
+  "flow_cta": "Book now",
+  "flow_action": "navigate",
+  "flow_action_payload": { "screen": "BOOKING" }
+}
+```
+
+| Field | Notes |
+|---|---|
+| `text` | Body shown with the button. |
+| `flow_id` | The Flow to open. |
+| `flow_cta` | Button label, up to 20 characters. |
+| `flow_action` | `navigate` to open on a screen you name, or `data_exchange` to ask your server for the first screen. |
+| `flow_action_payload` | For `navigate`, the first `screen` and any `data` it needs. Leave it out for `data_exchange`. |
+| `flow_token_extra` | Extra named values your server receives with every call for this form. |
+
+When the customer submits, the answers arrive as their next message, and the flow continues from the state that sent the form.
+
+### From an AI agent
+
+An `LLM_AGENT` can open a form on its own when it fits what the customer asked. See [AI Agent Replies](./ai-agent-replies#forms).
+
+---
+
+## Your Flow server
+
+A dynamic Flow needs an HTTPS endpoint you run. Set it in the dashboard on the Flow, or point the Flow at the chatbot's [REST API integration](./integrations#rest-api-integration) so its base URL and headers are reused. Sarufi handles WhatsApp's encryption and keys for you: your server receives and returns plain JSON, for every surface alike.
+
+### Request
+
+Sarufi sends a `POST` with a JSON body:
+
+```json
+{
+  "flow_id": "01KFLOW...",
+  "meta_flow_id": "1234567890",
+  "screen": "BRANCH",
+  "action": "data_exchange",
+  "data": { "branch": "Mlimani" },
+  "session": {
+    "user_id": "+255712345678",
+    "flow_token": "{\"branch\":\"Mlimani\",...}",
+    "metadata": { "channel": "whatsapp" }
+  }
+}
+```
+
+| Field | Notes |
+|---|---|
+| `screen` | The screen the customer is on. |
+| `action` | `INIT` when the form opens, `data_exchange` when a screen submits to you, `BACK` when the customer goes back to a screen whose content you supply. |
+| `data` | What the screen sent. |
+| `session.flow_token` | The form's token. It carries `flow_token_extra` and any values an AI agent opened the form with. |
+| `session.metadata.channel` | Where the form is open. |
+
+### Response
+
+Reply with the next screen and its data, in WhatsApp's own shape:
+
+```json
+{ "screen": "SLOTS", "data": { "slots": [{ "id": "0900", "title": "09:00" }, { "id": "1000", "title": "10:00" }] } }
+```
+
+Or in the extended shape:
+
+| Field | Notes |
+|---|---|
+| `status` | `success` or `error`. |
+| `action` | `navigate` (default), `complete` to finish the form, or `error`. |
+| `screen` | The next screen. Leave it out with data only to refresh the current screen. |
+| `data` | Values the screen binds to. |
+| `error_message` | Required with `action: "error"`. Shown to the customer. |
+
+Replying with the screen `SUCCESS` also finishes the form.
+
+### Verify the call
+
+Each call carries an `X-Sarufi-Signature: t=<unix-seconds>,v1=<hex>` header, made with the chatbot's `webhook_secret` exactly as for [outbound sends](./conversations#send-a-message-to-a-customer): `v1` is the HMAC-SHA256 of `"<t>.<raw body>"`. Refuse any call whose signature does not match or is older than five minutes.
+
+```python
+import hashlib, hmac, time
+
+def verify(raw_body: bytes, header: str, secret: str) -> bool:
+    parts = dict(p.split("=", 1) for p in header.split(","))
+    t, v1 = parts.get("t", ""), parts.get("v1", "")
+    if not t.isdigit() or abs(time.time() - int(t)) > 300:
+        return False
+    expected = hmac.new(secret.encode(), f"{t}.".encode() + raw_body, hashlib.sha256).hexdigest()
+    return hmac.compare_digest(expected, v1)
+```
+
+### Limits
+
+- Reply within the Flow's timeout, 8 seconds unless you set another. A timeout or a `502`, `503` or `504` is retried once.
+- Keep replies under 1 MB.
+- A failed call shows the customer a short "please try again" notice. Your own error text is shown only through `error_message`.
+
+---
+
+## Publishing
+
+Publishing a `meta` flow uploads it to WhatsApp. When WhatsApp refuses, the reason is shown in the Publish dialog with what to fix, for example a failed payment method, a blocked number or an unverified business. Every data-exchange Flow of a chatbot answers on the chatbot's WhatsApp number, so you can publish several.
+
+A screen may place `RichText` only beside a `Footer`; this is checked when you save.
