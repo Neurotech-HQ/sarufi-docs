@@ -4,9 +4,9 @@ description: Create and manage knowledge bases, add sources, and connect them to
 icon: BookOpen
 ---
 
-A **Knowledge Base (KB)** is a collection of text sources that Sarufi uses to answer questions via retrieval-augmented generation (RAG). Sources can be plain text snippets or URLs that Sarufi will crawl.
+A **Knowledge Base (KB)** is a collection of text sources that Sarufi uses to answer questions via retrieval-augmented generation (RAG). Sources can be plain text snippets or web pages that Sarufi reads and keeps up to date.
 
-Once created, a KB is attached to one or more chatbots. When a user asks a question the chatbot's flow doesn't explicitly handle, the KB is queried for a relevant answer.
+Once created, a KB is attached to one or more chatbots. When a user asks a question the chatbot's flow doesn't explicitly handle, the KB is searched for a relevant answer. See [How answers are found](#how-answers-are-found).
 
 ---
 
@@ -97,6 +97,7 @@ Authorization: Bearer <api-key>
 
 ---
 
+
 ## Sources
 
 Sources are the individual pieces of content indexed in a KB.
@@ -112,6 +113,8 @@ Authorization: Bearer <api-key>
 curl -X GET https://developers.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sources \
   -H "Authorization: Bearer <your-api-key>"
 ```
+
+Each entry is a [Source object](#source-object).
 
 ---
 
@@ -129,41 +132,30 @@ Content-Type: application/json
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `title` | string | yes | Document title used in citations. |
-| `content` | string | yes | The full text content to index. Markdown is supported. |
+| `name` | string | yes | Source name, 1 to 255 characters. Shown in the dashboard and used when the bot cites the source. |
+| `content` | string | yes | The full text to index. Markdown is supported. |
 
 ```bash
 curl -X POST https://developers.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sources/text \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
-    "title": "Return Policy",
+    "name": "Return Policy",
     "content": "We accept returns within 30 days of purchase. Items must be in original condition..."
   }'
 ```
 
-**Response - 201 Created**
-
-```json
-{
-  "id": "01KSR...",
-  "kb_id": "01KAB123...",
-  "type": "text",
-  "title": "Return Policy",
-  "status": "processing",
-  "created_at": "2026-02-10T11:00:00Z"
-}
-```
+**Response - 201 Created** with the new [Source object](#source-object).
 
 <Callout type="info" title="Processing time">
-After adding a source its `status` is `processing`. Indexing usually completes within a few seconds. Poll the list sources endpoint or check `status` until it reads `ready`.
+A new source is indexed in the background, usually within seconds for text. Poll [Get Source](#get-source) until `status` reads `COMPLETED`, or `FAILED` with an `error_message`.
 </Callout>
 
 ---
 
 ### Add Web Source
 
-Crawls a URL and indexes its content.
+Reads a public web page, and the pages it links to on the same site, and indexes their content.
 
 ```http
 POST /api/dev/v1/knowledge-bases/{kb_id}/sources/web
@@ -175,17 +167,56 @@ Content-Type: application/json
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `url` | string | yes | Public URL to crawl. Must be accessible without authentication. |
-| `title` | string | no | Override title. If omitted, the page's `<title>` tag is used. |
+| `name` | string | yes | Source name, 1 to 255 characters. |
+| `url` | string | yes | Public URL to start from. Must be reachable without signing in. |
 
 ```bash
 curl -X POST https://developers.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sources/web \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
   -d '{
-    "url": "https://yoursite.com/faq",
-    "title": "FAQ Page"
+    "name": "Help centre",
+    "url": "https://yoursite.com/faq"
   }'
+```
+
+**Response - 201 Created** with the new [Source object](#source-object). When reading finishes, `crawled_urls` lists every page that was indexed.
+
+See [How web pages are read](#how-web-pages-are-read) for what is kept from each page.
+
+---
+
+### Get Source
+
+```http
+GET /api/dev/v1/knowledge-bases/{kb_id}/sources/{source_id}
+Authorization: Bearer <api-key>
+```
+
+Returns the [Source object](#source-object).
+
+---
+
+### Update Source
+
+Renames a source, or changes how often a web source is read again.
+
+```http
+PATCH /api/dev/v1/knowledge-bases/{kb_id}/sources/{source_id}
+Authorization: Bearer <api-key>
+Content-Type: application/json
+```
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `name` | string | yes | Source name, 1 to 255 characters. |
+| `refresh_interval_seconds` | integer | no | Web sources only. How often the site is read again, at most `2592000` (30 days). `0` turns re-reading off. Leave it out to keep the rhythm Sarufi has learned from how often the site changes. |
+
+```bash
+curl -X PATCH https://developers.sarufi.io/api/dev/v1/knowledge-bases/<kb-id>/sources/<source-id> \
+  -H "Authorization: Bearer <your-api-key>" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Help centre", "refresh_interval_seconds": 86400}'
 ```
 
 ---
@@ -201,9 +232,104 @@ Authorization: Bearer <api-key>
 
 ---
 
+### Source object
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | Source ID. |
+| `knowledge_base_id` | string | The KB it belongs to. |
+| `source_type` | string | `TEXT`, `WEB` or `FILE`. |
+| `status` | string | Indexing state. `COMPLETED` when the source is searchable, `FAILED` when it could not be indexed. |
+| `name` | string | Source name. |
+| `chunk_count` | integer | How many searchable passages the source produced. |
+| `error_message` | string \| null | Why indexing failed. |
+| `crawled_urls` | string[] | Web sources: the pages that were indexed. |
+| `warning` | string | Present when indexing finished but found little readable content, so `COMPLETED` does not mean the whole site is covered. |
+| `created_at` | string | ISO 8601 timestamp. |
+| `processed_at` | string \| null | When indexing last finished. |
+| `last_crawled_at` | string | Web sources: when the site was last read. |
+| `last_changed_at` | string | Web sources: when its content last changed. |
+| `next_refresh_at` | string | Web sources: when it is next due to be read. |
+| `refresh_interval_seconds` | integer | Web sources: the current re-read interval. |
+| `crawl_failures` | integer | Web sources: consecutive failed re-reads. |
+| `refresh_abandoned` | boolean | Web sources: `true` when the site failed too often and is no longer re-read. Fix the site, then add the source again. |
+
+```json
+{
+  "id": "01KSR...",
+  "knowledge_base_id": "01KAB123...",
+  "source_type": "WEB",
+  "status": "COMPLETED",
+  "name": "Help centre",
+  "chunk_count": 48,
+  "error_message": null,
+  "crawled_urls": ["https://yoursite.com/faq", "https://yoursite.com/shipping"],
+  "created_at": "2026-10-01T09:00:00Z",
+  "processed_at": "2026-10-01T09:00:41Z",
+  "last_crawled_at": "2026-10-20T09:00:00Z",
+  "next_refresh_at": "2026-10-21T09:00:00Z",
+  "refresh_interval_seconds": 86400
+}
+```
+
+---
+
+## How web pages are read
+
+- **The main content, not the chrome.** Menus, banners, cookie notices and footers are dropped. A small block marked as content, such as a side menu, never replaces the whole page.
+- **FAQ and accordion pages are read in full.** Answers hidden behind a collapsed question are kept, and each question and its answer is indexed as its own passage, with the page title and section, so a visitor's question finds the exact answer.
+- **A page limit.** A web source follows links on the same site for up to 10 pages. The limit counts pages actually read, so skipped or duplicate pages do not use it up. For a larger site, add one web source per section.
+- **Kept up to date.** Sites are read again on a rhythm learned from how often they change, or on `refresh_interval_seconds`. A re-read replaces passages only after the new ones are indexed, so search never comes back empty while a site is being refreshed.
+
+---
+
+## How answers are found
+
+Every search combines two methods and merges their rankings:
+
+- **Keyword search** finds passages that use the visitor's exact words: product codes, names, prices.
+- **Meaning search** finds passages that say the same thing in other words, or in another language.
+
+When several KBs are attached, they are searched together and the KB with the highest `priority` wins near ties. At most two passages come from any one page, and near-duplicate passages are dropped, so the agent sees a varied set.
+
+Each search is given a **confidence**:
+
+| Confidence | Meaning |
+|---|---|
+| `HIGH` | A passage clearly answers the question. |
+| `PARTIAL` | Related passages were found, but none answers it fully. The agent is told to answer only what the passages support. |
+| `NONE` | Nothing relevant was found. The agent says so instead of guessing. |
+
+The latest confidence is stored in the flow variable `variables.rag_last_confidence`, so later states can branch on it.
+
+### Routing on confidence
+
+An `LLM_AGENT` action can leave for another state instead of answering from thin results, with `rag_config`:
+
+```json
+{
+  "type": "LLM_AGENT",
+  "system_prompt": "You answer questions about our products.",
+  "rag_config": {
+    "low_confidence_transition": "offer_human",
+    "no_results_transition": "offer_human"
+  }
+}
+```
+
+| Field | Description |
+|---|---|
+| `low_confidence_transition` | Followed when the search is `PARTIAL`. |
+| `no_results_transition` | Followed when the search is `NONE`. When only one of the two is set, it is used for both. |
+| `low_confidence_threshold` | A score from `0` to `1` (default `0.65`), used only when a search returns no confidence band. |
+
+The agent's reply for that turn is still sent; the transition decides where the conversation goes next.
+
+---
+
 ## Chatbot ↔ KB Connections
 
-Attach or detach a KB from a chatbot. Multiple KBs can be attached to one chatbot; they are all queried when answering.
+Attach or detach a KB from a chatbot. Multiple KBs can be attached to one chatbot; they are all searched when answering.
 
 ### List Attached KBs
 
@@ -220,11 +346,16 @@ Authorization: Bearer <api-key>
 Content-Type: application/json
 ```
 
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `knowledge_base_id` | string | yes | The KB to attach. |
+| `priority` | integer | no | `0` or more. Higher wins near ties when several KBs match equally well. |
+
 ```bash
 curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/knowledge-bases \
   -H "Authorization: Bearer <your-api-key>" \
   -H "Content-Type: application/json" \
-  -d '{"kb_id": "01KAB123..."}'
+  -d '{"knowledge_base_id": "01KAB123...", "priority": 1}'
 ```
 
 ### Detach KB from Chatbot
