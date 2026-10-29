@@ -133,7 +133,7 @@ def verify(raw_body: bytes, header: str, secret: str) -> bool:
 
 ### Limits
 
-- Reply within the Flow's timeout, 8 seconds unless you set another. A timeout or a `502`, `503` or `504` is retried once.
+- Reply within the Flow's timeout, 8 seconds unless you set another. A failed call is not retried unless the Flow sets a retry policy; one that does retries once by default, on a timeout or a `502`, `503` or `504`.
 - Keep replies under 1 MB.
 - A failed call shows the customer a short "please try again" notice. Your own error text is shown only through `error_message`.
 

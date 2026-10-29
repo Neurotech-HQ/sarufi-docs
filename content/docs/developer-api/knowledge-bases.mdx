@@ -320,7 +320,7 @@ An `LLM_AGENT` action can leave for another state instead of answering from thin
 | Field | Description |
 |---|---|
 | `low_confidence_transition` | Followed when the search is `PARTIAL`. |
-| `no_results_transition` | Followed when the search is `NONE`. When only one of the two is set, it is used for both. |
+| `no_results_transition` | Followed when the search is `NONE`. Each is followed only for its own case. |
 | `low_confidence_threshold` | A score from `0` to `1` (default `0.65`), used only when a search returns no confidence band. |
 
 The agent's reply for that turn is still sent; the transition decides where the conversation goes next.
