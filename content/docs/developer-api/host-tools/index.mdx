@@ -1,12 +1,12 @@
 ---
 title: "Overview"
-description: Let your chatbot's AI agent call functions that run on your own web page or server, with your signed-in user's session.
+description: Let your chatbot's AI agent call functions that run on your own website, from a public site search to actions for a signed-in user.
 icon: Wrench
 ---
 
-Host-run tools let the AI agent in your chatbot call functions that **you** run. In the web chat widget they are JavaScript functions on your page, running in the visitor's browser with your own session. Over the [Chat API](./chat) they are calls your server answers. Either way the agent can search your site, or answer "what is my balance?", without you opening a new API to Sarufi.
+Website tools (host-run tools) let the AI agent in the Sarufi web widget call JavaScript functions on **your** page. The function runs in the visitor's browser, so the agent can search your site, or answer "what is my balance?" through your own API, without you opening a new API to Sarufi. Over the [Developer API](/docs/developer-api/host-tools/developer-api) the same tools are calls your server answers.
 
-A tool has a definition (its name, what it does, and the JSON Schema of its arguments) and a handler (the code that runs). The definition is what the model reads; the handler is yours.
+A tool has a **definition** (its name, what it does, and the JSON Schema of its arguments) and a **handler** (the code that runs). The definition is what the model reads; the handler is yours.
 
 ## Three paths
 
@@ -14,88 +14,76 @@ Start with the simplest one that fits.
 
 | You want | Path | Definitions come from | Backend or token needed |
 |---|---|---|---|
-| Public features anyone can use: search, store hours, stock lookups | [Public site tools](#public-site-tools) | A workspace tool set linked to the bot | No |
-| Features for a signed-in user: balance, orders, payments | [Account actions](#account-actions) | A tool set, with `requires_verified_user: true` | Yes: a host token per user |
-| Definitions kept next to your code, shipped with your release | [Tools declared in page code](#tools-declared-in-page-code) | `ChatWidget.tool()` on the page | Yes: a host token that signs the tools' digest |
+| Public features anyone can use: search, store hours, stock | [Public site tools](#public-site-tools) | A tool set in your workspace, linked to the bot | No |
+| Features for a signed-in user: balance, orders, payments | [Signed-in users](/docs/developer-api/host-tools/signed-in-users) | A tool set, with "Needs signed-in user" on | Yes: a host token per user |
+| Definitions kept next to your code, shipped with your release | [Tools declared in page code](/docs/developer-api/host-tools/page-code) | `ChatWidget.tool()` on the page | Yes: a host token that also signs the tools |
 
 In every path the page only **runs** tools. What the model is told about a tool comes from you, never from unsigned page code.
 
----
+<Callout type="warn" title="Read the safety rules before going live">
+  A tool call is a request your page makes on the visitor's behalf, with arguments chosen by a model. [Safety](/docs/developer-api/host-tools/security) lists what your server must still check.
+</Callout>
 
 ## Public site tools
 
-The whole setup for a public search tool, with no backend and no token:
+The whole setup for a public site search, with no backend and no token.
 
-1. **Create a tool set** in your workspace with a `search_site` tool, and link the set to your bot, in the dashboard or with the [API](./host-tools/api-reference#tool-sets):
+**1. Create a tool set and connect it.** In the dashboard, open your bot's **Integrations**, then **Website tools**, **Create tool set**. Add a tool:
 
-   ```json
-   {
-     "name": "search_site",
-     "description": "Search this website's pages and products.",
-     "parameters": { "type": "object", "properties": { "query": { "type": "string", "minLength": 2 } }, "required": ["query"] },
-     "timeout_ms": 10000,
-     "requires_verified_user": false
-   }
-   ```
+- name `search_site`;
+- what it does: "Search this website's pages and products.";
+- one text input, `query`, required;
+- **Status while running**: "Searching the site" (optional; see [the status line](/docs/developer-api/host-tools/running-calls#what-the-visitor-sees));
+- leave "Needs signed-in user" off.
 
-2. **On the page**, supply the handler:
+Save. A tool set made from a bot's page is connected to that bot automatically. To manage tool sets through the API instead, see [Tool sets and limits](/docs/developer-api/host-tools/tool-sets).
 
-   ```javascript
-   ChatWidget.registerTools({
-     search_site: ({ query }) => searchSite(query),
-   });
-   ```
+**2. Register the handler after the widget loads.** `ChatWidget` is defined by the embed snippet of your web integration, so your code must run after that script has loaded:
 
-That is all. The widget checks the args against the schema before your function runs and catches anything it throws (see [The safe wrapper](./host-tools/widget#the-safe-wrapper)).
-
----
-
-## Account actions
-
-For tools that act for a signed-in user, set `requires_verified_user: true` on them. Your backend then mints a short-lived **host token** for the user, and the page hands it to the widget:
-
-```javascript
-const { token } = await fetch("/chat-token", { credentials: "include" }).then((r) => r.json());
-ChatWidget.identify({ token });
+```html
+<script src="https://your-deployment.example.com/widget.js" data-widget-key="YOUR_CHATBOT_ID" async></script>
+<script>
+  window.addEventListener("load", () => {
+    ChatWidget.registerTools({
+      search_site: async ({ query }) => {
+        const hits = await fetch(`/search.json?q=${encodeURIComponent(query)}`).then((r) => r.json());
+        return hits.slice(0, 5).map((h) => ({ title: h.title, url: h.url }));
+      },
+    });
+  });
+</script>
 ```
 
-Without a valid token those tools are never offered, so an anonymous visitor cannot reach them. See [Signing Host Tokens](./host-tools/signing).
+That is all. The widget checks the args against the tool's schema before your function runs, and catches anything it throws (see [What the widget guarantees](/docs/developer-api/host-tools/running-calls#what-the-widget-guarantees)).
 
----
+<Sequence
+  title="A public site tool, from question to reply"
+  actors={["Visitor", "Widget", "Sarufi", "Your page"]}
+  steps={[
+    [0, 1, "Asks: do you have blue shoes?"],
+    [1, 2, "Sends the message and the tools this page has"],
+    [2, 2, "The agent picks search_site", "note"],
+    [2, 1, "Run search_site for blue shoes"],
+    [1, 3, "Calls your handler"],
+    [3, 1, "Returns five matches", "reply"],
+    [1, 2, "Sends the result", "reply"],
+    [2, 0, "Replies with the matches", "reply"],
+  ]}
+/>
 
-## Tools declared in page code
+**Test on your own site.** The dashboard playground does not run website tools, because they live in your page. Open your site, ask "search for blue shoes", and run `ChatWidget.debug(true)` in the console if nothing happens.
 
-Instead of registering definitions through the dashboard or API, declare them next to the handler with `ChatWidget.tool()`. They are offered to the model **only when your backend signs their digest** into the host token. Without that, they are ignored and the page only supplies handlers. See [Declaring tools in page code](./host-tools/widget#declaring-tools-in-page-code).
+## What you'll see in your dashboard
 
----
-
-## How a call runs
-
-1. The visitor sends a message. The widget tells Sarufi which of its tools are live on this page.
-2. The agent decides to call one or more tools. Sarufi sends them as a [batch](./host-tools/batches) to the widget, or returns them in the Chat API response.
-3. Your handlers run and return results.
-4. The agent continues with the results, and may send another batch, until it replies.
-
-The model is told to apologise or retry once when a tool fails, and never to invent data.
-
----
-
-## Limits
-
-| Limit | Value |
-|---|---|
-| Tools per chatbot, across linked sets | 32 |
-| Tools declared per session | 16 |
-| Tool name | `^[a-z][a-z0-9_]{1,47}$`, unique, and not the name of a built-in or MCP tool |
-| `description` | 1024 characters |
-| `parameters` | An object JSON Schema of at most 8 KB, integers only |
-| `timeout_ms` | Default 30000, from 1000 to 300000 |
-| Result size | 32 KB once serialized |
+- **Inbox:** each agent reply shows the tools it used, with their outcome and how long they took. Failed and timed-out calls stand out, so you can find the conversation where a handler went wrong.
+- **Per-tool stats:** for each tool, how often it runs, how often it fails and with what, and how long it takes.
+- **Analytics:** how your tools are helping (conversations that used a tool and were resolved), and **capability gaps**: things visitors keep asking for that the bot cannot do or answer yet, each with a suggested fix such as adding a website tool, an MCP integration or a knowledge base topic. A gap is shown only when several different visitors asked for it. Requests the bot's safety guards stopped, and off-topic requests it declined, never count as gaps.
 
 ## Where to go next
 
-- [Widget Usage](./host-tools/widget): registering handlers, choosing live tools, declaring tools, debugging
-- [Signing Host Tokens](./host-tools/signing): Node and Python helpers, test vectors, troubleshooting
-- [Steps and Modes](./host-tools/batches): how batches of calls run
-- [API Reference](./host-tools/api-reference): tool sets, links, and host tools over the Chat API
-- [Security](./host-tools/security)
+- [Tool sets and limits](/docs/developer-api/host-tools/tool-sets): defining tools, the set id rule, and every limit.
+- [Signed-in users](/docs/developer-api/host-tools/signed-in-users): host tokens, signing in and out, and shared devices.
+- [Running calls](/docs/developer-api/host-tools/running-calls): handlers, steps, the status line, and what happens on reload.
+- [Tools declared in page code](/docs/developer-api/host-tools/page-code): `ChatWidget.tool()` and signed definitions.
+- [Developer API](/docs/developer-api/host-tools/developer-api): the same tools without the widget.
+- [Safety](/docs/developer-api/host-tools/security) and [Troubleshooting](/docs/developer-api/host-tools/troubleshooting).

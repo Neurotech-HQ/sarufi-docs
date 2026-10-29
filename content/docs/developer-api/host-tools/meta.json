@@ -1,12 +1,14 @@
 {
-  "title": "Host-run Tools",
+  "title": "Website Tools",
   "icon": "Wrench",
   "pages": [
     "index",
-    "widget",
-    "signing",
-    "batches",
-    "api-reference",
-    "security"
+    "tool-sets",
+    "signed-in-users",
+    "running-calls",
+    "page-code",
+    "developer-api",
+    "security",
+    "troubleshooting"
   ]
 }

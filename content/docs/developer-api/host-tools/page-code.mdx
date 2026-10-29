@@ -1,0 +1,145 @@
+---
+title: "Tools declared in page code"
+description: Declare website tools next to their handlers with ChatWidget.tool(), and sign the definitions into the host token.
+icon: Code
+---
+
+Instead of defining tools in a tool set, you can declare them next to the handler with `ChatWidget.tool()`. Page-declared definitions are offered to the model **only when your server signs them** into the host token (the `tools_digest` claim). Without that they are ignored, and the page only supplies handlers.
+
+## With the `t` schema builder
+
+```javascript
+const { tool, t } = ChatWidget;
+
+ChatWidget.registerTools({
+  list_transactions: tool({
+    description: "The user's most recent transactions, newest first.",
+    args: {
+      limit: t.integer().min(1).max(50).default(5),
+      direction: t.enum(["in", "out"]).optional().describe("Money in or money out"),
+    },
+    timeout_ms: 15000,
+    requires_verified_user: true,
+    status: "Fetching your transactions",
+    handler: async ({ limit, direction }, { signal }) => {
+      const q = new URLSearchParams({ limit: String(limit), ...(direction ? { direction } : {}) });
+      const r = await fetch(`/api/wallet/transactions?${q}`, { signal, credentials: "include" });
+      if (!r.ok) throw new Error("Transactions are unavailable right now.");
+      return r.json();
+    },
+  }),
+});
+```
+
+| Builder | JSON Schema |
+|---|---|
+| `t.string()`, `t.number()`, `t.integer()`, `t.boolean()` | `{"type": ...}` |
+| `t.enum(["a", "b"])` | `{"enum": ["a", "b"]}` |
+| `t.array(item)` | `{"type": "array", "items": ...}` |
+| `t.object({ ... })` | `{"type": "object", "properties": ..., "required": [...]}` |
+| `.min(n)` / `.max(n)` | `minLength`/`maxLength` on strings, `minItems`/`maxItems` on arrays, `minimum`/`maximum` on numbers |
+| `.optional()` | left out of `required` |
+| `.default(v)` | `"default": v`, not required, and filled in before your handler runs |
+| `.describe(text)` | `"description": text` |
+
+`args` takes a map of `t` types or a `t.object(...)`. A `tool()` without a handler throws at once, naming its description.
+
+## With Zod or a raw JSON Schema
+
+```javascript
+import { z } from "zod";
+
+ChatWidget.registerTools({
+  get_order: tool({
+    description: "One of the signed-in user's orders.",
+    args: z.object({ order_id: z.string().min(3) }),
+    // The server answers only for an order owned by the session's user.
+    handler: ({ order_id }, { signal }) =>
+      fetch(`/api/orders/${encodeURIComponent(order_id)}`, { signal, credentials: "include" }).then((r) => r.json()),
+  }),
+  search_products: tool({
+    description: "Search the catalogue.",
+    parameters: { type: "object", properties: { q: { type: "string" } }, required: ["q"] },
+    handler: ({ q }) => searchCatalogue(q),
+  }),
+});
+```
+
+The widget does not bundle Zod. It recognises a Zod schema by its shape and uses `toJSONSchema()` when your Zod version has it, or else converts the common types itself (string, number, int, boolean, enum, array, object, optional, nullable, default, with min/max and descriptions). A raw `parameters` object is used as written. When both your page schema and Sarufi's definition exist, the args must pass both, yours first.
+
+## Inference, when you give no schema
+
+When a `tool()` has neither `args` nor `parameters`, the widget reads the handler's source:
+
+```javascript
+tool({
+  handler: async ({ account, limit = 10, currency = "TZS" }) => {
+    /** The user's transactions on one account. */
+    // ...
+  },
+});
+// parameters: { type: "object",
+//   properties: { account: {}, limit: { type: "number", default: 10 }, currency: { type: "string", default: "TZS" } },
+//   required: ["account"] }
+// description: "The user's transactions on one account."
+```
+
+- It sees the names in a destructured first parameter. A name with a literal default (number, string, boolean) gets that type and is optional; a name without a default is required and untyped.
+- A `/** ... */` comment inside the function becomes the description when `description` is not given. Many bundlers strip comments, so set `description` yourself in production.
+- It never fails: anything it cannot read, including minified code, gives `{ "type": "object" }`.
+- **Explicit `args` or `parameters` always win.** Inference is best effort, for prototypes; give a schema for anything real.
+
+## The manifest and its digest
+
+```javascript
+const { tools, json, digest } = await ChatWidget.toolManifest();
+```
+
+- `json` is the **canonical** form of every definition declared with `tool()`: keys at every depth in the default JavaScript string sort (UTF-16 code units, so `"10"` comes before `"9"`), no whitespace, the array sorted by `name`.
+- `digest` is the lowercase hex SHA-256 of that string's UTF-8 bytes; `tools` is the same list parsed back for reading.
+- The widget sends `json` itself, as a string, as `declared_tools` when it connects, so nothing on the way can change the bytes.
+
+Keep the definitions in one place your build shares with the server (for example a `host-tools.json` the page imports and the server reads), or copy `tools` from `toolManifest()` into your server once per release. Your server signs the same digest; the helpers in [Signing host tokens](/docs/developer-api/host-tools/signed-in-users#signing-host-tokens) compute it. **Schemas use whole numbers only**: a number like `10.5` may be printed differently by another language and break the digest, and `ChatWidget.debug(true)` warns when a declared schema contains one.
+
+
+## Test vectors
+
+The common inputs are on [Signed-in users](/docs/developer-api/host-tools/signed-in-users#test-vectors).
+
+**Two declared tools:**
+
+```json
+[
+  {"name":"list_transactions","description":"The user's most recent transactions, newest first.","parameters":{"type":"object","properties":{"limit":{"type":"integer","minimum":1,"maximum":50,"default":5},"direction":{"enum":["in","out"]}}},"timeout_ms":15000,"requires_verified_user":true},
+  {"name":"get_balance","description":"The signed-in user's current wallet balance.","parameters":{"type":"object","properties":{}},"concurrency":"parallel","requires_verified_user":true}
+]
+```
+
+- `tools_digest`: `037c65d14fa6cb5f336d1b4928f03e7f30e7e65730acc39daa69b844f5c757b6`
+- token:
+
+```text
+eyJjaGF0Ym90X2lkIjoiMDFKQk9UMDAwMDAwMDAwMDAwMDAwMDAwMEEiLCJleHAiOjE3NjcyMjU2MDAsIm9yaWdpbiI6Imh0dHBzOi8vYXBwLmV4YW1wbGUuY29tIiwidG9vbHNfZGlnZXN0IjoiMDM3YzY1ZDE0ZmE2Y2I1ZjMzNmQxYjQ5MjhmMDNlN2YzMGU3ZTY1NzMwYWNjMzlkYWE2OWI4NDRmNWM3NTdiNiIsInVzZXJfaWQiOiJ1c2VyXzQyIn0.t=1767222000,v1=48d48a0a1db6a9ee154b5c69b4a41428df443c6f19d7c068f88ecabb8681e315
+```
+
+**Integer-like keys**, which sort as strings (`"10"` before `"9"`):
+
+```json
+[{"name":"pick_slot","description":"Book one of the day's slots.","parameters":{"type":"object","properties":{"9":{"type":"string"},"10":{"type":"string"},"a":{"type":"integer","minimum":0}},"required":["10","9"]}}]
+```
+
+- canonical tools: `[{"description":"Book one of the day's slots.","name":"pick_slot","parameters":{"properties":{"10":{"type":"string"},"9":{"type":"string"},"a":{"minimum":0,"type":"integer"}},"required":["10","9"],"type":"object"}}]`
+- `tools_digest`: `52fed1cfe5253151bf671634d8dfd2c12b360880bd456cd70496bf7e1be8881b`
+- token:
+
+```text
+eyJjaGF0Ym90X2lkIjoiMDFKQk9UMDAwMDAwMDAwMDAwMDAwMDAwMEEiLCJleHAiOjE3NjcyMjU2MDAsIm9yaWdpbiI6Imh0dHBzOi8vYXBwLmV4YW1wbGUuY29tIiwidG9vbHNfZGlnZXN0IjoiNTJmZWQxY2ZlNTI1MzE1MWJmNjcxNjM0ZDhkZmQyYzEyYjM2MDg4MGJkNDU2Y2Q3MDQ5NmJmN2UxYmU4ODgxYiIsInVzZXJfaWQiOiJ1c2VyXzQyIn0.t=1767222000,v1=75ed7f929d490b97ed3f81f2d36f41879624714716ef5d8e2a245a066970fb9b
+```
+
+## When the digest does not match
+
+| Console says | Cause | Fix |
+|---|---|---|
+| `tools_digest` does not match | The server's definitions differ from the page's | Regenerate `host-tools.json` from `ChatWidget.toolManifest()` and redeploy both |
+| Declared tools are ignored without a `tools_digest` | The server signs no digest | Pass the definitions to `hostToken` |
+| A non-integer number in a declared schema | A value like `10.5` | Use whole numbers |

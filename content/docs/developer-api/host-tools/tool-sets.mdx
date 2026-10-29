@@ -1,0 +1,76 @@
+---
+title: "Tool sets and limits"
+description: Define website tools in workspace tool sets, link them to chatbots, and stay inside the limits.
+icon: Boxes
+---
+
+Website tools are defined in **tool sets** at the workspace level and **linked** to chatbots, the same way knowledge bases and MCP servers are. A bot offers only the tools of its linked tool sets. The dashboard does all of this; the API is here for automation.
+
+```http
+GET /api/dev/v1/workspaces/{workspace_id}/host-tools
+GET /api/dev/v1/workspaces/{workspace_id}/host-tools/{set_id}
+PUT /api/dev/v1/workspaces/{workspace_id}/host-tools/{set_id}
+PUT /api/dev/v1/chatbots/{chatbot_id}/host-tools/links
+Authorization: Bearer <api-key>
+```
+
+`PUT` on a tool set creates or replaces it. You choose the `set_id`:
+
+```json
+{
+  "name": "Wallet",
+  "tools": [
+    {
+      "name": "get_balance",
+      "description": "The signed-in user's current wallet balance.",
+      "parameters": { "type": "object", "properties": {} },
+      "timeout_ms": 15000,
+      "requires_verified_user": true,
+      "status": "Checking your balance"
+    },
+    {
+      "name": "list_transactions",
+      "description": "The user's most recent transactions, newest first.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "limit": { "type": "integer", "minimum": 1, "maximum": 50 },
+          "direction": { "enum": ["in", "out"] }
+        }
+      },
+      "timeout_ms": 15000,
+      "requires_verified_user": true
+    }
+  ]
+}
+```
+
+`GET` on a tool set returns `{ "set_id", "name", "tools", "linked_chatbots", "updated_at" }`, and `GET` on the collection lists them. Link tool sets to a bot by sending the full list:
+
+```json
+{ "set_ids": ["wallet-k3x9a1", "shop-0p2m7q"] }
+```
+
+## Rules and limits
+
+| | |
+|---|---|
+| Tool set id | 3 to 64 lowercase letters, digits or dashes, starting with a letter or digit: `^[a-z0-9][a-z0-9-]{2,63}$`, for example `wallet-k3x9a1` |
+| Tool set name | at most 80 characters |
+| Tool name | `^[a-z][a-z0-9_]{1,47}$`, unique across all of a bot's linked tool sets |
+| Description | at most 1024 characters |
+| `parameters` | an object JSON Schema of at most 8 KB, **whole numbers only** |
+| `timeout_ms` | default 30000 (30 s), from 1000 (1 s) to 300000 (5 min) |
+| `requires_verified_user` | `true`: offered only with an accepted host token. `false`: offered to every visitor |
+| `concurrency` | `"parallel"` (default) or `"serial"`; use `serial` for anything that changes data |
+| `status` | optional **Status while running**: at most 60 characters of plain text the visitor sees while it runs, such as "Checking your balance" |
+| Per tool set | at most 24 tools |
+| Per bot | at most 8 linked tool sets, and 24 tools across them |
+| Per visitor message | at most 4 steps and 16 calls; beyond that the agent answers with what it has |
+| Result | at most 32 KB once serialized |
+
+A builtin or MCP tool with the same name always wins. Linking or saving a tool set whose names clash with another tool set linked to the same bot is refused:
+
+```json
+{ "code": "tool_clash", "detail": "Tool \"search_site\" is in both set \"Shop\" and set \"Docs\".", "tools": ["search_site"] }
+```

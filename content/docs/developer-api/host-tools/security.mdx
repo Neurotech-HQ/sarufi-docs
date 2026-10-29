@@ -1,25 +1,26 @@
 ---
-title: "Security"
-description: What host-run tools protect for you, and what stays your responsibility.
+title: "Safety"
+description: What website tools protect for you, and what your server must still check.
 icon: ShieldCheck
 ---
 
+A tool call is your page making a request for the visitor, with arguments a model chose after reading the visitor's words. Treat it exactly like a request from an untrusted client.
+
+- **Never take a user or account id as an argument.** Your server derives who the user is from its own session. A `get_order({ order_id })` tool must fetch with `credentials: "include"`, and your server must check that the order belongs to the signed-in user, or any visitor can read anyone's orders.
+- **Validate the args again on your server.** The widget checks them against the schema, but the browser is not a security boundary.
+- **Make writes idempotent.** Send `ctx.call_id` as the idempotency key for every write (see the [create order, then pay](/docs/developer-api/host-tools/running-calls#example-create-an-order-then-pay) example), and have `pay` refuse an order that is already paid. A retried call must never charge twice.
+- **Mark writes `"concurrency": "serial"`** in the tool set, so they never run at the same time.
+- **Rate-limit the endpoints** your tools call, as you would for any client.
+- **Return the minimum.** Never return secrets, tokens, full card or account numbers, or another user's data. Results reach the model and may be stored in the conversation transcript.
+- **Origin is not authentication.** A host token is a bearer credential: whoever holds it is that user on that site until it expires. Keep it short-lived and serve it only to the signed-in user.
+- **The webhook secret is the root of trust.** It is in the bot's **Settings, Webhook**. The host-token signing key is derived from it, so regenerating the secret breaks both webhook verification and every host token until your server has the new one.
+- **Who sees the history:** signing in mid-conversation keeps the chat; signing out (`signOut()`, or a token that stops being accepted) or a different user signing in starts a fresh conversation before anything else is said.
+- **Developer API callers:** pass `verified_user_id` (your own user id) only for a user you have authenticated, and use each `session_id` for one user only.
+
 ## What Sarufi enforces
 
-- **Without a valid host token the session is unverified.** Only owner-registered tools with `requires_verified_user: false` are offered. Page-declared definitions are ignored, and the page only supplies handlers.
-- **Definitions are authoritative only from you.** Tools come from your workspace tool sets, or from page code whose digest your server signed. An injected script cannot add a tool or change a description the model reads. `setTools` and `available()` can only narrow what is offered.
-- **A token is bound to one site and one user.** It is refused on any origin other than the one it names, and only accepted when that origin is in the bot's allowed domains. A refreshed token must name the same user as the session.
-- **Tokens are short-lived.** `exp` is at most 24 hours ahead.
-- **Calls are bound.** A `call_id` is unguessable, single-use and tied to its session. A result for an unknown, expired or foreign call is refused, and repeated tampering is throttled.
-- **Results are screened and clipped** before the model sees them.
-
-## What stays yours
-
-- **Keep the webhook secret on your server.** Anyone with it can mint tokens for any user. Rotate it in the dashboard if it leaks.
-- **Mint tokens only for a signed-in user**, per user, with an expiry of 15 minutes and a refresh on a timer.
-- **Treat args as untrusted input.** They come from a model that read the visitor's words. Your API must still authorise every request with the user's own session, exactly as if the user had clicked.
-- **Return the minimum.** Anything you return can end up in the agent's reply.
-- **Use `requires_verified_user`** for anything personal, so the tool is never offered to an anonymous visitor.
-- **Mark side effects `serial`**, so a payment never overlaps the order it pays for. See [Steps and Modes](./batches).
-- **Keep error messages plain.** The message you throw may reach the visitor in the agent's words. Leave out stack traces and internal codes.
-- **Keep args and results out of your logs** when they hold personal data, including in `onToolCall` and `onToolResult` hooks.
+- **Without a valid token** the session is anonymous: only tools that do not need a signed-in user are offered, page-declared definitions are ignored, and the page only supplies handlers.
+- **Definitions are authoritative only from you**: from your tool sets, or from page code your server signs. `setTools` and `available()` can only narrow.
+- **A token is bound to one site and one user.** It is refused on any origin other than the one it names, when that origin is not in the bot's allowed domains, and after `exp`. Verification also ends at `exp` on an open chat.
+- **Calls are bound.** A `call_id` is unguessable, single-use and tied to the session; a result for an unknown or foreign call is refused.
+- **Limits per visitor message:** at most 4 steps and 16 calls; beyond that the agent answers with what it has.

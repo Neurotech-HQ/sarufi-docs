@@ -1,0 +1,22 @@
+---
+title: "Troubleshooting"
+description: Why a website tool is not called, and what the console says about your host token.
+icon: LifeBuoy
+---
+
+Turn on diagnostics while you set up: `ChatWidget.debug(true)`. The widget then explains in the console what Sarufi decided about your token and which handlers are not offered. It never prints the token, tool args or results.
+
+## Tools are never called
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| Nothing happens while testing in the dashboard | The playground does not run website tools | Test on your own site |
+| `ChatWidget is not defined` | Your code runs before the widget script has loaded | Run it after the embed snippet, inside a `load` handler |
+| Console: a handler "is not offered in this session" | Its tool set is not linked to this bot, or it needs a signed-in user and no token was accepted | Link the tool set on the bot's **Website tools**, or fix the token |
+| A linked tool is never called | `setTools([])`, or a list without it, is still in effect | Call `setTools(null)`, or include the name |
+| Same, on some pages only | The tool's `available()` returns false there | Check its condition |
+| `/chat-token` answers 401 | The visitor is signed out | Expected: the chat continues with public tools only |
+| Connecting a tool set is refused | It would take the bot past 8 linked tool sets or 24 tools, or a tool name clashes | Disconnect a set you no longer need, merge small sets, or rename the clashing tool |
+| Saving a tool set is refused | It has more than 24 tools | Split it into two tool sets |
+
+For what each `host_token_status` means, see [Signed-in users](/docs/developer-api/host-tools/signed-in-users#what-sarufi-decided-about-the-token). For digest problems with page-declared tools, see [Tools declared in page code](/docs/developer-api/host-tools/page-code#when-the-digest-does-not-match).
