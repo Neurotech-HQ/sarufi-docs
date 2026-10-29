@@ -1,0 +1,161 @@
+---
+title: "Running calls"
+description: Handlers and their context, choosing which tools are live, steps, the status line, and what happens on reload or in a second tab.
+icon: Play
+---
+
+## Registering handlers
+
+```javascript
+ChatWidget.registerTools({
+  get_balance: async (_args, ctx) => { /* ... */ },
+
+  list_transactions: {
+    handler: async ({ limit = 5, direction }, { signal }) => {
+      const q = new URLSearchParams({ limit: String(limit), ...(direction ? { direction } : {}) });
+      const r = await fetch(`/api/wallet/transactions?${q}`, { signal, credentials: "include" });
+      if (!r.ok) throw new Error("Transactions are unavailable right now.");
+      const rows = await r.json();
+      return rows.map((t) => ({ amount: t.amount, at: t.created_at, status: t.status }));
+    },
+    available: () => Boolean(window.currentUser),
+  },
+});
+```
+
+A handler is a function, or `{ handler, available? }`. Definitions written next to the handler with `ChatWidget.tool()` are on [Tools declared in page code](/docs/developer-api/host-tools/page-code).
+
+### The handler context
+
+Each handler receives `(args, ctx)`:
+
+- `ctx.signal` aborts when the call times out or is cancelled; pass it to `fetch`.
+- `ctx.call_id` is the same for every retry and reload of this call: **use it as the idempotency key for writes**.
+- `ctx.status("Verifying payment")` replaces what the visitor sees while the call runs (at most 60 characters, plain text).
+- `ctx.user` is `{ id }` only when Sarufi accepted a host token, and `null` otherwise. It never comes from `identify(userId)`. **Never authorise with `user.id` alone: your server must use its own session.**
+- `ctx.conversationId` is the chat session.
+
+### Choosing which tools are live
+
+```javascript
+ChatWidget.setTools(["get_balance", "list_transactions"]); // only these, on this page
+ChatWidget.setTools([]);                                   // none
+ChatWidget.setTools(null);                                 // lift the page's list
+```
+
+The widget sends the live names with every message: registered handlers, cut by `setTools` and each tool's `available()`. This only **narrows** what the bot offers, never adds to it.
+
+### Logging hooks
+
+```javascript
+ChatWidget.onToolCall(({ name, step, mode }) => console.debug("tool", name, step, mode));
+ChatWidget.onToolResult(({ name, ok, error, durationMs }) => metrics.track(name, ok, durationMs));
+```
+
+The widget itself never logs args or results. `onToolCall` receives the args; keep them out of your logs if they hold personal data.
+
+## Steps and modes
+
+The agent sends calls in **batches**. Every batch has:
+
+- `step`: 1 for the first batch of a visitor's message, then 2, 3 and so on, up to **4 steps and 16 calls per message**;
+- `mode`: `parallel` when every call may overlap, `sequential` when any call in it is `serial`;
+- `calls`, each with an `order`.
+
+In `parallel` mode the widget runs every call at once and returns each result as soon as it is ready. In `sequential` mode it runs them in `order`; after the first failure the remaining calls are answered `skipped` and never run. In a sequential batch each call's deadline follows the ones before it.
+
+A call that needs an earlier result never shares a batch with it: it comes in a **later step**, after the agent has seen the first results.
+
+### Example: create an order, then pay
+
+Both tools are `"concurrency": "serial"` and need a signed-in user. Each write sends its `call_id` as the idempotency key, so a retried call can never create a second order or charge twice:
+
+```javascript
+ChatWidget.registerTools({
+  create_order: async ({ product_id, quantity }, { signal, call_id }) => {
+    const r = await fetch("/api/orders", {
+      method: "POST", signal, credentials: "include",
+      headers: { "Content-Type": "application/json", "Idempotency-Key": call_id },
+      body: JSON.stringify({ product_id, quantity }),
+    });
+    if (!r.ok) throw new Error("The order could not be created.");
+    const order = await r.json();
+    return { order_id: order.id, total: order.total, currency: order.currency };
+  },
+  // The server pays only an unpaid order owned by the session's user.
+  pay: async ({ order_id }, { signal, call_id, status }) => {
+    const r = await fetch(`/api/orders/${encodeURIComponent(order_id)}/pay`, {
+      method: "POST", signal, credentials: "include", headers: { "Idempotency-Key": call_id },
+    });
+    if (!r.ok) throw new Error("Payment did not go through.");
+    status("Confirming with your bank");
+    const { status: paid } = await r.json();
+    return { status: paid };
+  },
+});
+```
+
+The visitor says "buy two of the blue kitenge and pay with my wallet":
+
+<Sequence
+  title="One step at a time, with the status line, while a second tab is open"
+  actors={["Visitor", "Tab A", "Sarufi", "Tab B"]}
+  steps={[
+    [2, 1, "Step 1: create_order"],
+    [1, 0, "Status: Creating your order", "reply"],
+    [1, 2, "Order ord_9 created", "reply"],
+    [2, 1, "Step 2: pay ord_9"],
+    [1, 0, "Status: Paying from your wallet", "reply"],
+    [2, 3, "Same call, already started in Tab A"],
+    [3, 3, "Shows Finishing in another window, never runs it", "note"],
+    [1, 2, "Paid", "reply"],
+    [2, 0, "Your order is paid", "reply"],
+  ]}
+/>
+
+If Tab A is reloaded or closed during step 2 instead, the payment is never run a second time: the call is answered `interrupted`, the status line shows "Couldn't confirm", and the agent tells the visitor it could not confirm the payment.
+
+1. **Step 1** (`sequential`): `create_order({ product_id, quantity: 2 })` returns `{ order_id: "ord_9", total: 60000 }`.
+2. **Step 2** (`sequential`): with the order id now known, the agent calls `pay({ order_id: "ord_9" })`.
+3. The agent confirms the payment to the visitor.
+
+If `create_order` fails, there is no step 2: the agent tells the visitor and does not try to pay.
+
+### Reloads and second tabs
+
+Each `call_id` runs **at most once**, across reloads and tabs. The widget tells Sarufi before a handler starts and remembers the call for the tab session.
+
+- **Another window of the same chat started the call:** this window does not run it again. It shows "Finishing in another window" and answers with that window's result.
+- **The page that started the call was reloaded or closed before it finished:** after a short wait the call is answered `interrupted`. The handler is not run again.
+
+`interrupted` means **the outcome is unknown**: the request may or may not have reached your server. The agent tells the visitor it could not confirm. Check the outcome on your server, by the `call_id` you used as the idempotency key, before trying again.
+
+## What the visitor sees
+
+While the agent works, the widget shows a status line (a small spinner and a label) in place of the typing dots:
+
+- for your tools, the tool's **Status while running** (`status`), or "Working on it" when it has none; a handler can change it with `ctx.status(...)`;
+- for the bot's own steps, a fixed label such as "Searching" or "Connecting you";
+- calls that run in order (a `sequential` step) show as a short list: a check on each finished step, "Couldn't finish" on a failed one, "Couldn't confirm" on an interrupted one, at most 4 rows and then "+N more". The list collapses when the reply arrives;
+- plain thinking still shows the dots.
+
+Labels are one line of plain text, at most 60 characters, cut with an ellipsis when the chat is narrow; the full text stays available to screen readers, which hear updates politely. They never contain tool arguments or results. Motion stops for visitors who ask for reduced motion.
+
+## What the widget guarantees
+
+Every handler runs inside a safe wrapper, so a tool can never break your page:
+
+| Situation | The agent receives |
+|---|---|
+| No handler, `available()` false, or not in `setTools` | `not_available`, at once |
+| Args break the page's schema or the tool's definition | `invalid_args`; the handler is not called |
+| Handler throws or rejects | `failed`, with your error message clipped to 300 characters |
+| Handler runs past `timeout_ms` (default 30 s, 1 s to 5 min) | `timeout`; your `signal` is aborted |
+| Result over 32 KB once serialized | `failed` |
+| An earlier call in a sequential batch failed | `skipped` |
+| The call was started in another window of the same chat | not run again; answered with that window's result |
+| The call was started by a page that was reloaded or closed before it finished | `interrupted`; not run again, so check the outcome on your server |
+
+Results are made JSON-safe first: functions and symbols are dropped, cycles are cut, dates become ISO strings, and keys like `__proto__` are removed from args and results. A handler stops early enough for its result to arrive before the call's deadline. Results are sent as each call finishes, kept while the widget is offline, and retried until Sarufi answers. A call Sarufi cancels (a new message, the conversation ending, a person taking over) is aborted through `signal`, and its result is discarded.
+
+The agent is told to apologise or retry once on an error, never to invent data. The error message you throw may reach the visitor in the agent's words, so keep it plain and free of internals.

@@ -1,0 +1,237 @@
+---
+title: "Signed-in users"
+description: Offer tools that act for a signed-in user, with a short-lived host token your server signs.
+icon: KeyRound
+---
+
+For tools that act for a signed-in user, such as a wallet balance, Sarufi needs to know who the user is. Your server says so with a short-lived **host token**.
+
+## Account actions in 6 steps
+
+1. **Turn on "Needs signed-in user"** (`requires_verified_user: true`) for each personal tool in its tool set. Without an accepted token those tools are never offered.
+2. **Add your site to the web integration's allowed domains.** This is required: host tokens are refused for a bot with no allowed domains.
+3. **Find your chatbot id and webhook secret** in the bot's **Settings**: the chatbot id on **General**, the secret on **Webhook**. Keep the secret on your server only.
+4. **Add a `/chat-token` route to your server** that requires your own sign-in and returns a token for the current user ([below](#signing-host-tokens)).
+5. **On the page, fetch the token and pass it to the widget**, and refresh it before it expires.
+6. **Register the handlers**, calling your own API with the user's session cookie.
+
+<Sequence
+  title="A signed-in tool: your server vouches for the user"
+  actors={["Your server", "Your page", "Sarufi", "Visitor"]}
+  steps={[
+    [1, 0, "Asks /chat-token with the user's session"],
+    [0, 1, "Signs a token for this user and site", "reply"],
+    [1, 2, "identify({ token })"],
+    [2, 2, "Checks signature, site and expiry", "note"],
+    [3, 2, "What is my balance?"],
+    [2, 1, "Run get_balance"],
+    [1, 2, "Your API's answer", "reply"],
+    [2, 3, "Your balance is 60,000", "reply"],
+  ]}
+/>
+
+### On the page
+
+```javascript
+async function refreshChatToken() {
+  const r = await fetch("/chat-token", { credentials: "include" });
+  if (!r.ok) return; // 401: signed out, the chat goes on with public tools only
+  const { token } = await r.json();
+  ChatWidget.identify({ token });
+}
+
+refreshChatToken();
+setInterval(refreshChatToken, 10 * 60 * 1000); // inside the 15-minute expiry
+ChatWidget.onTokenExpired(refreshChatToken);    // called when the token runs out on an open chat
+document.querySelector("#logout")?.addEventListener("click", () => ChatWidget.signOut());
+```
+
+- `identify({ token })` hands a new token to the open chat without dropping it.
+- When a token's `exp` passes on an open chat, Sarufi ends verification (the `host_expired` event), the chat drops to public tools, and the widget runs your `onTokenExpired` callback. If the callback returns a token, or a promise of one, the widget passes it to `identify` for you.
+- `ChatWidget.signOut()` tells Sarufi the user has gone. Call it from your sign-out button.
+- `identify("someone@example.com")` with a plain string still names an anonymous visitor in the inbox; it does not verify anyone.
+
+### Shared devices
+
+- **Signing in mid-conversation keeps the chat.** A visitor who asks a question and then signs in carries on where they were.
+- **Signing out, or a different user signing in, starts a fresh conversation** before anything else is said, and the widget clears the old messages from the screen. On a shared computer, the next person never sees the last person's chat.
+
+### The handlers
+
+```javascript
+ChatWidget.registerTools({
+  get_balance: async (_args, { signal }) => {
+    const r = await fetch("/api/wallet/balance", { signal, credentials: "include" });
+    if (!r.ok) throw new Error("Balance is unavailable right now.");
+    const { amount, currency } = await r.json();
+    return { amount, currency };
+  },
+});
+```
+
+Your server answers from **its own session**, not from anything in the args. Handler context, `setTools` and `available()` are on [Running calls](/docs/developer-api/host-tools/running-calls).
+
+## Signing host tokens
+
+A host token is how your server tells Sarufi what it cannot learn from the browser:
+
+- **who** the signed-in user is (`user_id`), so tools that need a signed-in user can be offered;
+- **which site** the token is for (`origin`), so a token copied to another site is worthless;
+- **which page-declared tools** you vouch for (`tools_digest`, optional; see [Tools declared in page code](/docs/developer-api/host-tools/page-code)).
+
+### Rules
+
+1. **Mint only on your server.** The webhook secret never goes into the browser, an app bundle or mobile code. Anyone holding it can mint tokens for any user.
+2. **Short expiry.** 15 minutes is recommended; 1 hour is the maximum, and longer tokens are refused.
+3. **Refresh before `exp`** by calling `ChatWidget.identify({ token })` again with a new token.
+4. **Set `origin` to the exact page origin**: scheme, host and port, lowercase, no path, no trailing slash, the default port left out (`https://app.example.com`, `http://localhost:3000`).
+5. **That origin must be in the bot's allowed domains.** With no allowed domains configured, every host token is refused.
+6. **One user per token.** Mint per signed-in user and never reuse a token across users.
+7. **Rotate the secret if it leaks.** Regenerate it in the bot's **Settings, Webhook** and deploy the new one to your server. Tokens signed with the old secret stop working, and so does webhook verification, until your server has the new secret.
+
+### The format
+
+| Part | Value |
+|---|---|
+| Claims | `chatbot_id`, `user_id`, `origin`, `exp` (Unix seconds), and `tools_digest` only when the page declares tools |
+| Body | the claims as canonical JSON: keys in UTF-16 code-unit order (the JavaScript default sort), no whitespace |
+| Signing key | `k` = HMAC_SHA256(webhook secret, `"host-token"`), used as the **raw 32 bytes**, not hex |
+| Signature | `v1` = hex HMAC-SHA256 with `k` over `"<t>." + body bytes`, where `t` is the current Unix time |
+| Token | `base64url(body) + "." + "t=<t>,v1=<hex>"`, base64url without padding |
+
+Sarufi verifies the HMAC over the exact bytes it decodes and never re-serialises them, so sign exactly the bytes you encode.
+
+### Node (Express)
+
+```javascript
+import { createHash, createHmac } from "node:crypto";
+import express from "express";
+
+// Keys in default JS string order at every depth, no whitespace. Built by hand because a
+// JS object moves integer-like keys ("9" before "10"), which would change the bytes.
+function canonical(v) {
+  if (v === null || typeof v !== "object") return JSON.stringify(v);
+  if (Array.isArray(v)) return `[${v.map((x) => (x === undefined ? "null" : canonical(x))).join(",")}]`;
+  const parts = Object.keys(v).sort().filter((k) => v[k] !== undefined).map((k) => `${JSON.stringify(k)}:${canonical(v[k])}`);
+  return `{${parts.join(",")}}`;
+}
+
+export function toolsDigest(tools) {
+  const sorted = [...tools].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+  return createHash("sha256").update(canonical(sorted), "utf8").digest("hex");
+}
+
+export function hostToken({ chatbotId, userId, origin, exp, tools, secret, now = Math.floor(Date.now() / 1000) }) {
+  const claims = { chatbot_id: chatbotId, user_id: userId, origin, exp };
+  if (tools?.length) claims.tools_digest = toolsDigest(tools);
+  const body = canonical(claims);
+  const key = createHmac("sha256", secret).update("host-token").digest(); // raw bytes
+  const v1 = createHmac("sha256", key).update(`${now}.${body}`).digest("hex");
+  return `${Buffer.from(body).toString("base64url")}.t=${now},v1=${v1}`;
+}
+
+const app = express();
+
+// requireSession is your own sign-in middleware; never mint for an anonymous request.
+app.get("/chat-token", requireSession, (req, res) => {
+  const now = Math.floor(Date.now() / 1000);
+  res.set("Cache-Control", "no-store").json({
+    token: hostToken({
+      chatbotId: process.env.CHATBOT_ID,
+      userId: String(req.user.id),
+      origin: "https://app.example.com",
+      exp: now + 15 * 60,
+      secret: process.env.CHATBOT_WEBHOOK_SECRET,
+      now,
+    }),
+  });
+});
+```
+
+### Python (FastAPI)
+
+```python
+import base64, hashlib, hmac, json, os, time
+from fastapi import Depends, FastAPI
+
+def _utf16(k: str) -> bytes:
+    return k.encode("utf-16-be")
+
+def canonical(v) -> str:
+    """Keys in UTF-16 code-unit order at every depth (the JS default sort), no whitespace."""
+    if isinstance(v, dict):
+        return "{" + ",".join(
+            json.dumps(k, ensure_ascii=False) + ":" + canonical(v[k]) for k in sorted(v, key=_utf16)
+        ) + "}"
+    if isinstance(v, list):
+        return "[" + ",".join(canonical(x) for x in v) + "]"
+    return json.dumps(v, ensure_ascii=False)
+
+def tools_digest(tools: list) -> str:
+    ordered = sorted(tools, key=lambda d: _utf16(d["name"]))
+    return hashlib.sha256(canonical(ordered).encode("utf-8")).hexdigest()
+
+def host_token(*, chatbot_id: str, user_id: str, origin: str, exp: int, secret: str,
+               tools: list | None = None, now: int | None = None) -> str:
+    claims = {"chatbot_id": chatbot_id, "user_id": user_id, "origin": origin, "exp": exp}
+    if tools:
+        claims["tools_digest"] = tools_digest(tools)
+    body = canonical(claims)
+    t = int(time.time()) if now is None else now
+    key = hmac.new(secret.encode(), b"host-token", hashlib.sha256).digest()  # raw bytes
+    v1 = hmac.new(key, f"{t}.{body}".encode(), hashlib.sha256).hexdigest()
+    b64 = base64.urlsafe_b64encode(body.encode()).decode().rstrip("=")
+    return f"{b64}.t={t},v1={v1}"
+
+app = FastAPI()
+
+# current_user is your own sign-in dependency; never mint for an anonymous request.
+@app.get("/chat-token")
+def chat_token(user=Depends(current_user)):
+    now = int(time.time())
+    return {"token": host_token(
+        chatbot_id=os.environ["CHATBOT_ID"],
+        user_id=str(user.id),
+        origin="https://app.example.com",
+        exp=now + 15 * 60,
+        secret=os.environ["CHATBOT_WEBHOOK_SECRET"],
+        now=now,
+    )}
+```
+
+### Test vectors
+
+Check your implementation before going live. The widget's own tests and both helpers above produce these exact strings.
+
+```json
+{
+  "secret": "whsec_test_vector",
+  "chatbot_id": "01JBOT0000000000000000000A",
+  "user_id": "user_42",
+  "origin": "https://app.example.com",
+  "exp": 1767225600,
+  "t": 1767222000
+}
+```
+
+**No declared tools:**
+
+```text
+eyJjaGF0Ym90X2lkIjoiMDFKQk9UMDAwMDAwMDAwMDAwMDAwMDAwMEEiLCJleHAiOjE3NjcyMjU2MDAsIm9yaWdpbiI6Imh0dHBzOi8vYXBwLmV4YW1wbGUuY29tIiwidXNlcl9pZCI6InVzZXJfNDIifQ.t=1767222000,v1=bb9e1fbc0be6d127c02af1ab6ba29110844d0c4319902f56f1de99d538c73cc4
+```
+
+Vectors with declared tools are on [Tools declared in page code](/docs/developer-api/host-tools/page-code#test-vectors).
+
+## What Sarufi decided about the token
+
+`ChatWidget.debug(true)` prints the `host_token_status` Sarufi reports when the chat connects and after each `identify`. It never prints the token itself.
+
+| `host_token_status` | Meaning | Fix |
+|---|---|---|
+| `none` | No host token was sent | Call `identify({ token })` after sign-in |
+| `accepted` | The token is valid; the visitor is verified | |
+| `invalid` | Signature, `chatbot_id` or format is wrong | Check the chatbot id and secret, derive the signing key with `"host-token"` as raw bytes, sign the exact bytes you encode, and compare with the test vectors |
+| `expired` | `exp` has passed, or is more than 1 hour ahead | Mint with a 15-minute expiry and refresh on a timer and in `onTokenExpired` |
+| `origin` | `origin` differs from the page (`www.`, port, `http` vs `https`, trailing slash) | Mint with the page's exact `window.location.origin` |
+| `no_allowed_domains` | The bot has no allowed domains, so tokens are refused | Add your site to the web integration's allowed domains |
+| `user_changed` | The token names a different user than this conversation | Expected after a user switch: a fresh conversation starts |
