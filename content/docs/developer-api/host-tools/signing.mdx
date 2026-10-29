@@ -1,0 +1,214 @@
+---
+title: "Signing Host Tokens"
+description: Mint short-lived host tokens on your server to verify a user, bind the token to your site, and vouch for page-declared tools.
+icon: KeyRound
+---
+
+A host token is how your server tells Sarufi three things it cannot learn from the browser:
+
+- **who** the signed-in user is (`user_id`), so tools marked `requires_verified_user` can be offered;
+- **which site** the token was made for (`origin`), so a token copied to another site is worthless;
+- **which page-declared tools** you vouch for (`tools_digest`), so a script injected into your page cannot add tools the model would trust.
+
+## Rules
+
+1. **Mint only on your server.** The chatbot's webhook secret never goes into the browser, an app bundle or mobile code. Anyone holding it can mint tokens for any user.
+2. **Short expiry.** Use 15 minutes; 24 hours is the ceiling.
+3. **Refresh before `exp`** by fetching a new token and calling `ChatWidget.identify({ token })` again.
+4. **Set `origin` to the exact page origin**: scheme, host and port, lowercase, no path and no trailing slash, the default port left out (`https://app.example.com`, `http://localhost:3000`).
+5. **Add that origin to the bot's allowed domains** (the web integration's `allowed_domains`, see [Integrations](../integrations#web-widget-integration)).
+6. **One user per token.** Mint per signed-in user and never reuse a token across users.
+7. **Rotate the secret if it leaks.** Rotate the webhook secret in the dashboard and deploy the new one to your server. Tokens signed with the old secret stop working, so visitors lose verified tools until their page fetches a fresh token.
+
+## The format
+
+| Part | Value |
+|---|---|
+| Claims | `chatbot_id`, `user_id`, `origin`, `exp` (Unix seconds), and `tools_digest` when the page declares tools |
+| Body | The claims as canonical JSON: keys in UTF-16 code-unit order (the JavaScript default sort), no whitespace |
+| Signature | `v1` = hex HMAC-SHA256 with the webhook secret over `"<t>." + body bytes`, where `t` is the current Unix time |
+| Token | `base64url(body) + "." + "t=<t>,v1=<hex>"`, with base64url unpadded |
+
+Sarufi verifies the HMAC over the exact bytes it decodes and never re-serialises them, so sign exactly the bytes you encode. It then checks `exp`, `chatbot_id`, that `origin` equals the page's origin, and that the origin is in the bot's allowed domains. A token that fails any check is ignored: the chat goes on, unverified.
+
+`tools_digest` is the lowercase hex SHA-256 of the canonical JSON of the declared tools, sorted by `name`. It must equal the `digest` from [`ChatWidget.toolManifest()`](./widget#the-manifest-your-backend-signs).
+
+---
+
+## Node (Express)
+
+```javascript
+import { createHash, createHmac } from "node:crypto";
+import express from "express";
+import declaredTools from "./host-tools.json" with { type: "json" }; // the same definitions the page declares
+
+// Keys in default JS string order at every depth, no whitespace. Built by hand because a
+// JS object moves integer-like keys ("9" before "10"), which would change the bytes.
+function canonical(v) {
+  if (v === null || typeof v !== "object") return JSON.stringify(v);
+  if (Array.isArray(v)) return `[${v.map((x) => (x === undefined ? "null" : canonical(x))).join(",")}]`;
+  const parts = Object.keys(v).sort().filter((k) => v[k] !== undefined).map((k) => `${JSON.stringify(k)}:${canonical(v[k])}`);
+  return `{${parts.join(",")}}`;
+}
+
+export function toolsDigest(tools) {
+  const sorted = [...tools].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+  return createHash("sha256").update(canonical(sorted), "utf8").digest("hex");
+}
+
+export function hostToken({ chatbotId, userId, origin, exp, tools, secret, now = Math.floor(Date.now() / 1000) }) {
+  const claims = { chatbot_id: chatbotId, user_id: userId, origin, exp };
+  if (tools?.length) claims.tools_digest = toolsDigest(tools);
+  const body = canonical(claims);
+  const v1 = createHmac("sha256", secret).update(`${now}.${body}`).digest("hex");
+  return `${Buffer.from(body).toString("base64url")}.t=${now},v1=${v1}`;
+}
+
+const app = express();
+
+// requireSession is your own sign-in middleware; never mint for an anonymous request.
+app.get("/chat-token", requireSession, (req, res) => {
+  const now = Math.floor(Date.now() / 1000);
+  res.set("Cache-Control", "no-store").json({
+    token: hostToken({
+      chatbotId: process.env.CHATBOT_ID,
+      userId: req.user.id,
+      origin: "https://app.example.com",
+      exp: now + 15 * 60,
+      tools: declaredTools,
+      secret: process.env.CHATBOT_WEBHOOK_SECRET,
+      now,
+    }),
+  });
+});
+```
+
+Leave out `tools` when the page declares none.
+
+## Python (FastAPI)
+
+```python
+import base64, hashlib, hmac, json, os, time
+from fastapi import Depends, FastAPI
+
+def _utf16(k: str) -> bytes:
+    return k.encode("utf-16-be")
+
+def canonical(v) -> str:
+    """Keys in UTF-16 code-unit order at every depth (the JS default sort), no whitespace."""
+    if isinstance(v, dict):
+        return "{" + ",".join(
+            json.dumps(k, ensure_ascii=False) + ":" + canonical(v[k]) for k in sorted(v, key=_utf16)
+        ) + "}"
+    if isinstance(v, list):
+        return "[" + ",".join(canonical(x) for x in v) + "]"
+    return json.dumps(v, ensure_ascii=False)
+
+def tools_digest(tools: list) -> str:
+    ordered = sorted(tools, key=lambda d: _utf16(d["name"]))
+    return hashlib.sha256(canonical(ordered).encode("utf-8")).hexdigest()
+
+def host_token(*, chatbot_id: str, user_id: str, origin: str, exp: int, secret: str,
+               tools: list | None = None, now: int | None = None) -> str:
+    claims = {"chatbot_id": chatbot_id, "user_id": user_id, "origin": origin, "exp": exp}
+    if tools:
+        claims["tools_digest"] = tools_digest(tools)
+    body = canonical(claims)
+    t = int(time.time()) if now is None else now
+    v1 = hmac.new(secret.encode(), f"{t}.{body}".encode(), hashlib.sha256).hexdigest()
+    b64 = base64.urlsafe_b64encode(body.encode()).decode().rstrip("=")
+    return f"{b64}.t={t},v1={v1}"
+
+with open("host-tools.json") as f:
+    DECLARED_TOOLS = json.load(f)
+
+app = FastAPI()
+
+# current_user is your own sign-in dependency; never mint for an anonymous request.
+@app.get("/chat-token")
+def chat_token(user=Depends(current_user)):
+    now = int(time.time())
+    return {"token": host_token(
+        chatbot_id=os.environ["CHATBOT_ID"],
+        user_id=str(user.id),
+        origin="https://app.example.com",
+        exp=now + 15 * 60,
+        tools=DECLARED_TOOLS,
+        secret=os.environ["CHATBOT_WEBHOOK_SECRET"],
+        now=now,
+    )}
+```
+
+In Flask the route body is the same under `@app.get("/chat-token")` with your `login_required`.
+
+## On the page
+
+```javascript
+async function refreshChatToken() {
+  const r = await fetch("/chat-token", { credentials: "include" });
+  if (!r.ok) return; // signed out: the chat goes on without verified tools
+  const { token } = await r.json();
+  ChatWidget.identify({ token });
+}
+
+await refreshChatToken();
+setInterval(refreshChatToken, 10 * 60 * 1000); // well inside the 15-minute expiry
+```
+
+---
+
+## Test vectors
+
+Check your implementation against these inputs before going live. The widget, the Node helper and the Python helper all produce these exact strings.
+
+```json
+{
+  "secret": "whsec_test_vector",
+  "chatbot_id": "01JBOT0000000000000000000A",
+  "user_id": "user_42",
+  "origin": "https://app.example.com",
+  "exp": 1767225600,
+  "t": 1767222000,
+  "tools": [
+    {"name":"list_transactions","description":"The user's most recent transactions, newest first.","parameters":{"type":"object","properties":{"limit":{"type":"integer","minimum":1,"maximum":50,"default":5},"direction":{"enum":["in","out"]}}},"timeout_ms":15000,"requires_verified_user":true},
+    {"name":"get_balance","description":"The signed-in user's current wallet balance.","parameters":{"type":"object","properties":{}},"concurrency":"parallel","requires_verified_user":true}
+  ]
+}
+```
+
+- `tools_digest`: `037c65d14fa6cb5f336d1b4928f03e7f30e7e65730acc39daa69b844f5c757b6`
+- token:
+
+```text
+eyJjaGF0Ym90X2lkIjoiMDFKQk9UMDAwMDAwMDAwMDAwMDAwMDAwMEEiLCJleHAiOjE3NjcyMjU2MDAsIm9yaWdpbiI6Imh0dHBzOi8vYXBwLmV4YW1wbGUuY29tIiwidG9vbHNfZGlnZXN0IjoiMDM3YzY1ZDE0ZmE2Y2I1ZjMzNmQxYjQ5MjhmMDNlN2YzMGU3ZTY1NzMwYWNjMzlkYWE2OWI4NDRmNWM3NTdiNiIsInVzZXJfaWQiOiJ1c2VyXzQyIn0.t=1767222000,v1=89724c7074ca1bd35c5c7b1269dbcf74c435a81b30f93394129e45f50322dd35
+```
+
+A second case proves that integer-like keys sort as strings (`"10"` before `"9"`). With the same secret, ids, origin, `exp` and `t`, and these tools:
+
+```json
+[{"name":"pick_slot","description":"Book one of the day's slots.","parameters":{"type":"object","properties":{"9":{"type":"string"},"10":{"type":"string"},"a":{"type":"integer","minimum":0}},"required":["10","9"]}}]
+```
+
+- canonical tools: `[{"description":"Book one of the day's slots.","name":"pick_slot","parameters":{"properties":{"10":{"type":"string"},"9":{"type":"string"},"a":{"minimum":0,"type":"integer"}},"required":["10","9"],"type":"object"}}]`
+- `tools_digest`: `52fed1cfe5253151bf671634d8dfd2c12b360880bd456cd70496bf7e1be8881b`
+- token:
+
+```text
+eyJjaGF0Ym90X2lkIjoiMDFKQk9UMDAwMDAwMDAwMDAwMDAwMDAwMEEiLCJleHAiOjE3NjcyMjU2MDAsIm9yaWdpbiI6Imh0dHBzOi8vYXBwLmV4YW1wbGUuY29tIiwidG9vbHNfZGlnZXN0IjoiNTJmZWQxY2ZlNTI1MzE1MWJmNjcxNjM0ZDhkZmQyYzEyYjM2MDg4MGJkNDU2Y2Q3MDQ5NmJmN2UxYmU4ODgxYiIsInVzZXJfaWQiOiJ1c2VyXzQyIn0.t=1767222000,v1=f2b5393b34986dd9bbf8414b2b3bc850f3adb1b2edf220286f263bf2f3f8b543
+```
+
+---
+
+## Troubleshooting
+
+Turn on diagnostics while you set up: `ChatWidget.debug(true)`.
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| Verified tools never offered; console says the origin does not match | `origin` differs from the page (`www.`, port, `http` vs `https`, trailing slash) | Mint with the page's exact `window.location.origin` |
+| Same, origin matches | The origin is not in the bot's allowed domains | Add it to the web integration's `allowed_domains` |
+| Works, then stops after a while; console says expired | The token passed `exp` and was not refreshed | Refresh on a timer shorter than the expiry |
+| Ignored from the start, nothing in the console | Wrong webhook secret or `chatbot_id`, or the body was re-serialised after signing | Check both against the dashboard, sign the exact bytes you encode, and compare with the test vectors |
+| Page-declared tools missing; console says `tools_digest` does not match | The server's definitions differ from the page's | Regenerate `host-tools.json` from `ChatWidget.toolManifest()` and redeploy both |
+| Console warns about a non-integer number | A declared schema holds a value like `10.5` | Use integers |
+| Console says declared tools are ignored without a `tools_digest` | The server signs no digest | Pass the definitions to `hostToken` |

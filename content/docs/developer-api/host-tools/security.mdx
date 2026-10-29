@@ -1,0 +1,25 @@
+---
+title: "Security"
+description: What host-run tools protect for you, and what stays your responsibility.
+icon: ShieldCheck
+---
+
+## What Sarufi enforces
+
+- **Without a valid host token the session is unverified.** Only owner-registered tools with `requires_verified_user: false` are offered. Page-declared definitions are ignored, and the page only supplies handlers.
+- **Definitions are authoritative only from you.** Tools come from your workspace tool sets, or from page code whose digest your server signed. An injected script cannot add a tool or change a description the model reads. `setTools` and `available()` can only narrow what is offered.
+- **A token is bound to one site and one user.** It is refused on any origin other than the one it names, and only accepted when that origin is in the bot's allowed domains. A refreshed token must name the same user as the session.
+- **Tokens are short-lived.** `exp` is at most 24 hours ahead.
+- **Calls are bound.** A `call_id` is unguessable, single-use and tied to its session. A result for an unknown, expired or foreign call is refused, and repeated tampering is throttled.
+- **Results are screened and clipped** before the model sees them.
+
+## What stays yours
+
+- **Keep the webhook secret on your server.** Anyone with it can mint tokens for any user. Rotate it in the dashboard if it leaks.
+- **Mint tokens only for a signed-in user**, per user, with an expiry of 15 minutes and a refresh on a timer.
+- **Treat args as untrusted input.** They come from a model that read the visitor's words. Your API must still authorise every request with the user's own session, exactly as if the user had clicked.
+- **Return the minimum.** Anything you return can end up in the agent's reply.
+- **Use `requires_verified_user`** for anything personal, so the tool is never offered to an anonymous visitor.
+- **Mark side effects `serial`**, so a payment never overlaps the order it pays for. See [Steps and Modes](./batches).
+- **Keep error messages plain.** The message you throw may reach the visitor in the agent's words. Leave out stack traces and internal codes.
+- **Keep args and results out of your logs** when they hold personal data, including in `onToolCall` and `onToolResult` hooks.

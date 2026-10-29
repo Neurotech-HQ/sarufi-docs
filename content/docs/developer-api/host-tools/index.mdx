@@ -1,0 +1,101 @@
+---
+title: "Overview"
+description: Let your chatbot's AI agent call functions that run on your own web page or server, with your signed-in user's session.
+icon: Wrench
+---
+
+Host-run tools let the AI agent in your chatbot call functions that **you** run. In the web chat widget they are JavaScript functions on your page, running in the visitor's browser with your own session. Over the [Chat API](./chat) they are calls your server answers. Either way the agent can search your site, or answer "what is my balance?", without you opening a new API to Sarufi.
+
+A tool has a definition (its name, what it does, and the JSON Schema of its arguments) and a handler (the code that runs). The definition is what the model reads; the handler is yours.
+
+## Three paths
+
+Start with the simplest one that fits.
+
+| You want | Path | Definitions come from | Backend or token needed |
+|---|---|---|---|
+| Public features anyone can use: search, store hours, stock lookups | [Public site tools](#public-site-tools) | A workspace tool set linked to the bot | No |
+| Features for a signed-in user: balance, orders, payments | [Account actions](#account-actions) | A tool set, with `requires_verified_user: true` | Yes: a host token per user |
+| Definitions kept next to your code, shipped with your release | [Tools declared in page code](#tools-declared-in-page-code) | `ChatWidget.tool()` on the page | Yes: a host token that signs the tools' digest |
+
+In every path the page only **runs** tools. What the model is told about a tool comes from you, never from unsigned page code.
+
+---
+
+## Public site tools
+
+The whole setup for a public search tool, with no backend and no token:
+
+1. **Create a tool set** in your workspace with a `search_site` tool, and link the set to your bot, in the dashboard or with the [API](./host-tools/api-reference#tool-sets):
+
+   ```json
+   {
+     "name": "search_site",
+     "description": "Search this website's pages and products.",
+     "parameters": { "type": "object", "properties": { "query": { "type": "string", "minLength": 2 } }, "required": ["query"] },
+     "timeout_ms": 10000,
+     "requires_verified_user": false
+   }
+   ```
+
+2. **On the page**, supply the handler:
+
+   ```javascript
+   ChatWidget.registerTools({
+     search_site: ({ query }) => searchSite(query),
+   });
+   ```
+
+That is all. The widget checks the args against the schema before your function runs and catches anything it throws (see [The safe wrapper](./host-tools/widget#the-safe-wrapper)).
+
+---
+
+## Account actions
+
+For tools that act for a signed-in user, set `requires_verified_user: true` on them. Your backend then mints a short-lived **host token** for the user, and the page hands it to the widget:
+
+```javascript
+const { token } = await fetch("/chat-token", { credentials: "include" }).then((r) => r.json());
+ChatWidget.identify({ token });
+```
+
+Without a valid token those tools are never offered, so an anonymous visitor cannot reach them. See [Signing Host Tokens](./host-tools/signing).
+
+---
+
+## Tools declared in page code
+
+Instead of registering definitions through the dashboard or API, declare them next to the handler with `ChatWidget.tool()`. They are offered to the model **only when your backend signs their digest** into the host token. Without that, they are ignored and the page only supplies handlers. See [Declaring tools in page code](./host-tools/widget#declaring-tools-in-page-code).
+
+---
+
+## How a call runs
+
+1. The visitor sends a message. The widget tells Sarufi which of its tools are live on this page.
+2. The agent decides to call one or more tools. Sarufi sends them as a [batch](./host-tools/batches) to the widget, or returns them in the Chat API response.
+3. Your handlers run and return results.
+4. The agent continues with the results, and may send another batch, until it replies.
+
+The model is told to apologise or retry once when a tool fails, and never to invent data.
+
+---
+
+## Limits
+
+| Limit | Value |
+|---|---|
+| Tools per chatbot, across linked sets | 32 |
+| Tools declared per session | 16 |
+| Tool name | `^[a-z][a-z0-9_]{1,47}$`, unique, and not the name of a built-in or MCP tool |
+| `description` | 1024 characters |
+| `parameters` | An object JSON Schema of at most 8 KB, integers only |
+| `timeout_ms` | Default 30000, from 1000 to 300000 |
+| Result size | 32 KB once serialized |
+
+## Where to go next
+
+- [Widget Usage](./host-tools/widget): registering handlers, choosing live tools, declaring tools, debugging
+- [Signing Host Tokens](./host-tools/signing): Node and Python helpers, test vectors, troubleshooting
+- [Steps and Modes](./host-tools/batches): how batches of calls run
+- [API Reference](./host-tools/api-reference): tool sets, links, and host tools over the Chat API
+- [Security](./host-tools/security)

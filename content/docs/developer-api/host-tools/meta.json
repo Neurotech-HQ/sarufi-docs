@@ -1,0 +1,12 @@
+{
+  "title": "Host-run Tools",
+  "icon": "Wrench",
+  "pages": [
+    "index",
+    "widget",
+    "signing",
+    "batches",
+    "api-reference",
+    "security"
+  ]
+}

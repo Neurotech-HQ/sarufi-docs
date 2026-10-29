@@ -1,0 +1,212 @@
+---
+title: "Widget Usage"
+description: Register tool handlers on your page, choose which tools are live, and declare tools in code.
+icon: PanelsTopLeft
+---
+
+The web chat widget exposes `window.ChatWidget` (also available as `window.SarufiWidget`). Every method can be called before or after the widget loads.
+
+| Method | What it does |
+|---|---|
+| `registerTools({ name: handler \| options })` | Supplies handlers. Can be called more than once |
+| `setTools(names \| null)` | Narrows which registered tools are live on this page |
+| `identify({ token })` | Hands the widget a [host token](./signing). Call again with a fresh token to refresh |
+| `tool(definition)`, `t` | Declare a tool in page code, with the `t` schema builder |
+| `toolManifest()` | The canonical definitions and digest your backend signs |
+| `onToolCall(fn)`, `onToolResult(fn)` | Logging hooks |
+| `debug(on)` | Explains setup problems in the browser console |
+
+---
+
+## Register handlers
+
+```javascript
+ChatWidget.registerTools({
+  get_balance: async (_args, { signal }) => {
+    const r = await fetch("/api/wallet/balance", { signal, credentials: "include" });
+    if (!r.ok) throw new Error("Balance is unavailable right now.");
+    return r.json(); // { amount: 125000, currency: "TZS" }
+  },
+
+  list_transactions: {
+    handler: async ({ limit = 5, direction }, { signal }) => {
+      const q = new URLSearchParams({ limit: String(limit), ...(direction ? { direction } : {}) });
+      const r = await fetch(`/api/wallet/transactions?${q}`, { signal, credentials: "include" });
+      if (!r.ok) throw new Error("Transactions are unavailable right now.");
+      const rows = await r.json();
+      // Send only what the agent needs.
+      return rows.map((t) => ({ id: t.id, amount: t.amount, at: new Date(t.created_at), status: t.status }));
+    },
+    available: () => Boolean(window.currentUser),
+  },
+});
+```
+
+A handler is a function, or an object with `handler` and an optional `available()`. Each handler receives `(args, { signal, user, conversationId })`:
+
+- `signal` aborts when the call times out; pass it to `fetch`;
+- `user` is `{ id }` from the host token, or `null`;
+- `conversationId` is the chat session.
+
+## Choose which tools are live
+
+```javascript
+// Only these, on this page. It narrows, never adds.
+ChatWidget.setTools(["get_balance", "list_transactions"]);
+
+// On the public site, none.
+ChatWidget.setTools([]);
+
+// Lift the page's list again.
+ChatWidget.setTools(null);
+```
+
+The widget sends the live names with every message: registered tools, cut by `setTools` and each tool's `available()`. Sarufi offers the model only the intersection with what the owner registered or the token signed.
+
+## Identify the user
+
+```javascript
+ChatWidget.identify({ token }); // a host token minted by your backend
+```
+
+Calling it again while the chat is open hands the new token to the open session without dropping the chat. If the session refuses it (invalid, expired, wrong origin, a different user, or throttled), the widget reconnects with the new token.
+
+`identify(userId)` with a plain string still names an anonymous visitor, as before. It does not verify anyone, so verified-user tools stay hidden.
+
+## Logging hooks
+
+```javascript
+ChatWidget.onToolCall(({ name, step, mode }) => console.debug("tool", name, step, mode));
+ChatWidget.onToolResult(({ name, ok, error, durationMs }) => metrics.track(name, ok, durationMs));
+```
+
+The widget itself never logs args or results. `onToolCall` hooks receive the args; keep them out of your logs if they hold personal data.
+
+---
+
+## The safe wrapper
+
+Every handler runs inside a safe wrapper, so a tool can never break your page:
+
+| Situation | The agent receives |
+|---|---|
+| No handler, `available()` false, or not in `setTools` | `not_available`, at once |
+| Args break the tool's JSON Schema | `invalid_args`; the handler is not called |
+| Handler throws or rejects | `failed`, with your error message clipped to 300 characters |
+| Handler runs past `timeout_ms` | `timeout`; your `signal` is aborted |
+| Result over 32 KB once serialized | `failed` |
+| An earlier call in a sequential batch failed | `skipped` |
+
+Results are made JSON-safe first: functions and symbols are dropped, cycles are cut, and dates become ISO strings. Each call runs **exactly once**, even when a batch is replayed after a reconnect, and results made while offline are sent when the widget reconnects. Hooks run inside their own try/catch.
+
+The error message you throw may reach the visitor in the agent's words, so keep it plain and free of internals.
+
+---
+
+## Declaring tools in page code
+
+Declare the definition next to the handler with `tool()`. Page-declared definitions are offered to the model **only when your backend signs their digest** into the host token; without that, they are ignored.
+
+### With the `t` schema builder
+
+```javascript
+const { tool, t } = ChatWidget;
+
+ChatWidget.registerTools({
+  list_transactions: tool({
+    description: "The user's most recent transactions, newest first.",
+    args: {
+      limit: t.integer().min(1).max(50).default(5),
+      direction: t.enum(["in", "out"]).optional().describe("Money in or money out"),
+    },
+    timeout_ms: 15000,
+    requires_verified_user: true,
+    handler: async ({ limit, direction }, { signal }) => {
+      const q = new URLSearchParams({ limit: String(limit), ...(direction ? { direction } : {}) });
+      const r = await fetch(`/api/wallet/transactions?${q}`, { signal, credentials: "include" });
+      if (!r.ok) throw new Error("Transactions are unavailable right now.");
+      return r.json();
+    },
+  }),
+});
+```
+
+| Builder | JSON Schema |
+|---|---|
+| `t.string()`, `t.number()`, `t.integer()`, `t.boolean()` | `{"type": ...}` |
+| `t.enum(["a", "b"])` | `{"enum": ["a", "b"]}` |
+| `t.array(item)` | `{"type": "array", "items": ...}` |
+| `t.object({ ... })` | `{"type": "object", "properties": ..., "required": [...]}` |
+| `.min(n)` / `.max(n)` | `minLength`/`maxLength` on strings, `minItems`/`maxItems` on arrays, `minimum`/`maximum` on numbers |
+| `.optional()` | left out of `required` |
+| `.default(v)` | `"default": v`, not required, and filled in before your handler runs |
+| `.describe(text)` | `"description": text` |
+
+`args` takes a map of `t` types or a `t.object(...)`. A `tool()` also accepts `available`, `concurrency`, `timeout_ms` and `requires_verified_user`.
+
+### With Zod or a raw JSON Schema
+
+```javascript
+import { z } from "zod";
+
+ChatWidget.registerTools({
+  get_order: tool({
+    description: "One order by its id.",
+    args: z.object({ order_id: z.string().min(3) }),
+    handler: ({ order_id }, { signal }) => fetch(`/api/orders/${order_id}`, { signal }).then((r) => r.json()),
+  }),
+  search_products: tool({
+    description: "Search the catalogue.",
+    parameters: { type: "object", properties: { q: { type: "string" } }, required: ["q"] },
+    handler: ({ q }) => searchCatalogue(q),
+  }),
+});
+```
+
+The widget does not bundle Zod. It recognises a Zod schema by its shape and uses `toJSONSchema()` when your Zod version has it, or else converts the common types itself (string, number, int, boolean, enum, array, object, optional, nullable, default, with min/max and descriptions). A raw `parameters` object is sent exactly as written.
+
+### Inference, when you give no schema
+
+When a `tool()` has neither `args` nor `parameters`, the widget reads the handler's source:
+
+```javascript
+tool({
+  handler: async ({ account, limit = 10, currency = "TZS" }) => {
+    /** The user's transactions on one account. */
+    // ...
+  },
+});
+// parameters: { type: "object",
+//   properties: { account: {}, limit: { type: "number", default: 10 }, currency: { type: "string", default: "TZS" } },
+//   required: ["account"] }
+// description: "The user's transactions on one account."
+```
+
+- It sees the names in a destructured first parameter. A name with a literal default gets that type and is optional; a name without a default is required and untyped.
+- A `/** ... */` comment inside the function becomes the description when `description` is not given. Many bundlers strip comments, so set `description` yourself in production.
+- It never fails: anything it cannot read, including minified code, gives `{ "type": "object" }`.
+- **Explicit `args` or `parameters` always win.** Inference is for prototypes.
+
+### The manifest your backend signs
+
+```javascript
+const { tools, json, digest } = await ChatWidget.toolManifest();
+```
+
+- `json` is the canonical form of every definition declared with `tool()`: keys at every depth in the default JavaScript string sort (UTF-16 code units, so `"10"` comes before `"9"`), no whitespace, the array sorted by `name`.
+- `digest` is the lowercase hex SHA-256 of that string's UTF-8 bytes.
+- `tools` is the same list parsed back for reading.
+
+The widget sends `json` itself, as a string, so nothing on the way can change the bytes.
+
+Keep the definitions in one place your build shares with the server (for example a `host-tools.json` the page imports and the server reads), or copy `tools` from `toolManifest()` into your server once per release. **Schemas use integers only**: a number like `10.5` may be printed differently by another language and break the digest.
+
+---
+
+## Debugging
+
+```javascript
+ChatWidget.debug(true);
+```
+
+The widget then explains in the console what it can see from the page: an origin that does not match the token, an expired token, a digest mismatch, a non-integer number in a declared schema, or a handler whose tool is not linked to this bot. It never prints the token, tool args or results, and it cannot check the signature, since the secret is not in the browser. See [Troubleshooting](./signing#troubleshooting).
