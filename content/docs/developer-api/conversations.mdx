@@ -180,6 +180,43 @@ Besides the API key, each request carries a signature made with the chatbot's `w
 | `image`, `video`, `audio`, `document` | `url`, optional `caption`, `filename` for a document |
 | `cta_url` | `body`, `display_text`, `url` |
 | `template` | `name`, `language` (default `en`), optional `parameters`. WhatsApp only |
+| `location` | `latitude` (-90 to 90), `longitude` (-180 to 180), optional `name` (up to 100 characters) and `address` (up to 300) |
+| `contacts` | `contacts`: 1 to 10 cards, each with `name.formatted_name` and at least one phone in `phones` or email in `emails`. Optional `name.first_name`, `name.last_name`, `org` (`company`, `department`, `title`) and `urls` (http or https only) |
+
+A map pin and a contact card are delivered natively on WhatsApp, Messenger and the web chat. No field may contain a line break.
+
+```json
+{
+  "channel": "WHATSAPP",
+  "to": "+255712345678",
+  "message": {
+    "type": "location",
+    "latitude": -6.7724,
+    "longitude": 39.2083,
+    "name": "City Centre branch",
+    "address": "Samora Avenue, Dar es Salaam"
+  }
+}
+```
+
+```json
+{
+  "channel": "WEB",
+  "to": "01JPQ...",
+  "message": {
+    "type": "contacts",
+    "contacts": [
+      {
+        "name": { "formatted_name": "Customer Care", "first_name": "Customer", "last_name": "Care" },
+        "phones": [{ "phone": "+255700000000", "type": "WORK" }],
+        "emails": [{ "email": "care@example.com", "type": "WORK" }],
+        "org": { "company": "Example Ltd" },
+        "urls": [{ "url": "https://example.com/contact" }]
+      }
+    ]
+  }
+}
+```
 
 On WhatsApp a plain message is delivered only within 24 hours of the customer's last message. Outside that window send a `template`; a plain send is refused with `window_closed`.
 
@@ -295,6 +332,41 @@ curl -X POST https://developers.sarufi.io/api/dev/v1/chatbots/<chatbot-id>/conve
 ```
 
 `takeover` answers `{ "status": "held" }`. A `takeover` on a conversation an inbox agent holds, or one that is closed, is refused with `409`. A conversation id that is not this chatbot's answers `404`.
+
+---
+
+## Handoff to a Person
+
+A conversation reaches a person in one of three ways:
+
+| How | What happens |
+|---|---|
+| The AI agent escalates | An `LLM_AGENT` that lists the `human_handoff` tool calls it when the customer asks for a person or the agent cannot help. The conversation becomes `HANDOFF_PENDING` and your team is alerted in the dashboard inbox. |
+| A person takes over | An inbox agent accepts or takes over the conversation, or you send a message or a `takeover` through this API. The conversation becomes `AGENT_ACTIVE` and the bot stays quiet. |
+| A person hands it back | The inbox agent hands it back, you `release` it, or the 15-minute hold after the last API send or action runs out. The bot answers the next message. |
+
+This works the same on WhatsApp, Messenger and the web chat. On the web chat the visitor sees the person's name on their replies, and a reply sent after the visitor has left waits for them and is shown when they return.
+
+Enable escalation in a flow by listing the tool on the agent:
+
+```json
+{
+  "type": "LLM_AGENT",
+  "system_prompt": "You help customers with orders.",
+  "tools": [{ "name": "human_handoff" }],
+  "handoff_message": "I'm connecting you with a member of our team.",
+  "no_agent_transition": "leave_a_message"
+}
+```
+
+| Field | Description |
+|---|---|
+| `handoff_message` | Sent when the agent escalates without saying anything itself. |
+| `no_agent_transition` | The state to go to when no one on your team is available to take the conversation. |
+
+To build your own inbox on top of the API, list conversations with `status=HANDOFF_PENDING`, read their [messages](#get-conversation-messages), then reply with [Send a Message to a Customer](#send-a-message-to-a-customer) and hand back with `release` when you are done.
+
+Chat API sessions (`channel=api`) are the exception: the API never pushes messages, so a person cannot reply into one. See [Session Lifecycle](./chat#session-lifecycle).
 
 ---
 

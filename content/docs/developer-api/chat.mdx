@@ -221,7 +221,8 @@ Identical to a button tap, with the row's `id` as `button_id`.
 |---|---|
 | `LOCATION_REQUEST` | Send the location as text. The API cannot send a shared map location |
 | `CTA_URL` | Nothing to send. The button only opens its link |
-| `FLOW` | Not answerable over the API. The request has no field for a completed WhatsApp Flow form |
+| `FLOW` | Not answerable over the API. Forms open on WhatsApp, the web chat and the playground. See [WhatsApp Flows](./whatsapp-flows) |
+| `LOCATION`, `CONTACTS` | Nothing to answer. Continue with the next text or tap |
 | `IMAGE`, `VIDEO`, `AUDIO`, `DOCUMENT`, `TEXT` | Continue with the next text or tap |
 
 The API also cannot send media from the user: the request has only `message`, `message_type` and `button_id`.
@@ -251,7 +252,7 @@ The API also cannot send media from the user: the request has only `message`, `m
 | Normal turn | The bot answers and the session moves to the state named in `current_state` |
 | The flow reaches a final state | The conversation starts over: the next message gets the welcome again. The `session_id` stays valid |
 | No message for 30 minutes | The session's place in the flow is forgotten. The next message gets the welcome again, on the same `session_id` |
-| The AI assistant hands the user to a person | The bot's reply arrives as normal, but no one on your team is alerted through the API, and a person cannot reply into an API session because the API never pushes messages |
+| The AI assistant hands the user to a person | The bot's reply arrives as normal, but a person cannot reply into an API session because the API never pushes messages. See [Handoff to a Person](./conversations#handoff-to-a-person) |
 | Session closed | `410` with `detail` `Chat session has been closed`. Nothing closes an API session today, so this is reserved |
 
 - **Channel isolation**: Chat API sessions use the `api` channel. They are completely isolated from the same chatbot's `whatsapp`, `web`, or `sms` conversations.
@@ -274,6 +275,8 @@ Read each message by its `type`. A field that does not apply is left out, never 
 | `LOCATION_REQUEST` | `text` | Flow location request |
 | `TEMPLATE` | `template_name`, `template_language`, `template_parameters` | Flow template send |
 | `FLOW` | `text`, `flow_id`, `flow_cta`, `flow_action`, `flow_action_payload`, `flow_token_extra`, `flow_mode`, `header`, `footer` | Flow sending a WhatsApp Flow form |
+| `LOCATION` | `latitude`, `longitude`, `name`, `address` | The AI agent's map pin tool |
+| `CONTACTS` | `contacts` | The AI agent's contact card tool |
 
 `REACTION` exists in the engine but never reaches the API. A reaction needs a WhatsApp message to react to, so the API receives a short `TEXT` acknowledgement instead.
 
@@ -429,6 +432,34 @@ Caption rules:
   "flow_cta": "Book now",
   "flow_action": "navigate",
   "flow_action_payload": { "screen": "BOOKING" }
+}
+```
+
+### LOCATION
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `latitude` | number | yes | |
+| `longitude` | number | yes | |
+| `name` | string | no | Place name |
+| `address` | string | no | |
+
+```json
+{ "type": "LOCATION", "latitude": -6.7724, "longitude": 39.2083, "name": "City Centre branch" }
+```
+
+### CONTACTS
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `contacts` | array | yes | Cards with `name.formatted_name`, and `phones`, `emails`, `org`, `urls` when given |
+
+```json
+{
+  "type": "CONTACTS",
+  "contacts": [
+    { "name": { "formatted_name": "Customer Care" }, "phones": [{ "phone": "+255700000000", "type": "WORK" }] }
+  ]
 }
 ```
 

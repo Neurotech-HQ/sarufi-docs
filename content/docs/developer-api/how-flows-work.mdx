@@ -1,6 +1,6 @@
 ---
 title: "How Flows Work"
-description: Understand the flow system — states, transitions, variables, and action types — and how the conversation engine uses them to drive a chat.
+description: Understand the flow system - states, transitions, variables, and action types - and how the conversation engine uses them to drive a chat.
 icon: Cog
 ---
 
@@ -10,8 +10,8 @@ There are two flow types:
 
 | Type | Purpose |
 |---|---|
-| `conversation` | State-machine flows — the standard way to build structured conversations |
-| `meta` | WhatsApp UI Flows — native WhatsApp form screens |
+| `conversation` | State-machine flows - the standard way to build structured conversations |
+| `meta` | WhatsApp UI Flows - native WhatsApp form screens |
 
 ---
 
@@ -45,9 +45,9 @@ Bot reply delivered to user
 
 A state is the basic unit of a flow. Each state has three parts:
 
-- **Message** — what the chatbot sends when the conversation enters this state
-- **Actions** — operations that run when the state is entered (API calls, agent turns, etc.)
-- **Transitions** — named exits that define where the conversation goes next
+- **Message** - what the chatbot sends when the conversation enters this state
+- **Actions** - operations that run when the state is entered (API calls, agent turns, etc.)
+- **Transitions** - named exits that define where the conversation goes next
 
 ```
 ┌──────────────────────────────────┐
@@ -98,7 +98,7 @@ Transitions are named paths from a state to another state. The engine follows a 
 
 - The user sends a message that matches a transition trigger
 - An action completes and specifies a `success_transition` or `failure_transition`
-- No other transition matches — the `default` transition is followed
+- No other transition matches - the `default` transition is followed
 
 ---
 
@@ -123,7 +123,7 @@ Use variables in messages, transition conditions, API paths, headers, and reques
 
 ## Action types
 
-Actions run when the conversation engine enters a state. Multiple actions can be chained in a single state's `actions` array — they execute in order.
+Actions run when the conversation engine enters a state. Multiple actions can be chained in a single state's `actions` array - they execute in order.
 
 | Type | What it does |
 |---|---|
@@ -133,5 +133,5 @@ Actions run when the conversation engine enters a state. Multiple actions can be
 | `CONDITION` | Evaluates an expression and branches the conversation |
 
 <Callout type="idea" title="Connecting to your backend">
-`API_CALL` is the action type that lets flows fetch data, submit forms, and trigger operations in your own systems. See [Connecting to Your Backend](./api-call) for the full reference — field descriptions, HTTP method examples, auto-injected headers, and backend code samples.
+`API_CALL` is the action type that lets flows fetch data, submit forms, and trigger operations in your own systems. See [Connecting to Your Backend](./api-call) for the full reference - field descriptions, HTTP method examples, auto-injected headers, and backend code samples.
 </Callout>
