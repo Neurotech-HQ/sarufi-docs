@@ -1,0 +1,94 @@
+---
+title: "Developer API"
+description: Run website tools from your own server over the Chat API, without the widget.
+icon: Server
+---
+
+Server-to-server callers use the same tools without the widget. Requests carry your API key, so no origin or host token applies: you vouch for the user with `verified_user_id`.
+
+<Sequence
+  title="The Developer API loop"
+  actors={["Your server", "Sarufi"]}
+  steps={[
+    [0, 1, "POST messages: the user's text"],
+    [1, 0, "status: tool_calls, with a batch to run", "reply"],
+    [0, 0, "You run the calls", "note"],
+    [0, 1, "POST tool_results"],
+    [1, 0, "status: complete, with the reply", "reply"],
+  ]}
+/>
+
+## Sending a message
+
+`POST /api/dev/v1/chatbots/{chatbot_id}/chat/sessions/{session_id}/messages` takes, besides `message`:
+
+| Field | Meaning |
+|---|---|
+| `verified_user_id` | Your own id (at most 128 characters) for a user **you have authenticated**. Without it the session is anonymous and tools that need a signed-in user are hidden. |
+| `tools` | Optional tool definitions this caller runs for the session, at most 16, in the [tool set shape](/docs/developer-api/host-tools/tool-sets). |
+| `active_tools` | Optional list of names to offer now. It only narrows. |
+
+A session is bound to the first `verified_user_id` it sees. A different one is refused with `409` and a detail starting `user_changed`: open a new session for the other user. Use each session for one user only.
+
+When the reply needs your tools it has `status: "tool_calls"` and a `tools` batch:
+
+```json
+{
+  "status": "tool_calls",
+  "messages": [],
+  "tools": {
+    "step": 1,
+    "mode": "parallel",
+    "calls": [
+      { "call_id": "htc_01J...", "name": "get_balance", "args": {}, "timeout_ms": 15000, "order": 1 }
+    ]
+  }
+}
+```
+
+Run the calls the way the [widget does](/docs/developer-api/host-tools/running-calls#steps-and-modes): all at once in `parallel` mode, in `order` in `sequential` mode. Use `call_id` as the idempotency key for writes.
+
+## Posting results
+
+`POST /api/dev/v1/chatbots/{chatbot_id}/chat/sessions/{session_id}/tool_results`
+
+```json
+{
+  "step": 1,
+  "results": [
+    { "call_id": "htc_01J...", "ok": true, "result": { "amount": 60000, "currency": "TZS" } },
+    { "call_id": "htc_01K...", "ok": false, "error": "failed", "message": "Balance is unavailable right now." }
+  ]
+}
+```
+
+`error` is one of `not_available`, `invalid_args`, `failed`, `timeout`, `skipped` or `interrupted`, with an optional `message` of at most 300 characters. Keep each `result` under 32 KB.
+
+A `200` reply has the same shape as a message reply (`messages`, `status`, `tools`), so it can carry the next step, plus a receipt per result you sent:
+
+```json
+{
+  "status": "complete",
+  "messages": [ ... ],
+  "results": [
+    { "call_id": "htc_01J...", "ok": true },
+    { "call_id": "htc_01K...", "ok": false, "error": "expired" }
+  ]
+}
+```
+
+| Per-result `error` | Meaning |
+|---|---|
+| `unknown_call` | No such call in this session |
+| `expired` | The call passed its deadline before your result arrived |
+| `step_mismatch` | The call belongs to a different `step` than the one you posted |
+
+A refused result is not used; the others in the same request still are. When **none** of the results is taken, the whole request is refused:
+
+| Status | Meaning |
+|---|---|
+| `422` | The body is malformed, or it carries more than 32 results |
+| `409` | `user_changed`: the session belongs to a different `verified_user_id`; or `step_mismatch` or `expired`: none of the calls is waiting for these results |
+| `404` | `unknown_call`: none of the results answers a call of this session |
+
+Results are expected for every call in the batch; missing ones expire, and the agent is told so.
