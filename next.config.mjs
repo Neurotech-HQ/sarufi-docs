@@ -10,6 +10,11 @@ const config = {
   images: { unoptimized: true },
   // Keep Next from writing AGENTS.md / CLAUDE.md into the repo on dev start.
   agentRules: false,
+  experimental: {
+    // The build cache keeps the content step's absolute paths. Amplify restores it into a fresh
+    // directory each build, so the step writes to the last build's path and is refused.
+    turbopackFileSystemCacheForBuild: false,
+  },
 };
 
 export default withMDX(config);
